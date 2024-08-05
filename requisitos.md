@@ -1,21 +1,60 @@
-# Documento de Requisitos
-
-## Requisitos Funcionais
+# Documento de Requisitos Funcionais
 
 ### RF 01
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec blandit nulla vel diam vehicula, eu porttitor nulla aliquam.
+O sistema permitirá pesquisa por palavra-chave
 
 ### RF 02
+O sistema terá registro e login
 
-Nullam laoreet, mauris ac tempor vulputate, orci metus aliquet augue, at accumsan odio mi eu sapien. Aliquam tincidunt metus ut aliquet vehicula. Aliquam vitae arcu sed lacus fermentum sagittis.
+### RF 03
+O sistema terá usuários diferentes para administradores e clientes
 
-## Requisitos Não-Funcionais
+### RF 04
+O usuário do cliente poderá apenas comprar 
 
-### RNF 01
+### RF 05
+O usuário do administrador poderá adicionar e excluir produtos
 
-Nulla facilisi. Etiam tempus dolor et odio tincidunt fermentum. Donec pharetra nulla eu euismod maximus. Maecenas eu mauris tincidunt, pulvinar tellus sed, blandit eros.
+### RF 06
+Os produtos terão descrições 
 
-### RNF 02
+### RF 07
+O sistema terá um sistema de pesquisa de produtos
 
-Nam id enim ut quam faucibus scelerisque at non diam. Morbi eget eleifend lectus, quis fringilla elit. Morbi iaculis, elit vel accumsan hendrerit, ipsum purus varius lacus, eget facilisis massa mauris ac ipsum.
+### RF 08
+O sistema deverá exigir cadastro para a compra
+
+### RF 09
+O sistema terá categorias separadas para CD e LP
+
+### RF 10
+O sistema terá uma aba para pesquisa por gênero musical
+
+### RF 11
+O sistema terá uma imagem de boas vindas
+
+### RF 12
+O sistema terá um sistema de compra
+
+### RF 13
+O sistema terá um rodapé com contato e suporte
+
+### RF 14
+O site deverá ter um sistema de carrinho com visualização de preço total
+
+# Documento de Requisitos Não Funcionais
+
+### RNF01
+O site deverá ser responsivo
+
+### RNF02
+Deverá ser multiplataforma via web
+
+### RNF03
+O frontend deverá ser feito com react 
+
+### RNF04
+O backend deverá ser feito com Nodejs
+
+### RNF05
+O sistema terá marrom como cor principal
