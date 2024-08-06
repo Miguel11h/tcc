@@ -1,11 +1,12 @@
-# Nome do Meu Projeto
+# Disco Now
 
 Projeto Final do Curso Técnico Integrado de Desenvolvimento de Sistemas - Colégio Pedro II - Campus Duque de Caxias
 
 **Integrantes:**
- - Fulano
- - Beltrano
- - Ciclano
+ - Migue
+ - Stela
+ - Andrey
+ - Júlia
 
  ## Descrição do Projeto
 
