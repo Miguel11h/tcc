@@ -1,8 +1,8 @@
 # Documento de Requisitos Funcionais
 
-- [RF 01](RF-01)
-- [RF 02](RF-02)
-- [RF 03](RF-03)
+- [RF 01](#RF-01)
+- [RF 02](###RF-02)
+- [RF 03](#RF-03)
 - [RF 04](RF-04)
 - [RF 05](RF-05)
 - [RF 06](RF-06)
