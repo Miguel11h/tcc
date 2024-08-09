@@ -22,11 +22,11 @@ O sistema permitirá pesquisa por palavra-chave.
 ### RF 02
 O sistema terá registro e login.
   - Haverá dois botões, um de registro e outro de login
-    Registro:
+    - Registro:
       - O registro irá solicitar um nome, email e senha
       - O sistema vai lançar os dados do registro no banco de dados
       - O Sistema retornará o usuário logado para a página principal
-    Login:
+    - Login:
       - O login irá solicitar um nome e senha
       - O sistema vai verificar se o nome e a senha existem e se conferem no banco de dados
       - O sistema retornará o usuário logado para a página principal
