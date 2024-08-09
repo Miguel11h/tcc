@@ -1,24 +1,47 @@
 # Documento de Requisitos Funcionais
 
 - [RF 01](#RF-01)
-- [RF 02](###RF-02)
+- [RF 02](#RF-02)
 - [RF 03](#RF-03)
 - [RF 04](RF-04)
 - [RF 05](RF-05)
 - [RF 06](RF-06)
 - [RF 07](RF-07)
+- [RF 08](RF-08)
+- [RF 09](RF-09)
+- [RF 10](RF-10)
+- [RF 11](RF-11)
+- [RF 12](RF-12)
 
 ### RF 01
 O sistema permitirá pesquisa por palavra-chave.
+  - Haverá uma barra de pesquisa na página principal
+  - O usuário poderá pesquisar por palavras chave como: "Djavan"
+  - O sistema irá relacionar a palavra chave no banco de dados
+  - O sistema retornará uma página com relação a palavra chave
 
 ### RF 02
 O sistema terá registro e login.
+  - Haverá dois botões, um de registro e outro de login
+    Registro:
+      - O registro irá solicitar um nome, email e senha
+      - O sistema vai lançar os dados do registro no banco de dados
+      - O Sistema retornará o usuário logado para a página principal
+    Login:
+      - O login irá solicitar um nome e senha
+      - O sistema vai verificar se o nome e a senha existem e se conferem no banco de dados
+      - O sistema retornará o usuário logado para a página principal
 
 ### RF 03
 O sistema terá usuários diferentes para administradores e clientes.
+  - Haverá dois tipos de usuários diferentes com permissões diferentes
+  - Os clientes terão apenas acesso ao site principal
+  - Os admnistradores terão acesso ao banco de dados do site
 
 ### RF 04 
 O sistema deverá ter uma função de carrinho com visualização de preço total.
+  - 
+
 
 ### RF 05
 Apenas o usuário administrador poderá adicionar, editar e excluir produtos.
