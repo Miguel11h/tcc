@@ -15,6 +15,7 @@
 ### RF 01
 O sistema terá uma barra de pesquisa de produtos.
   - Haverá uma barra de pesquisa na página principal
+  - O que for digitado irá ser buscado no banco de dados e o sistema retornará os resultados relacionados a pesquisa do usuário
 
 ### RF 02
 O sistema permitirá pesquisa por palavra-chave.
