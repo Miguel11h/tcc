@@ -12,7 +12,7 @@
 - [RF 10](#RF-10)
 - [RF 11](#RF-11)
 
-### RF 06
+### RF 01
 O sistema terá uma barra de pesquisa de produtos.
   - Haverá uma barra de pesquisa na página principal
 
