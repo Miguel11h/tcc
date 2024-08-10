@@ -19,7 +19,7 @@ O sistema terá uma barra de pesquisa de produtos.
 
 ### RF 02
 O sistema permitirá pesquisa por palavra-chave.
-  - O usuário poderá pesquisar por palavras chave como: "Djavan"
+  - O usuário poderá pesquisar por palavras-chave como: "Djavan"
   - O sistema irá relacionar a palavra chave no banco de dados
   - O sistema retornará uma página com relação a palavra chave
 
@@ -39,7 +39,7 @@ O sistema terá registro e login.
 O sistema terá usuários diferentes para administradores e clientes.
   - Haverá dois tipos de usuários diferentes com permissões diferentes
   - Os clientes terão apenas acesso ao site principal
-  - Os admnistradores terão acesso ao banco de dados do site
+  - Os administradores terão acesso ao banco de dados do site
 
 ### RF 05 
 O sistema deverá ter uma função de carrinho com visualização de preço total.
