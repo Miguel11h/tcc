@@ -7,11 +7,11 @@
 - [RF 05](#RF-05)
 - [RF 06](#RF-06)
 - [RF 07](#RF-07)
-- [RF 07](#RF-08)
-- [RF 07](#RF-09)
-- [RF 07](#RF-10)
-- [RF 07](#RF-11)
-- [RF 07](#RF-12)
+- [RF 08](#RF-08)
+- [RF 09](#RF-09)
+- [RF 10](#RF-10)
+- [RF 11](#RF-11)
+- [RF 12](#RF-12)
 
 ### RF 01
 O sistema permitirá pesquisa por palavra-chave.
