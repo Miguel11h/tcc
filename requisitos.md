@@ -7,70 +7,47 @@
 - [RF 05](#RF-05)
 - [RF 06](#RF-06)
 - [RF 07](#RF-07)
-- [RF 08](#RF-08)
-- [RF 09](#RF-09)
-- [RF 10](#RF-10)
-- [RF 11](#RF-11)
+- [RF 07](#RF-08)
+- [RF 07](#RF-09)
+- [RF 07](#RF-10)
+- [RF 07](#RF-11)
+- [RF 07](#RF-12)
 
 ### RF 01
-O sistema terá uma barra de pesquisa de produtos.
-  - Haverá uma barra de pesquisa na página principal
-  - O que for digitado irá ser buscado no banco de dados e o sistema retornará os resultados relacionados a pesquisa do usuário
+O sistema permitirá pesquisa por palavra-chave.
 
 ### RF 02
-O sistema permitirá pesquisa por palavra-chave.
-  - O usuário poderá pesquisar por palavras-chave como: "Djavan"
-  - O sistema irá relacionar a palavra chave no banco de dados
-  - O sistema retornará uma página com relação a palavra chave
+O sistema terá registro e login.
 
 ### RF 03
-O sistema terá registro e login.
-  - Haverá dois botões, um de registro e outro de login
-    - Registro:
-      - O registro irá solicitar um nome, email e senha
-      - O sistema vai lançar os dados do registro no banco de dados
-      - O Sistema retornará o usuário logado para a página principal
-    - Login:
-      - O login irá solicitar um nome e senha
-      - O sistema vai verificar se o nome e a senha existem e se conferem no banco de dados
-      - O sistema retornará o usuário logado para a página principal
-
-### RF 04
 O sistema terá usuários diferentes para administradores e clientes.
-  - Haverá dois tipos de usuários diferentes com permissões diferentes
-  - Os clientes terão apenas acesso ao site principal
-  - Os administradores terão acesso ao banco de dados do site
 
-### RF 05 
+### RF 04 
 O sistema deverá ter uma função de carrinho com visualização de preço total.
-  - Haverá um botão com o ícone de um carrinho na página principal que quando clicada redirecionará o usuário para a página "Carrinho"
-  - A página "Carrinho" irá mostrar todos os produtos que o usuário adicionar no carrinho e a soma do valor de todos os produtos
-  - Haverá um botão de compra que quando clicado irá redirecionar o usuário para a página de compra com o valor de todos os produtos
+
+### RF 05
+Apenas o usuário administrador poderá adicionar, editar e excluir produtos.
 
 ### RF 06
 Os produtos terão nome, descrição, preço e categoria.
-  - Ao usuário clicar no produto irá para a página do produto em específico
-  - A página irá apresentar o nome, descrição, preço e categoria do produto
-  - A página do produto terá um botão de compra e outro botão de "Adicionar ao carrinho"
 
 ### RF 07
+O sistema terá um sistema de pesquisa de produtos.
+
+### RF 08
 O sistema terá um sistema de compra.
-  - Assim que o usúario clicar em "Comprar" em qualquer produto, será redirecionado para a página de compra ou pagamento
-  - Será permitido o pagamento via cartão de crédito e pix
 
 ### RF 09
 O sistema deverá exigir cadastro para a compra.
-  - O usuário será redirecionado para a página de cadastro caso tente comprar algum produto sem estar logado
 
 ### RF 10
-O sistema terá categorias de produto, como CD e LP.
-  - Na barra lateral haverá a divisão de categorias de produtos do site
-  - Quando clicada em uma categoria, o usuário será redirecionada para uma página com todos os produtos que possuem o id de acordo com a categoria
+O sistema deverá ter uma função de carrinho com visualização de preço total.
 
 ### RF 11
+O sistema terá categorias de produto, como CD e LP.
+
+### RF 12
 O sistema terá uma aba para pesquisa por gênero musical.
-  - Na barra lateral haverá a divisão de gêneros musicais
-  - Quando clicada em um gênero, o usuário será redirecionada para uma página com todos os produtos que possuem o id de acordo com o gênero musical
 
 # Documento de Requisitos Não Funcionais
 
