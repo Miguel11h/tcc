@@ -4,7 +4,7 @@
 
  - [CDU 01](#CDU-01): Cadastro de Usuários.
  - [CDU 02](#CDU-02): Login do Usuário.
- - [CDU 03](#CDU-03): Duis nec orci quis velit faucibus hendrerit tempus vel libero.
+ - [CDU 03](#CDU-03): Carrinho
 
 
 ## Lista dos Atores
@@ -47,15 +47,16 @@
 4. Quisque ac nulla convallis, lobortis nibh ac, tristique enim.
 5. Nulla ultricies metus nec risus mollis, interdum ultrices justo malesuada.
 
-### CDU 03 - Terceiro bglh
+### CDU 03 - Carrinho de Compras
 
-Duis nec orci quis velit faucibus hendrerit tempus vel libero.
-
+## Atores
+- Usuário
+- Funcionários
 **Fluxo Principal**
 
-1. Praesent interdum lectus sit amet augue tincidunt imperdiet.
-2. Duis ac dolor vel nisi imperdiet vehicula et non sem.
-3. Nunc imperdiet tortor consequat, lobortis purus non, interdum risus.
+1. Qualquer produto terá como ser adicionado e retirado do carrinho.
+2. A soma dos produtos já será feita, mostrando o total.
+3. 
 
 **Fluxo Alternativo A**
 
