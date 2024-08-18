@@ -11,8 +11,13 @@
 
  - Clientes
  - Funcionários
+ - Sistema
 
 ### CDU 01 - Cadastro de usuários
+## Atores
+ - Clientes
+ - Funcionários
+ - Sistema
 
 **Fluxo Principal**
 
