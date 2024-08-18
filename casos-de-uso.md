@@ -30,9 +30,9 @@
 **Fluxo Principal**
 
 1. Usuário irá informar email e senha.
-2. Mauris varius massa ac fermentum scelerisque.
-3. Morbi in tortor dignissim, bibendum tellus et, varius odio.
-4. Mauris egestas leo a suscipit feugiat.
+2. Usuário irá confirmar os dados pressionando o botão 'Seguinte'                                         
+3. Banco de dados irá registrar as informações em uma tabela.
+4. Usuário
 
 **Fluxo Alternativo A**
 
