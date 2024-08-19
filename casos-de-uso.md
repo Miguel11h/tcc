@@ -50,7 +50,9 @@
 1. Cliente irá informar email e senha.
 2. Sistema verifica que informações não conferem na base de dados
 3. Sistema retorna um aviso dizendo que as credencias não conferem
-4. Cliente 
+4. Cliente digita um email e senha que conferem
+5. Sistema valida as credenciais e autentica o usuário.
+6. Cliente é redirecionado para a página principal logado.
 
 ### CDU 03 - Pesquisa de Produtos
 ## Atores
