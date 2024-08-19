@@ -28,15 +28,29 @@
 2. Sistema valida os dados e realiza o cadastro no banco de dados.
 3. Cliente é redirecionado para a página principal já logado.
 
+**Fluxo Alternativo - Senha incorreta**
+1. Cliente informa nome, email, senha e confirmação de senha.
+2. Sistema verifica que a senha e a confirmação da senha não conferem
+3. Sistema retorna um aviso dizendo que as senhas não conferem
+4. Cliente digita uma senha que confere com confirmar senha
+5. Sistema valida os dados e realiza o cadastro no banco de dados.
+6. Cliente é redirecionado para a página principal já logado.
+
 ### CDU 02 - Login
 ## Atores
  - Cliente
  - Sistema
 
 **Fluxo Principal**
-1. Usuário irá informar email e senha.
+1. Cliente irá informar email e senha.
 2. Sistema valida as credenciais e autentica o usuário.                                       
 3. Cliente é redirecionado para a página principal logado.
+
+**Fluxo Alternativo - Dados não conferem**
+1. Cliente irá informar email e senha.
+2. Sistema verifica que informações não conferem na base de dados
+3. Sistema retorna um aviso dizendo que as credencias não conferem
+4. Cliente 
 
 ### CDU 03 - Pesquisa de Produtos
 ## Atores
