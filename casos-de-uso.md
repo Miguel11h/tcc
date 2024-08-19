@@ -3,101 +3,97 @@
 ## Lista dos Casos de Uso
 
  - [CDU 01](#CDU-01): Cadastro de Usuários.
- - [CDU 02](#CDU-02): Login do Usuário.
- - [CDU 03](#CDU-03): Carrinho
+ - [CDU 02](#CDU-02): Login.
+ - [CDU 03](#CDU-03): Pesquisa de produtos.
+ - [CDU 04](#CDU-04): Visualização por categoria.
+ - [CDU 05](#CDU-05): Visualização por gênero musical.
+ - [CDU 06](#CDU-06): Adicionar produto ao carrinho.
+ - [CDU 07](#CDU-07): Finalizar compra.
+ - [CDU 08](#CDU-08): Gerenciar produtos
 
 
 ## Lista dos Atores
 
- - Clientes
- - Funcionários
+ - Cliente
+ - Administradores
  - Sistema
 
 ### CDU 01 - Cadastro de usuários
 ## Atores
- - Clientes
- - Funcionários
+ - Cliente
  - Sistema
 
 **Fluxo Principal**
-
-1. Usuário irá informar nome e sobrenome, email, senha e confirmação de senha.
-2. Usuário irá confirmar os dados pressionando o botão 'Registrar'.
-3. Banco de dados irá registrar as informações em uma tabela.
-4. Usuário será redirecionado para a página principal já logado.
-
-**Fluxo Alternativo A**
-
-1. . . .
+1. Cliente informa nome, email, senha e confirmação de senha.
+2. Sistema valida os dados e realiza o cadastro no banco de dados.
+3. Cliente é redirecionado para a página principal já logado.
 
 ### CDU 02 - Login
-
-**Fluxo Principal**
-
-1. Usuário irá informar email e senha.
-2. Usuário irá confirmar os dados pressionando o botão 'Seguinte'                                         
-3. Banco de dados irá registrar as informações em uma tabela.
-4. Usuário
-
-**Fluxo Alternativo A**
-
-1. Nulla elementum diam eu elementum rutrum.
-2. Aenean scelerisque est at nunc ornare, ac condimentum justo sollicitudin.
-3. Quisque eget risus ut est lacinia sollicitudin ac non diam.
-4. Quisque ac nulla convallis, lobortis nibh ac, tristique enim.
-5. Nulla ultricies metus nec risus mollis, interdum ultrices justo malesuada.
-
-### CDU 03 - Carrinho de Compras
-
 ## Atores
-- Usuário
-- Funcionários
-**Fluxo Principal**
-
-1. Qualquer produto terá como ser adicionado e retirado do carrinho.
-2. A soma dos produtos já será feita, mostrando o total.
-3. 
-
-**Fluxo Alternativo A**
-
-1. Aliquam efficitur arcu ac fermentum egestas.
-2. Pellentesque ac diam vitae erat bibendum hendrerit.
-3. Mauris sed purus sit amet lectus efficitur placerat et eu diam.
-4. Aenean ullamcorper tellus quis nibh porttitor congue.
-5. Phasellus laoreet erat eget condimentum dictum.
-
-### CDU 04' - Quarto bglh
-
-Duis nec orci quis velit faucibus hendrerit tempus vel libero.
+ - Cliente
+ - Sistema
 
 **Fluxo Principal**
+1. Usuário irá informar email e senha.
+2. Sistema valida as credenciais e autentica o usuário.                                       
+3. Cliente é redirecionado para a página principal logado.
 
-1. Praesent interdum lectus sit amet augue tincidunt imperdiet.
-2. Duis ac dolor vel nisi imperdiet vehicula et non sem.
-3. Nunc imperdiet tortor consequat, lobortis purus non, interdum risus.
+### CDU 03 - Pesquisa de Produtos
+## Atores
+- Cliente
+- Sistema
+  
+**Fluxo Principal**
+1. Cliente insere uma palavra-chave no campo de busca.
+2. Sistema exibe a lista de produtos relacionados à palavra-chave.
+3. Cliente visualiza os produtos.
 
-**Fluxo Alternativo A**
-
-1. Aliquam efficitur arcu ac fermentum egestas.
-2. Pellentesque ac diam vitae erat bibendum hendrerit.
-3. Mauris sed purus sit amet lectus efficitur placerat et eu diam.
-4. Aenean ullamcorper tellus quis nibh porttitor congue.
-5. Phasellus laoreet erat eget condimentum dictum.
-
-
-### CDU 05 - quinto bglh 
-Duis nec orci quis velit faucibus hendrerit tempus vel libero.
+### CDU 04 - Visualização por Categoria
+## Atores
+- Cliente
+- Sistema
 
 **Fluxo Principal**
+1. Cliente acessa a aba de categorias.
+2. Sistema exibe as categorias disponíveis, como CD e LP.
+3. Cliente seleciona uma categoria e visualiza os produtos correspondentes.
+  
+### CDU 05 - Visualização por Gênero Musical
+## Atores
+- Cliente
+- Sistema
 
-1. Praesent interdum lectus sit amet augue tincidunt imperdiet.
-2. Duis ac dolor vel nisi imperdiet vehicula et non sem.
-3. Nunc imperdiet tortor consequat, lobortis purus non, interdum risus.
+**Fluxo Principal**
+1. Cliente acessa a aba de gênero musical.
+2. Sistema exibe os gêneros disponíveis.
+3. Cliente seleciona um gênero e visualiza os produtos relacionados.
 
-**Fluxo Alternativo A**
+### CDU 06 - Adicionar Produto ao Carrinho
+## Atores
+- Cliente
+- Sistema
 
-1. Aliquam efficitur arcu ac fermentum egestas.
-2. Pellentesque ac diam vitae erat bibendum hendrerit.
-3. Mauris sed purus sit amet lectus efficitur placerat et eu diam.
-4. Aenean ullamcorper tellus quis nibh porttitor congue.
-5. Phasellus laoreet erat eget condimentum dictum.
+**Fluxo Principal**
+1. Cliente seleciona um produto e pressiona o botão "Adicionar ao Carrinho".
+2. Sistema adiciona o produto ao carrinho e atualiza o total da compra.
+3. Cliente visualiza o carrinho com o produto adicionado.
+
+### CDU 07 - Finalizar Compra
+## Atores
+- Cliente
+- Sistema
+
+**Fluxo Principal**
+1. Cliente acessa o carrinho e pressiona o botão "Finalizar Compra".
+2. Sistema solicita confirmação de login, endereço e método de pagamento.
+3. Sistema processa o pagamento e exibe a confirmação da compra.
+
+### CDU 08 - Gerenciar Produtos
+## Atores
+- Administradores
+- Sistema
+
+**Fluxo Principal**
+1. Administrador acessa a base de dados.
+2. Administrador pode adicionar, editar ou excluir produtos.
+3. Sistema atualiza a base de dados com as mudanças realizadas.
