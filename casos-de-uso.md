@@ -64,6 +64,12 @@
 2. Sistema exibe a lista de produtos relacionados à palavra-chave.
 3. Cliente visualiza os produtos.
 
+**Fluxo Alternativo - Nenhum Produto Encontrado**
+1. Cliente insere uma palavra-chave no campo de busca.
+2. Sistema não encontra produtos relacionados à palavra-chave.
+3. Sistema exibe uma mensagem informando que não foram encontrados produtos.
+4. Cliente pode tentar uma nova busca com uma palavra-chave diferente.
+
 ### CDU 04 - Visualização por Categoria
 ## Atores
 - Cliente
@@ -73,6 +79,14 @@
 1. Cliente acessa a aba de categorias.
 2. Sistema exibe as categorias disponíveis, como CD e LP.
 3. Cliente seleciona uma categoria e visualiza os produtos correspondentes.
+
+**Fluxo Alternativo - Nenhum Produto na Categoria**
+1. Cliente acessa a aba de categorias.
+2. Sistema exibe as categorias disponíveis, como CD e LP.
+3. Cliente seleciona uma categoria.
+4. Sistema não encontra produtos na categoria selecionada.
+5. Sistema exibe uma mensagem informando que não há produtos disponíveis nessa categoria.
+6. Cliente pode voltar e escolher outra categoria.
   
 ### CDU 05 - Visualização por Gênero Musical
 ## Atores
@@ -84,6 +98,14 @@
 2. Sistema exibe os gêneros disponíveis.
 3. Cliente seleciona um gênero e visualiza os produtos relacionados.
 
+**Fluxo Alternativo - Nenhum Produto no Gênero Musical**
+1. Cliente acessa a aba de gênero musical.
+2. Sistema exibe os gêneros disponíveis.
+3. Cliente seleciona um gênero musical.
+4. Sistema não encontra produtos no gênero musical selecionado.
+5. Sistema exibe uma mensagem informando que não há produtos disponíveis nesse gênero.
+6. Cliente pode voltar e escolher outro gênero musical.
+
 ### CDU 06 - Adicionar Produto ao Carrinho
 ## Atores
 - Cliente
@@ -93,6 +115,18 @@
 1. Cliente seleciona um produto e pressiona o botão "Adicionar ao Carrinho".
 2. Sistema adiciona o produto ao carrinho e atualiza o total da compra.
 3. Cliente visualiza o carrinho com o produto adicionado.
+
+**Fluxo Alternativo - Produto Esgotado**
+1. Cliente seleciona um produto e pressiona o botão "Adicionar ao Carrinho".
+2. Sistema verifica que o produto está esgotado.
+3. Sistema exibe uma mensagem informando que o produto está indisponível.
+4. Cliente pode procurar um produto alternativo.
+
+**Fluxo Alternativo - Limite de Produto no Carrinho Atingido**
+1. Cliente seleciona um produto e pressiona o botão "Adicionar ao Carrinho".
+2. Sistema verifica que o cliente já atingiu o limite de unidades permitido para aquele produto no carrinho.
+3. Sistema exibe uma mensagem informando que o limite de unidades foi atingido.
+4. Cliente pode ajustar a quantidade no carrinho ou não adicionar mais unidades.
 
 ### CDU 07 - Finalizar Compra
 ## Atores
@@ -104,6 +138,26 @@
 2. Sistema solicita confirmação de login, endereço e método de pagamento.
 3. Sistema processa o pagamento e exibe a confirmação da compra.
 
+**Fluxo Alternativo - Cliente Não Logado**
+1. Cliente acessa o carrinho e pressiona o botão "Finalizar Compra".
+2. Sistema detecta que o cliente não está logado.
+3. Sistema solicita o login.
+4. Cliente informa as credenciais e realiza o login.
+5. Sistema redireciona o cliente de volta ao carrinho para finalizar a compra.
+
+**Fluxo Alternativo - Pagamento Não Autorizado**
+1. Cliente acessa o carrinho e pressiona o botão "Finalizar Compra".
+2. Sistema solicita confirmação de login, endereço e método de pagamento.
+3. Sistema processa o pagamento, mas ele não é autorizado.
+4. Sistema exibe uma mensagem informando que o pagamento foi recusado.
+5. Cliente pode tentar um novo pagamento com outra forma de pagamento ou corrigir as informações.
+
+**Fluxo Alternativo - Produto Indisponível Durante Finalização**
+1. Cliente acessa o carrinho e pressiona o botão "Finalizar Compra".
+2. Sistema detecta que um dos produtos no carrinho ficou indisponível.
+3. Sistema exibe uma mensagem informando que o produto está esgotado.
+4. Cliente pode remover o produto indisponível e continuar a compra ou cancelar a operação.
+
 ### CDU 08 - Gerenciar Produtos
 ## Atores
 - Administradores
@@ -113,3 +167,10 @@
 1. Administrador acessa a base de dados.
 2. Administrador pode adicionar, editar ou excluir produtos.
 3. Sistema atualiza a base de dados com as mudanças realizadas.
+
+**Fluxo Alternativo - Produto Não Encontrado para Edição/Exclusão**
+1. Administrador acessa a base de dados.
+2. Administrador tenta editar ou excluir um produto.
+3. Sistema não encontra o produto informado para edição ou exclusão.
+4. Sistema exibe uma mensagem informando que o produto não foi encontrado.
+5. Administrador pode realizar uma nova tentativa com um produto válido.
