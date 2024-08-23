@@ -13,11 +13,11 @@
  - [CDU 11](#CDU-11): Gerenciar categorias
  - [CDU 12](#CDU-12) Gerenciar gênero musical 
 
-## Lista dos Atores
+## Lista dos Atores 
  - Cliente
  - Administradores
 
-### CDU 01 - Cadastro de usuários 
+### CDU 01 - Cadastro de usuários (#CDU-1) 
 ## Atores
  - Cliente
 
