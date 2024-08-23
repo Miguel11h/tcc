@@ -249,7 +249,7 @@
 4. Sistema informa que o usuário não foi encontrado
 5. Administrador pode tentar novamente com um usuário válido
 
-### CDU 11 - Gerenciar categorias 
+### CDU-11 - Gerenciar categorias 
 ## Atores
 - Administradores
  
