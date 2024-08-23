@@ -17,7 +17,8 @@
  - Cliente
  - Administradores
 
-### CDU-01 - Cadastro de usuários
+### CDU-01 
+### Cadastro de usuários
 ## Atores
  - Cliente
 
@@ -64,7 +65,8 @@
 6. Sistema retorna que o login foi realizado com sucesso  
 7. Cliente é redirecionado para a página principal logado
 
-### CDU 03 - Logout 
+### CDU 03
+### Logout
 ## Atores
  - Cliente
  - Administrador
