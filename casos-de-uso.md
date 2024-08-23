@@ -1,14 +1,14 @@
 ## Lista dos Casos de Uso
 
- - [CDU 01](#CDU-1): Cadastro de Usuários 
- - [CDU 02](#CDU-2): Login
- - [CDU 03](#CDU-3): Logout 
- - [CDU 04](#CDU-4): Pesquisa de produtos 
- - [CDU 05](#CDU-5): Visualização por categoria
- - [CDU 06](#CDU-6): Visualização por gênero musical 
- - [CDU 07](#CDU-7): Adicionar produto ao carrinho
- - [CDU 08](#CDU-8): Finalizar compra
- - [CDU 09](#CDU-9): Gerenciar produtos
+ - [CDU 01](#CDU-01): Cadastro de Usuários 
+ - [CDU 02](#CDU-02): Login
+ - [CDU 03](#CDU-03): Logout 
+ - [CDU 04](#CDU-04): Pesquisa de produtos 
+ - [CDU 05](#CDU-05): Visualização por categoria
+ - [CDU 06](#CDU-06): Visualização por gênero musical 
+ - [CDU 07](#CDU-07): Adicionar produto ao carrinho
+ - [CDU 08](#CDU-08): Finalizar compra
+ - [CDU 09](#CDU-09): Gerenciar produtos
  - [CDU 10](#CDU-10): Gerenciar usuários 
  - [CDU 11](#CDU-11): Gerenciar categorias
  - [CDU 12](#CDU-12) Gerenciar gênero musical 
@@ -17,7 +17,7 @@
  - Cliente
  - Administradores
 
-### CDU 01 - Cadastro de usuários (#CDU-1) 
+### CDU 01 - Cadastro de usuários
 ## Atores
  - Cliente
 
