@@ -94,7 +94,8 @@
 3. Sistema informa que não foram encontrados produtos relacionados
 4. Cliente pode tentar uma nova busca com uma palavra-chave diferente
 
-### CDU 05 - Visualização por Categoria
+### CDU 05
+### Visualização por Categoria
 ## Atores
 - Cliente
 
