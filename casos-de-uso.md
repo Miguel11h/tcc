@@ -284,7 +284,7 @@
 4. Sistema informa que a categoria não foi encontrada
 5. Administrador pode tentar novamente com uma categoria válida
 
-### CDU-12 - Gerenciar Gênero Musical
+### CDU-12
 ## Atores
 - Administradores
  
