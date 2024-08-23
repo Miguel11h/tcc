@@ -46,7 +46,8 @@
 6. Sistema retorna que o cadastro foi realizado com sucesso
 7. Cliente é redirecionado para a página principal já logado
 
-### CDU 02 - Login 
+### CDU 02
+### Login
 ## Atores
  - Cliente
 
@@ -77,7 +78,8 @@
 3. Sistema retorna que o logout foi realizado com sucesso
 4. Usuário é redirecionado para a página principal deslogado
 
-### CDU 04 - Pesquisa de Produtos 
+### CDU 04
+### Pesquisa de Produtos
 ## Atores
 - Cliente
  
@@ -110,7 +112,8 @@
 5. Sistema informa que não há produtos disponíveis nessa categoria
 6. Cliente pode voltar e escolher outra categoria
  
-### CDU 06 - Visualização por Gênero Musical
+### CDU 06
+### Visualização por Gênero Musical
 ## Atores
 - Cliente
 
@@ -128,7 +131,8 @@
 5. Sistema informa que não há produtos disponíveis nesse gênero
 6. Cliente pode voltar e escolher outro gênero musical
 
-### CDU 07 - Adicionar Produto ao Carrinho 
+### CDU 07
+### Adicionar Produto ao Carrinho
 ## Atores
 - Cliente
 
