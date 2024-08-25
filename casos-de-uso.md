@@ -187,7 +187,8 @@
 3. Sistema exibe uma mensagem informando que o produto está esgotado
 4. Cliente pode remover o produto indisponível e continuar a compra ou cancelar a operação
 
-### CDU 09 - Gerenciar Produtos
+### CDU 09
+### Gerenciar Produtos
 ## Atores
 - Administradores
  
@@ -222,7 +223,8 @@
 4. Sistema informa que o produto não foi encontrado
 5. Administrador pode tentar novamente com um produto válido
 
-### CDU 10 - Gerenciar Usuários
+### CDU 10
+### Gerenciar Usuários
 ## Atores
 - Administradores
  
