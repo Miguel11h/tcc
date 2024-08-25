@@ -154,7 +154,8 @@
 3. Sistema informa que o limite de unidades foi atingido
 4. Cliente pode ajustar a quantidade no carrinho ou não adicionar mais unidades
 
-### CDU 08 - Finalizar Compra
+### CDU 08
+### Finalizar Compra
 ## Atores
 - Cliente
 
@@ -256,7 +257,8 @@
 4. Sistema informa que o usuário não foi encontrado
 5. Administrador pode tentar novamente com um usuário válido
 
-### CDU-11 - Gerenciar categorias 
+### CDU-11
+### Gerenciar categorias 
 ## Atores
 - Administradores
  
@@ -292,6 +294,7 @@
 5. Administrador pode tentar novamente com uma categoria válida
 
 ### CDU-12
+### Gerenciar gênero musical
 ## Atores
 - Administradores
  
