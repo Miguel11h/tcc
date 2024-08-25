@@ -17,6 +17,9 @@
  - Cliente
  - Administradores
 
+### Diagrama de Casos de Uso
+![Diagrama de Casos de Uso](diagramacasosuso2.png)
+
 ### CDU-01 
 ### Cadastro de usuários
 ## Atores
