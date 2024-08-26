@@ -15,6 +15,7 @@
 
 ## Lista dos Atores 
  - Cliente
+ - Funcionário
  - Administradores
 
 ### Diagrama de Casos de Uso
