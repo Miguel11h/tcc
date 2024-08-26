@@ -19,7 +19,7 @@
  - Administradores
 
 ### Diagrama de Casos de Uso
-![Diagrama de Casos de Uso](diagramacasosuso2.png)
+![Diagrama de Casos de Uso](arquivosinuteis/diagramacdu.png)
 
 ### CDU-01 
 ### Cadastro de usuários
