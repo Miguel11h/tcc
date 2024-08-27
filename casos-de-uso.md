@@ -21,7 +21,7 @@
 ### Diagrama de Casos de Uso
 ![Diagrama de Casos de Uso](arquivosinuteis/diagramacdu.png)
 
-### CDU-01 
+### CDU 01 
 ### Cadastro de usuários
 ## Atores
  - Cliente
