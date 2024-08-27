@@ -161,12 +161,6 @@
 3. Sistema informa que o produto está indisponível
 4. Cliente pode procurar um produto alternativo
 
-**Fluxo Alternativo B - Limite de Produto no Carrinho Atingido**
-1. Cliente seleciona um produto e pressiona o botão "Adicionar ao Carrinho"
-2. Sistema verifica que o cliente já atingiu o limite de unidades permitido para aquele produto no carrinho
-3. Sistema informa que o limite de unidades foi atingido
-4. Cliente pode ajustar a quantidade no carrinho ou não adicionar mais unidades
-
 ### CDU 08
 ### Finalizar Compra
 ## Atores
@@ -174,9 +168,10 @@
 
 **Fluxo Principal**
 1. Cliente acessa o carrinho e pressiona o botão "Finalizar Compra"
-2. Sistema solicita confirmação de login e endereço
-3. Sistema solicita informe do método de pagamento
-3. Sistema processa o pagamento e exibe a confirmação da compra
+2. Sistema solicita informações do endereço
+3. Sistema solicita confirmação de login e endereço
+4. Sistema solicita informe do método de pagamento
+5. Sistema processa o pagamento e exibe a confirmação da compra
 
 **Fluxo Alternativo A - Cliente Não Logado**
 1. Cliente acessa o carrinho e pressiona o botão "Finalizar Compra"
@@ -185,16 +180,25 @@
 4. Cliente informa as credenciais e realiza o login
 5. Sistema redireciona o cliente de volta ao carrinho para finalizar a compra
 
-**Fluxo Alternativo B - Pagamento Não Autorizado**
+**Fluxo Alternativo B - Endereço Inválido**
 1. Cliente acessa o carrinho e pressiona o botão "Finalizar Compra"
-2. Sistema solicita confirmação de login e endereço
-3. Sistema solicita informe do método de pagamento
-4. Sistema processa o pagamento, mas ele não é autorizado
-5. Sistema exibe uma mensagem informando que o pagamento foi recusado
-6. Cliente pode tentar mudar a forma de pagamento ou corrigir as informações
-7. Sistema processa o pagamento e exibe a confirmação da compra
+2. Sistema solicita informações do endereço
+3. Sistema detecta que o endereço é inválido
+4. Sistema informa que o endereçõ é inválido
+5. Cliente informa o endereço válido
+6. Sistema redireciona o cliente de volta ao carrinho para finalizar a compra
 
-**Fluxo Alternativo C - Produto Indisponível Durante Finalização**
+**Fluxo Alternativo C - Pagamento Não Autorizado**
+1. Cliente acessa o carrinho e pressiona o botão "Finalizar Compra"
+2. Sistema solicita informações do endereço
+3. Sistema solicita confirmação de login e endereço
+4. Sistema solicita informe do método de pagamento
+5. Sistema processa o pagamento, mas ele não é autorizado
+6. Sistema exibe uma mensagem informando que o pagamento foi recusado
+7. Cliente pode tentar mudar a forma de pagamento ou corrigir as informações
+8. Sistema processa o pagamento e exibe a confirmação da compra
+
+**Fluxo Alternativo D - Produto Indisponível Durante Finalização**
 1. Cliente acessa o carrinho e pressiona o botão "Finalizar Compra"
 2. Sistema detecta que um dos produtos no carrinho ficou indisponível
 3. Sistema exibe uma mensagem informando que o produto está esgotado
