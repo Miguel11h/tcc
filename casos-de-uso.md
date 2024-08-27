@@ -11,7 +11,7 @@
  - [CDU 09](#CDU-09): Gerenciar produtos
  - [CDU 10](#CDU-10): Gerenciar usuários 
  - [CDU 11](#CDU-11): Gerenciar categorias
- - [CDU 12](#CDU-12) Gerenciar gênero musical 
+ - [CDU 12](#CDU-12): Gerenciar gênero musical 
 
 ## Lista dos Atores 
  - Cliente
