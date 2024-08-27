@@ -32,7 +32,7 @@
 3. Sistema retorna que o cadastro foi realizado com sucesso
 4. Cliente é redirecionado para a página principal já logado
 
-**Diagrama de Sequência**
+## Diagrama de Sequência
 ![Diagrama de Sequencia Cadastro](arquivosinuteis/diagramasequencia1.drawio.png)
 
 **Fluxo Alternativo A - Senha incorreta**
@@ -64,7 +64,7 @@
 3. Sistema retorna que o login foi realizado com sucesso                           
 4. Cliente é redirecionado para a página principal logado
 
-**Diagrama de Sequência**
+## Diagrama de Sequência
 ![Diagrama de Sequencia Login](arquivosinuteis/diagramasequencia2.drawio.png)
 
 **Fluxo Alternativo - Dados não conferem**
@@ -88,7 +88,7 @@
 3. Sistema retorna que o logout foi realizado com sucesso
 4. Usuário é redirecionado para a página principal deslogado
 
-**Diagrama de Sequência**
+## Diagrama de Sequência
 ![Diagrama de Sequencia Logout](arquivosinuteis/diagramasequencia3.drawio.png)
 
 ### CDU 04
@@ -117,6 +117,9 @@
 2. Sistema exibe as categorias disponíveis, como CD e LP
 3. Cliente seleciona uma categoria
 4. Cliente é redirecionado para a página dos produtos correspondentes
+
+## Diagrama de Sequência
+
 
 **Fluxo Alternativo - Nenhum Produto na Categoria**
 1. Cliente acessa a aba de categorias
