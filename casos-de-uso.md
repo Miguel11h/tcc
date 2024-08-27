@@ -32,6 +32,9 @@
 3. Sistema retorna que o cadastro foi realizado com sucesso
 4. Cliente é redirecionado para a página principal já logado
 
+**Diagrama de Sequência**
+![Diagrama de Sequencia Cadastro](arquivosinuteis/diagramasequencia1.drawio.png)
+
 **Fluxo Alternativo A - Senha incorreta**
 1. Cliente informa nome, email, senha e confirmação de senha
 2. Sistema verifica que a senha e a confirmação da senha não conferem
@@ -61,6 +64,9 @@
 3. Sistema retorna que o login foi realizado com sucesso                           
 4. Cliente é redirecionado para a página principal logado
 
+**Diagrama de Sequência**
+![Diagrama de Sequencia Login](arquivosinuteis/diagramasequencia2.drawio.png)
+
 **Fluxo Alternativo - Dados não conferem**
 1. Cliente irá informar email e senha
 2. Sistema verifica que informações não conferem na base de dados
@@ -81,6 +87,9 @@
 2. Usuário é deslogado da conta
 3. Sistema retorna que o logout foi realizado com sucesso
 4. Usuário é redirecionado para a página principal deslogado
+
+**Diagrama de Sequência**
+![Diagrama de Sequencia Logout](arquivosinuteis/diagramasequencia3.drawio.png)
 
 ### CDU 04
 ### Pesquisa de Produtos
