@@ -101,6 +101,9 @@
 2. Sistema exibe a lista de produtos relacionados à palavra-chave
 3. Cliente visualiza os produtos
 
+## Diagrama de Sequência
+![Diagrama de Sequencia Pesquisa de Produtos](arquivosinuteis/diagramasequenciapesquisa.drawio.png)
+
 **Fluxo Alternativo - Nenhum Produto Encontrado**
 1. Cliente insere uma palavra-chave no campo de busca
 2. Sistema não encontra produtos relacionados à palavra-chave
@@ -119,7 +122,7 @@
 4. Cliente é redirecionado para a página dos produtos correspondentes
 
 ## Diagrama de Sequência
-
+![Diagrama de Sequencia Visualização por Categoria](arquivosinuteis/diagramasequenciavisucategoria1.drawio.png)
 
 **Fluxo Alternativo - Nenhum Produto na Categoria**
 1. Cliente acessa a aba de categorias
@@ -140,6 +143,9 @@
 3. Cliente seleciona um gênero
 4. Cliente é redirecionado para a página dos produtos correspondentes
 
+## Diagrama de Sequência
+![Diagrama de Sequencia Visualização por Gênero Musical](arquivosinuteis/diagramasequenciavisugenero1.png)
+
 **Fluxo Alternativo - Nenhum Produto no Gênero Musical**
 1. Cliente acessa a aba de gênero musical
 2. Sistema exibe os gêneros disponíveis
@@ -158,6 +164,9 @@
 2. Sistema adiciona o produto ao carrinho e atualiza o total da compra
 3. Cliente visualiza o carrinho com o produto adicionado
 
+## Diagrama de Sequência
+![Diagrama de Sequencia Adicionar Produto ao Carrinho](arquivosinuteis/diagramasequenciaadicionarcarrinho.png)
+
 **Fluxo Alternativo A - Produto Esgotado**
 1. Cliente seleciona um produto e pressiona o botão "Adicionar ao Carrinho"
 2. Sistema verifica que o produto está esgotado
@@ -175,6 +184,9 @@
 3. Sistema solicita confirmação de login e endereço
 4. Sistema solicita informe do método de pagamento
 5. Sistema processa o pagamento e exibe a confirmação da compra
+
+## Diagrama de Sequência
+![Diagrama de Sequencia Finalizar Compra](arquivosinuteis/diagramasequenciafinalizarcompra.png)
 
 **Fluxo Alternativo A - Cliente Não Logado**
 1. Cliente acessa o carrinho e pressiona o botão "Finalizar Compra"
@@ -220,6 +232,9 @@
 5. Sistema atualiza a base de dados com as mudanças realizadas
 6. Sistema informa que o produto foi incluído no banco de dados
 
+## Diagrama de Sequência
+![Diagrama de Sequencia Gerenciar Produtos](arquivosinuteis/diagramasequenciagerenciarprodutos.png)
+
 **Fluxo Alternativo A - Editar produto**
 1. Administrador acessa a base de dados
 2. Administrador seleciona opção de editar produto
@@ -255,6 +270,9 @@
 4. Administrador confirma o envio dos dados
 5. Sistema atualiza a base de dados com as mudanças realizadas
 6. Sistema informa que o usuário foi incluído no banco de dados
+
+## Diagrama de Sequência
+![Diagrama de Sequencia Gerenciar Usuários](arquivosinuteis/diagramasequenciagerenciarusuários.png)
 
 **Fluxo Alternativo A - Editar usuário**
 1. Administrador acessa a base de dados
@@ -292,6 +310,9 @@
 5. Sistema atualiza a base de dados com as mudanças realizadas
 6. Sistema informa que a categoria foi incluída no banco de dados
 
+## Diagrama de Sequência
+![Diagrama de Sequencia Gerenciar Categorias](arquivosinuteis/diagramasequenciagerenciarcategorias.png)
+
 **Fluxo Alternativo A - Editar categoria**
 1. Administrador acessa a base de dados
 2. Administrador seleciona opção de editar categoria
@@ -327,6 +348,9 @@
 4. Administrador confirma o envio dos dados
 5. Sistema atualiza a base de dados com as mudanças realizadas
 6. Sistema informa que o gênero musical foi incluído no banco de dados
+
+## Diagrama de Sequência
+![Diagrama de Sequencia Gerenciar Gênero](arquivosinuteis/diagramasequenciagerenciargenero.png)
 
 **Fluxo Alternativo A - Editar gênero musical**
 1. Administrador acessa a base de dados
