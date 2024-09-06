@@ -2,6 +2,7 @@ const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const app = express();
 const path = require('path');
+const bcrypt = require('bcryptjs');
 
 const PORT = 8080;
 
@@ -27,8 +28,6 @@ app.post('/send-information', (req, res) => {
             message:'As senhas digitadas não são iguais'
         })
     }
-    
-
     else{
         // aqui vai o código para inserir os registros no banco de dados
         const db = new sqlite3.Database('./db/banco.db', (err) => {
@@ -37,28 +36,46 @@ app.post('/send-information', (req, res) => {
             }
                 console.log("Conectou com o banco de dados!");
         });
-
-        db.run('INSERT INTO usuario(nome, email, senha) VALUES (?, ?, ?)',
-        [nome, email, senha], (err) => {
-            if(err){
-                console.error(err.message);
+        db.get('SELECT email FROM usuario WHERE email = ?', [email], async (error, result) => {
+            if(error){
+                console.log(error)
             }
-        });
-        
-        db.close((err) => {
-            if(err){
-                return console.error(err.message);
+            else if(result) {
+                db.close((err) => {
+                    if (err) {
+                    return console.error(err.message);
+                    }
+                    console.log('Fechou a conexão com o banco de dados.');
+                });
+                return res.status(200).json({
+                    status: 'failed',
+                    message: 'Este e-mail já está em uso!',
+                });
+            } else{
+                let senha_criptografada = await bcrypt.hash(senha, 8)
+                db.run('INSERT INTO usuario(nome, email, senha) VALUES (?, ?, ?)', [nome, email, senha_criptografada], (error2) => {
+                    if(error2) {
+                        console.log(error2)
+                    } else {
+                        db.close((err) => {
+                            if (err) {
+                            return console.error(err.message);
+                            }
+                            console.log('Fechou a conexão com o banco de dados.');
+                        });
+                        return res.status(200).json({
+                            status: 'success',
+                            message: 'Registro feito com sucesso!',
+                            campos: req.body
+                        });
+    }
+});
             }
-                console.log("Fechou a conexão com o banco de dados!");
-        });
-        res.status(200).json({
-            status: 'success',
-            message: 'Registro feito com sucesso!',
-            campos: req.body
-        });
+});
     }
     
     res.send(req.body);
+
 });
 
 app.listen(PORT, () => {
