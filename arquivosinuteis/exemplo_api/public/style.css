@@ -1,3 +1,146 @@
 .custom-navbar {
-    background-color: #804d00; /* Substitua pela cor desejada */
+    background-color: #543c08;
+}
+
+body {
+    background-color: #f8f9fa;
+}
+
+.card {
+    border-radius: 10px;
+    background-color: white;
+    border: 2px solid #543c08;
+}
+
+h2 {
+    color: #543c08;
+    font-weight: bold;
+}
+
+.form-label {
+    color: #543c08;
+    font-weight: bold;
+}
+
+.form-control {
+    border: 1px solid #543c08;
+    border-radius: 5px;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 5px rgba(84, 60, 8, 0.5);
+    border-color: #543c08;
+}
+
+.btn-primary {
+    background-color: #543c08;
+    border-color: #543c08;
+}
+
+.btn-primary:hover {
+    background-color: #6e5411;
+    border-color: #6e5411;
+}
+
+#message {
+    color: #543c08;
+}
+
+@media (max-width: 576px) {
+    .card {
+        padding: 1rem;
+    }
+}
+
+.navbar {
+    background-color: #543c08;
+    padding: 15px;
+}
+.navbar-brand img {
+    width: 100px;
+    height: auto;
+}
+
+
+.custom-nav-link {
+    color: white !important;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.custom-nav-link:hover {
+    color: #543c08 !important;
+    background-color: white;
+    border-radius: 5px;
+    border: 2px solid white;
+}
+
+.custom-nav-link:active {
+    background-color: #6e5411;
+    border-color: #6e5411;
+}
+
+.navbar-toggler {
+    border-color: white;
+}
+
+.navbar-toggler-icon {
+    background-color: white;
+}
+
+@media (max-width: 576px) {
+    .custom-nav-link {
+        font-size: 1rem;
+        padding: 8px 15px;
+    }
+}
+
+.footer {
+    background-color: #543c08;
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.footer .text-muted {
+    color: white !important;
+}
+
+.container-fluid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.image-container {
+    flex: 1;
+    padding: 20px;
+}
+
+.image-container img {
+    max-width: 100%;
+    height: auto;
+}
+
+.register-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width: 992px) {
+    .image-container {
+        display: none;
+    }
+    .register-container {
+        flex: 1;
+        width: 100%;
+    }
 }
