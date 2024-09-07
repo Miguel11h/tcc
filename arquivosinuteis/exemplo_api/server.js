@@ -25,7 +25,6 @@ app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
-// Rota para receber as informações do registro
 app.post('/send-information', (req, res) => {
     const { nome, email, senha, conf_senha } = req.body;
 
@@ -85,7 +84,6 @@ app.post('/send-information', (req, res) => {
     }
 });
 
-// Rota para login
 app.post('/login', (req, res) => {
     const { email, senha } = req.body;
 

@@ -37,6 +37,7 @@ form.addEventListener('submit', async (e) => {
             if (!isLoginPage) {
                 nome.value = '';
                 conf_senha.value = '';
+                window.location.href = '/login.html';
             }
         }
 
