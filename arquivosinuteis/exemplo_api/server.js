@@ -10,7 +10,7 @@ app.use(express.static('public'));
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'registro.html'))
+    res.sendFile(path.join(__dirname, 'public', 'login.html'))
 });
 
 app.post('/send-information', (req, res) => {
@@ -29,7 +29,6 @@ app.post('/send-information', (req, res) => {
         })
     }
     else{
-        // aqui vai o código para inserir os registros no banco de dados
         const db = new sqlite3.Database('./db/banco.db', (err) => {
             if(err){
                 return console.error(err.message);
