@@ -73,9 +73,6 @@ app.post('/send-information', (req, res) => {
             }
 });
     }
-    
-    res.send(req.body);
-
 });
 
 app.listen(PORT, () => {
