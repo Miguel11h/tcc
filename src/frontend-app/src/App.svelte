@@ -48,7 +48,7 @@
           },
         },
       );
-      resultado = res.data;
+      redosulta = res.data;
       error = null; // Limpa o erro se a requisição for bem-sucedida
       // recarrega lista de usuários apresentada
       carregarUsuarios();
@@ -81,6 +81,7 @@
   };
 
   carregarUsuarios();
+  
 </script>
 
 <main>
@@ -167,7 +168,7 @@
           {#if resultado && resultado.message}
             <p style="color: green;">{resultado.message}</p>
           {/if}
-          <button type="button" href='login.html'>login</button>
+          <a type="button" class="btn" href='login.html'>login</a>
         </div>
       </form>
       </div>
@@ -182,7 +183,7 @@
               <th>{nome_coluna}</th>
             {/each}
             <th></th>
-          </tr><tr />
+          </tr><tr/>
         </thead>
         <tbody>
           {#each Object.values(usuarios) as linha_usuario}

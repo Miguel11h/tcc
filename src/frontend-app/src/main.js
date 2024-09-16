@@ -1,4 +1,3 @@
-import './app.css'
 import App from './App.svelte'
 import Login from './Login.svelte'
 const app = new App({
