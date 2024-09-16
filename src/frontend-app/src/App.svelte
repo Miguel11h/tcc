@@ -26,7 +26,6 @@
       colunas_usuarios = Object.keys(usuarios[0]);
       error = null; // Limpa o erro se a requisição for bem-sucedida
     } catch (err) {
-      error = "Erro ao buscar dados: " + err.response?.data?.message || err.message;;
       console.error(err);
       usuarios = null; // Limpa o resultado em caso de erro
     }
@@ -48,7 +47,7 @@
           },
         },
       );
-      redosulta = res.data;
+      resultado = res.data;
       error = null; // Limpa o erro se a requisição for bem-sucedida
       // recarrega lista de usuários apresentada
       carregarUsuarios();
@@ -174,7 +173,6 @@
       </div>
       </div>
       </div>
-    
     {#if usuarios}
       <table>
         <thead>
