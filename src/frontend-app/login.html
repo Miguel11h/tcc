@@ -7,6 +7,15 @@
   </head>
   <body>
     <div id="login"></div>
-    <script type="module" src="/src/main.js"></script>
+    <script type="module">
+      import './src/app.css'
+      import Login from './src/Login.svelte'
+
+      const login = new Login({
+        target: document.getElementById('login'),
+      });
+
+      export default Login
+    </script>
   </body>
 </html>
