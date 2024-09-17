@@ -1,40 +1,40 @@
 .custom-navbar {
-    background-color: #543c08;
+    background-color: #7d4a2c;
 }
 
 body {
-    background-color: #f8f9fa;
+    background-color: #f3e6d8;
 }
 
 .card {
     border-radius: 10px;
     background-color: white;
-    border: 2px solid #543c08;
+    border: 2px solid #7d4a2c;
 }
 
 h2 {
-    color: #543c08;
+    color: #7d4a2c;
     font-weight: bold;
 }
 
 .form-label {
-    color: #543c08;
+    color: #7d4a2c;
     font-weight: bold;
 }
 
 .form-control {
-    border: 1px solid #543c08;
+    border: 1px solid #7d4a2c;
     border-radius: 5px;
 }
 
 .form-control:focus {
     box-shadow: 0 0 5px rgba(84, 60, 8, 0.5);
-    border-color: #543c08;
+    border-color: #7d4a2c;
 }
 
 .btn-primary {
-    background-color: #543c08;
-    border-color: #543c08;
+    background-color: #7d4a2c;
+    border-color: #7d4a2c;
 }
 
 .btn-primary:hover {
@@ -43,7 +43,7 @@ h2 {
 }
 
 #message {
-    color: #543c08;
+    color: #7d4a2c;
 }
 
 @media (max-width: 576px) {
@@ -53,14 +53,13 @@ h2 {
 }
 
 .navbar {
-    background-color: #543c08;
+    background-color: #7d4a2c;
     padding: 15px;
 }
 .navbar-brand img {
     width: 100px;
     height: auto;
 }
-
 
 .custom-nav-link {
     color: white !important;
@@ -72,7 +71,7 @@ h2 {
 }
 
 .custom-nav-link:hover {
-    color: #543c08 !important;
+    color: #7d4a2c !important;
     background-color: white;
     border-radius: 5px;
     border: 2px solid white;
@@ -99,7 +98,7 @@ h2 {
 }
 
 .footer {
-    background-color: #543c08;
+    background-color: #7d4a2c;
     color: white;
     position: relative;
     bottom: 0;

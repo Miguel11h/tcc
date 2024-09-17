@@ -115,7 +115,7 @@
     </div>
     <div class="register-container animated">
         <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%;">
-            <h2 class="text-center mb-4">Registre-se</h2>
+            <h2 class="text-center mb-4"><b>Registre-se</b></h2>
       <form on:submit|preventDefault={cadastrarUsuario} class="form_exemplo">
         <div class="mb-3">
           <label for="nome" class="form-label">Nome de Usuário</label>
@@ -160,7 +160,7 @@
           />
         </div>
         <div>
-          <button type="submit">Cadastrar</button>
+          <button type="submit" class="btn-primary w-100 rounded">Cadastrar</button>
           {#if error}
             <p style="color: red;">{error}</p>
           {/if}
