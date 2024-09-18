@@ -57,6 +57,70 @@ app.get('/usuarios', (req, res) => {
   });
 });
 
+app.post('/usuarios/login', (req, res) => {
+  const { email, senha } = req.body;
+  if (!email || !senha) {
+    return res.status(400).json({
+      status: 'failed',
+      message: 'Por favor, preencha todos os campos!',
+    });
+  }
+
+  let db = new sqlite3.Database('./users.db', (err) => {
+    if (err) {
+      return res.status(500).json({
+        status: 'failed',
+        message: 'Erro ao conectar ao banco de dados!',
+        error: err.message
+      });
+    }
+    console.log('Conectou no banco de dados!');
+  });
+
+  db.get('SELECT * FROM usuario WHERE email = ?', [email], async (err, usuario) => {
+    if (err) {
+      return res.status(500).json({
+        status: 'failed',
+        message: 'Erro ao consultar o banco de dados!',
+        error: err.message
+      });
+    }
+
+    if (!usuario) {
+      return res.status(400).json({
+        status: 'failed',
+        message: 'Usuário não encontrado!',
+      });
+    }
+
+    // Verificar a senha
+    const senhaCorreta = await bcrypt.compare(senha, usuario.senha);
+
+    if (!senhaCorreta) {
+      return res.status(400).json({
+        status: 'failed',
+        message: 'Senha incorreta!',
+      });
+    }
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Login realizado com sucesso!',
+      usuario: {
+        id: usuario.id_usuario,
+        nome: usuario.nome,
+        email: usuario.email
+      }
+    });
+
+    db.close((err) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log('Fechou a conexão com o banco de dados.');
+    });
+  });
+});
 
 app.post('/usuarios/novo', (req, res) => {
   const { nome, email, senha, conf_senha } = req.body;

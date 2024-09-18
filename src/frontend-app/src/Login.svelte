@@ -4,12 +4,10 @@
   import './style.css';
   import './assets/logo.png'
   import './assets/ouvindo.png'
-  let nome = "";
   let email = "";
   let senha = "";
-  let conf_senha = "";
-  let error = null;
   let resultado = null;
+  let error = null;
   let usuarios = null;
   let colunas_usuarios = null;
   const api_base_url = "http://localhost:3000";
@@ -31,34 +29,20 @@
     }
   };
 
-  const cadastrarUsuario = async () => {
+  const logarUsuario = async () => {
     try {
       let res = await axios.post(
-        api_base_url + "/usuarios/novo",
-        {
-          nome,
-          email,
-          senha,
-          conf_senha,
-        },
-        {
-          headers: {
-            Accept: "application/json",
-          },
-        },
+        api_base_url + "/usuarios/login",
+        { email, senha },
+        { headers: { Accept: "application/json" } }
       );
       resultado = res.data;
       error = null; // Limpa o erro se a requisição for bem-sucedida
-      // recarrega lista de usuários apresentada
-      carregarUsuarios();
     } catch (err) {
-      error =
-        "Erro ao enviar dados: " + err.response?.data?.message || err.message;
+      error = "Erro ao enviar dados: " + (err.response?.data?.message || err.message);
       resultado = null; // Limpa o resultado em caso de erro
     }
-    
   };
-
   // Função para deletar o usuário pelo ID
   const deletarUsuario = async (id) => {
     try {
@@ -87,34 +71,25 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <nav class="navbar navbar-expand-sm custom-navbar">
-      <div class="offcanvas offcanvas-start" id="demo">
-        <div class="offcanvas-header">
-          <h1 class="offcanvas-title">Heading</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-        </div>
-        <div class="offcanvas-body">
-          <p>Some text lorem ipsum.</p>
-          <p>Some text lorem ipsum.</p>
-          <p>Some text lorem ipsum.</p>
-          <button class="btn btn-secondary" type="button">A Button</button>
-        </div>
-      </div>
-      
-      <div class="container-fluid mt-3">
-        <h3>Offcanvas Sidebar</h3>
-        <p>Offcanvas is similar to modals, except that it is often used as a sidebar.</p>
-        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#demo">
-          Open Offcanvas Sidebar
-        </button>
-      </div>
-        <div class="container-fluid">
-          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#f3e6d8" class="bi bi-list" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
-          </svg>
+        <div class="container">
+          <button class="btn-primary rounded-5 sidebar" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#f3e6d8" class="bi bi-list" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+            </svg>
+          </button>
+          
+          
             <a class="navbar-brand" href="index.html">
                 <img src="/src/assets/logo.png" alt="Avatar Logo" style="width:100px;">
             </a>
+
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
+              <form class="d-flex w-50 navbar-nav ms-auto" id="search-form">
+                <input class="form-control me-2" type="search" id="search-input" placeholder="Search..." aria-label="Search">
+                <button class="btn-primary sidebar" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+        </svg></button>
+              </form>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                       <a href="">
@@ -135,17 +110,42 @@
         </div>
     </nav>
 
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">DISCONOW</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><a href="">USUÁRIO</a></li>
+            <li class="list-group-item"><a href="">CARRINHO</a></li>
+            <li class="list-group-item"><a href="">CDs</a></li>
+            <li class="list-group-item"><a href="">VINIL</a></li>
+            <li class="list-group-item"><a href="">SUPORTE</a></li>
+            <br>
+            <form class="d-flex w-50" id="search-form">
+              <input class="form-control me-2" type="search" id="search-input" placeholder="Search..." aria-label="Search">
+              <button class="btn-primary sidebar rounded-5" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+      </svg></button>
+            </form>
+          </ul>
+        </div>
+      </div>
+    </div>
+
     <div class="d-flex justify-content-center align-items-center min-vh-100">
         <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%;">
             <h2 class="text-center mb-4"><b>Login</b></h2>
-            <form on:submit|preventDefault={cadastrarUsuario} class="form_exemplo">
+            <form on:submit|preventDefault={logarUsuario} class="form_exemplo">
                 <div class="mb-3">
                     <label for="email" class="form-label">E-mail</label>
-                    <input type="email" id="email" name="email" class="form-control" placeholder="Digite seu e-mail">
+                    <input type="email" id="email" name="email" bind:value={email} class="form-control" placeholder="Digite seu e-mail">
                 </div>
                 <div class="mb-3">
                     <label for="senha" class="form-label">Senha</label>
-                    <input type="password" id="senha" name="senha" class="form-control" placeholder="Digite sua senha">
+                    <input type="password" id="senha" name="senha" bind:value={senha} class="form-control" placeholder="Digite sua senha">
                 </div>
                 <div>
                   <button type="submit" class="btn-primary w-100 rounded">Entrar</button>

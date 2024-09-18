@@ -41,7 +41,10 @@ h2 {
     background-color: #6e5411;
     border-color: #6e5411;
 }
-
+.sidebar:hover {
+    background-color: #7d4a2c;
+    border-color: #7d4a2c;
+}
 #message {
     color: #7d4a2c;
 }
