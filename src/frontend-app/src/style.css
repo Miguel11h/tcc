@@ -2,8 +2,16 @@
     background-color: #7d4a2c;
 }
 
+.btn-black {
+    background-color: black;
+}
+
 body {
     background-color: #f3e6d8;
+}
+
+.search:hover {
+    width: 100%;
 }
 
 .card {

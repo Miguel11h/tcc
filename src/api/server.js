@@ -93,7 +93,6 @@ app.post('/usuarios/login', (req, res) => {
       });
     }
 
-    // Verificar a senha
     const senhaCorreta = await bcrypt.compare(senha, usuario.senha);
 
     if (!senhaCorreta) {
