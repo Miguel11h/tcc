@@ -8,7 +8,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         usuarios: './usuarios.html',
-        login: './login.html'
+        login: './login.html',
+        administrador: './administrador.html'
       }
     }
   }
