@@ -186,6 +186,8 @@ app.post('/usuarios/novo', (req, res) => {
   }
 });
 
+
+
 app.delete('/usuarios/:id_usuario', (req, res) => {
   const { id_usuario } = req.params;
 
@@ -226,8 +228,68 @@ app.delete('/usuarios/:id_usuario', (req, res) => {
   });
 });
 
-  
+app.post('/usuarios/nome', (req, res) => {
+  const { id_usuario, nome } = req.body;
+
+  let db = new sqlite3.Database('./users.db', (err) => {
+    if (err) {
+      return res.status(500).json({ status: 'failed', message: 'Erro ao conectar ao banco de dados!', error: err.message });
+    }
+  });
+
+  db.run('UPDATE usuario SET nome = ? WHERE id_usuario = ?', [nome, id_usuario], function (err) {
+    if (err) {
+      return res.status(500).json({ status: 'failed', message: 'Erro ao atualizar o nome!', error: err.message });
+    }
+
+    res.status(200).json({ status: 'success', message: 'Nome atualizado com sucesso!' });
+  });
+
+  db.close();
+});
+
+app.post('/usuarios/email', (req, res) => {
+  const { id_usuario, email } = req.body;
+
+  let db = new sqlite3.Database('./users.db', (err) => {
+    if (err) {
+      return res.status(500).json({ status: 'failed', message: 'Erro ao conectar ao banco de dados!', error: err.message });
+    }
+  });
+
+  db.run('UPDATE usuario SET email = ? WHERE id_usuario = ?', [email, id_usuario], function (err) {
+    if (err) {
+      return res.status(500).json({ status: 'failed', message: 'Erro ao atualizar o email!', error: err.message });
+    }
+
+    res.status(200).json({ status: 'success', message: 'Email atualizado com sucesso!' });
+  });
+  db.close();
+});
+
+app.post('/usuarios/senha', async (req, res) => {
+  const { id_usuario, senha } = req.body;
+  const senha_criptografada = await bcrypt.hash(senha, 8);
+
+  let db = new sqlite3.Database('./users.db', (err) => {
+    if (err) {
+      return res.status(500).json({ status: 'failed', message: 'Erro ao conectar ao banco de dados!', error: err.message });
+    }
+  });
+
+  db.run('UPDATE usuario SET senha = ? WHERE id_usuario = ?', [senha_criptografada, id_usuario], function (err) {
+    if (err) {
+      return res.status(500).json({ status: 'failed', message: 'Erro ao atualizar a senha!', error: err.message });
+    }
+
+    res.status(200).json({ status: 'success', message: 'Senha atualizada com sucesso!' });
+  });
+
+  db.close();
+});
+
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
+
