@@ -104,9 +104,6 @@ const editarSenha = async (id_usuario, novaSenha) => {
             <a class="navbar-brand" href="index.html">
                 <img src="/src/assets/logo.png" alt="Avatar Logo" style="width:100px;">
             </a>
-            {#if session.usuarioNome} <!-- Verifica se o nome do usuário está na sessão -->
-            <span class="navbar-text">Bem-vindo, {session.usuarioNome}!</span>
-        {/if}
         <li class="nav-item">
             <a href="/logout" class="nav-link">Logout</a>
         </li>

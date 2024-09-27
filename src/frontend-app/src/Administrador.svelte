@@ -33,35 +33,6 @@
         usuarios = null; // Limpa o resultado em caso de erro
       }
     };
-  
-    const cadastrarUsuario = async () => {
-      try {
-        let res = await axios.post(
-          api_base_url + "/usuarios/novo",
-          {
-            nome,
-            email,
-            senha,
-            conf_senha,
-          },
-          {
-            headers: {
-              Accept: "application/json",
-            },
-          },
-        );
-        resultado = res.data;
-        error = null; // Limpa o erro se a requisição for bem-sucedida
-        // recarrega lista de usuários apresentada
-        carregarUsuarios();
-      } catch (err) {
-        error =
-          "Erro ao enviar dados: " + err.response?.data?.message || err.message;
-        resultado = null; // Limpa o resultado em caso de erro
-      }
-      
-    };
-  
     // Função para deletar o usuário pelo ID
     const deletarUsuario = async (id) => {
       try {
@@ -99,11 +70,6 @@ const editarNome = async (id_usuario, novoNome) => {
   carregarUsuarios();
 };
 
-const editarEmail = async (id_usuario, novoEmail) => {
-  await editarUsuario("/usuarios/email", { id_usuario, email: novoEmail });
-  carregarUsuarios();
-};
-
 const editarSenha = async (id_usuario, novaSenha) => {
   await editarUsuario("/usuarios/senha", { id_usuario, senha: novaSenha });
   carregarUsuarios();
@@ -115,7 +81,6 @@ const editarSenha = async (id_usuario, novaSenha) => {
   
   <main>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
     <nav class="navbar navbar-expand-sm custom-navbar">
       <div class="container">
         <button class="btn-primary rounded-5 sidebar" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
@@ -181,15 +146,13 @@ const editarSenha = async (id_usuario, novaSenha) => {
       </div>
     </div>
   </div>
- 
-  <div class="register-container animated">
-  <div class="card2 p-25 shadow-lg">
-    
+
       {#if usuarios}
-        <table class="table table-hover">
+      <div>
+        <table class="table table-hover table-bordered text-center rounded">
           <thead>
             <tr>
-              <th>Atualização: {#if error}
+              <th  colspan={colunas_usuarios.length + 2}>Atualização: {#if error}
                 <p style="color: red;">{error}</p>
               {/if}
               {#if resultado && resultado.message}
@@ -210,7 +173,7 @@ const editarSenha = async (id_usuario, novaSenha) => {
                   <td>{linha_usuario[atributo]}</td>
                 {/each}
                 <td>
-                  <button on:click={() => deletarUsuario(linha_usuario.id_usuario)}>Remover</button>
+                  <button on:click={() => deletarUsuario(linha_usuario.id_usuario)} class="rounded">Remover</button>
                 </td>
                 <td>
                   <div class="dropdown  dropend">
@@ -233,9 +196,8 @@ const editarSenha = async (id_usuario, novaSenha) => {
             {/each}
           </tbody>
         </table>
+      </div>
       {/if}
-    </div>
-    </div>
       <footer class="footer mt-auto py-3">
         <div class="container text-center">
             <span class="text-muted">DISCONOW &copy; 2024</span>

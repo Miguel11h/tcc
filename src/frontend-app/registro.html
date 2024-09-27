@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registro</title>
+  </head>
+  <body>
+    <div id="registro"></div>
+    <script type="module">
+      import './src/app.css'
+      import Registro from './src/Registro.svelte'
+
+      const registro = new Registro({
+        target: document.getElementById('registro'),
+      });
+
+      export default Registro
+    </script>
+  </body>
+</html>
