@@ -8,7 +8,6 @@
   let email = "";
   let senha = "";
   let novoNome = "";
-  let novoEmail = "";
   let novaSenha = ""; 
   let resultado = null;
   let error = null;
@@ -83,10 +82,6 @@ const editarNome = async (id_usuario, novoNome) => {
   await editarUsuario("/usuarios/nome", { id_usuario, nome: novoNome });
 };
 
-const editarEmail = async (id_usuario, novoEmail) => {
-  await editarUsuario("/usuarios/email", { id_usuario, email: novoEmail });
-};
-
 const editarSenha = async (id_usuario, novaSenha) => {
   await editarUsuario("/usuarios/senha", { id_usuario, senha: novaSenha });
 };
@@ -109,7 +104,12 @@ const editarSenha = async (id_usuario, novaSenha) => {
             <a class="navbar-brand" href="index.html">
                 <img src="/src/assets/logo.png" alt="Avatar Logo" style="width:100px;">
             </a>
-
+            {#if session.usuarioNome} <!-- Verifica se o nome do usuário está na sessão -->
+            <span class="navbar-text">Bem-vindo, {session.usuarioNome}!</span>
+        {/if}
+        <li class="nav-item">
+            <a href="/logout" class="nav-link">Logout</a>
+        </li>
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
               <div class="d-flex w-50 navbar-nav ms-auto" id="search-form">
                 <input class="form-control me-2" type="search" id="search-input" placeholder="Search..." aria-label="Search">
@@ -216,12 +216,7 @@ const editarSenha = async (id_usuario, novaSenha) => {
                     <label for="edit_nome">Editar Nome:</label>
                     <input type="text" bind:value ={novoNome} id="edit_nome" class="form-control">
                     <button on:click={() => editarNome(linha_usuario.id_usuario, novoNome)} class="btn btn-primary">Salvar</button>
-                  
-                    <label for="edit_email">Editar Email:</label>
-                    <input type="text" bind:value ={novoEmail} id="edit_email" class="form-control">
-                    <button on:click={() => editarEmail(linha_usuario.id_usuario, novoEmail)} class="btn btn-primary">Salvar</button>
-                  
-                    
+                 
                     <label for="edit_senha">Editar Senha:</label>
                     <input type="text" bind:value ={novaSenha} id="edit_senha" class="form-control">
                     <button on:click={() => editarSenha(linha_usuario.id_usuario, novaSenha)} class="btn btn-primary">Salvar</button>

@@ -187,7 +187,6 @@ app.post('/usuarios/novo', (req, res) => {
 });
 
 
-
 app.delete('/usuarios/:id_usuario', (req, res) => {
   const { id_usuario } = req.params;
 
@@ -230,7 +229,6 @@ app.delete('/usuarios/:id_usuario', (req, res) => {
 
 app.post('/usuarios/nome', (req, res) => {
   const { id_usuario, nome } = req.body;
-
   let db = new sqlite3.Database('./users.db', (err) => {
     if (err) {
       return res.status(500).json({ status: 'failed', message: 'Erro ao conectar ao banco de dados!', error: err.message });
@@ -245,25 +243,6 @@ app.post('/usuarios/nome', (req, res) => {
     res.status(200).json({ status: 'success', message: 'Nome atualizado com sucesso!' });
   });
 
-  db.close();
-});
-
-app.post('/usuarios/email', (req, res) => {
-  const { id_usuario, email } = req.body;
-
-  let db = new sqlite3.Database('./users.db', (err) => {
-    if (err) {
-      return res.status(500).json({ status: 'failed', message: 'Erro ao conectar ao banco de dados!', error: err.message });
-    }
-  });
-
-  db.run('UPDATE usuario SET email = ? WHERE id_usuario = ?', [email, id_usuario], function (err) {
-    if (err) {
-      return res.status(500).json({ status: 'failed', message: 'Erro ao atualizar o email!', error: err.message });
-    }
-
-    res.status(200).json({ status: 'success', message: 'Email atualizado com sucesso!' });
-  });
   db.close();
 });
 

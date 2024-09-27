@@ -8,6 +8,9 @@
     let email = "";
     let senha = "";
     let conf_senha = "";
+    let novoNome = "";
+    let novoEmail = "";
+    let novaSenha = ""; 
     let error = null;
     let resultado = null;
     let usuarios = null;
@@ -78,6 +81,33 @@
         resultado = null;
       }
     };
+const editarUsuario = async (endpoint, data) => {
+  try {
+    let res = await axios.post(api_base_url + endpoint, data, {
+      headers: { Accept: "application/json" },
+    });
+    resultado = res.data;
+    error = null; // Limpa o erro se a requisição for bem-sucedida
+  } catch (err) {
+    error = "Erro ao enviar dados: " + (err.response?.data?.message || err.message);
+    resultado = null; // Limpa o resultado em caso de erro
+  }
+};
+
+const editarNome = async (id_usuario, novoNome) => {
+  await editarUsuario("/usuarios/nome", { id_usuario, nome: novoNome });
+  carregarUsuarios();
+};
+
+const editarEmail = async (id_usuario, novoEmail) => {
+  await editarUsuario("/usuarios/email", { id_usuario, email: novoEmail });
+  carregarUsuarios();
+};
+
+const editarSenha = async (id_usuario, novaSenha) => {
+  await editarUsuario("/usuarios/senha", { id_usuario, senha: novaSenha });
+  carregarUsuarios();
+};
 
     carregarUsuarios();
 
@@ -181,6 +211,23 @@
                 {/each}
                 <td>
                   <button on:click={() => deletarUsuario(linha_usuario.id_usuario)}>Remover</button>
+                </td>
+                <td>
+                  <div class="dropdown  dropend">
+                    <button type="button" class="dropdown-toggle rounded" data-bs-toggle="dropdown">
+                      Editar
+                    </button>
+                    <ul class="dropdown-menu">
+                      <label for="edit_nome">Editar Nome:</label>
+                      <input type="text" bind:value ={novoNome} id="edit_nome" class="form-control">
+                      <button on:click={() => editarNome(linha_usuario.id_usuario, novoNome)} class="btn btn-primary">Salvar</button>
+        
+                      <label for="edit_senha">Editar Senha:</label>
+                      <input type="text" bind:value ={novaSenha} id="edit_senha" class="form-control">
+                      <button on:click={() => editarSenha(linha_usuario.id_usuario, novaSenha)} class="btn btn-primary">Salvar</button>
+                    
+                    </ul>
+                  </div> 
                 </td>
               </tr>
             {/each}
