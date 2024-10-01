@@ -11,41 +11,6 @@
   let usuarios = null;
   let colunas_usuarios = null;
   const api_base_url = "http://localhost:3000";
-
-const carregarUsuarios = async () => {
-    try {
-      let res = await axios.get(api_base_url + "/usuarios", {
-        responseType: "json",
-        headers: {
-          Accept: "application/json",
-        },
-      });
-      usuarios = res.data.usuarios;
-      colunas_usuarios = Object.keys(usuarios[0]);
-      error = null; // Limpa o erro se a requisição for bem-sucedida
-    } catch (err) {
-      console.error(err);
-      usuarios = null; // Limpa o resultado em caso de erro
-    }
-  };
-
-const logarUsuario = async () => {
-    try {
-      let res = await axios.post(
-        api_base_url + "/usuarios/login",
-        { email, senha },
-        { headers: { Accept: "application/json" } }
-      );
-      resultado = res.data;
-      error = null; // Limpa o erro se a requisição for bem-sucedida
-    } catch (err) {
-      error = "Erro ao enviar dados: " + (err.response?.data?.message || err.message);
-      resultado = null; // Limpa o resultado em caso de erro
-    }
-  };
-
-  carregarUsuarios();
-  
 </script>
 
 <main>
@@ -90,6 +55,32 @@ const logarUsuario = async () => {
         </div>
     </nav>
 
+    <div id="carouselExampleIndicators" class="carousel slide">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="/src/assets/slide1.png" class="d-block w-100" alt="Imagem de boas vindas">
+          </div>
+          <div class="carousel-item">
+            <img src="/src/assets/slide2.png" class="d-block w-100" alt="Imagem de divulgação">
+          </div>
+          <div class="carousel-item">
+            <img src="..." class="d-block w-100" alt="...">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
       <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasExampleLabel">DISCONOW</h5>
