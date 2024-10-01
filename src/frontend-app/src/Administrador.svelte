@@ -70,6 +70,11 @@ const editarNome = async (id_usuario, novoNome) => {
   carregarUsuarios();
 };
 
+const editarEmail = async (id_usuario, novoEmail) => {
+  await editarUsuario("/usuarios/email", { id_usuario, senha: novoEmail });
+  carregarUsuarios();
+};
+
 const editarSenha = async (id_usuario, novaSenha) => {
   await editarUsuario("/usuarios/senha", { id_usuario, senha: novaSenha });
   carregarUsuarios();
@@ -96,8 +101,7 @@ const editarSenha = async (id_usuario, novaSenha) => {
   
           <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <div class="d-flex w-50 navbar-nav ms-auto" id="search-form">
-              <input class="form-control me-2" type="search" id="search-input" placeholder="Search..." aria-label="Search">
-              <button class="btn-primary sidebar" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+              <input class="form-control me-2" type="search" id="search-input" placeholder="Pesquise aqui" aria-label="Search">              <button class="btn-primary sidebar" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
       </svg></button>
     </div>
@@ -184,6 +188,10 @@ const editarSenha = async (id_usuario, novaSenha) => {
                       <label for="edit_nome">Editar Nome:</label>
                       <input type="text" bind:value ={novoNome} id="edit_nome" class="form-control">
                       <button on:click={() => editarNome(linha_usuario.id_usuario, novoNome)} class="btn btn-primary">Salvar</button>
+
+                      <label for="edit_email">Editar Email:</label>
+                      <input type="text" bind:value ={novoEmail} id="edit_email" class="form-control">
+                      <button on:click={() => editarEmail(linha_usuario.id_usuario, novoEmail)} class="btn btn-primary">Salvar</button>
         
                       <label for="edit_senha">Editar Senha:</label>
                       <input type="text" bind:value ={novaSenha} id="edit_senha" class="form-control">

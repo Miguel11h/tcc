@@ -3,19 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+    <title>DiscoNow!</title>
   </head>
   <body>
-    <div id="login"></div>
+    <div id="index"></div>
     <script type="module">
       import './src/app.css'
-      import Login from './src/Login.svelte'
+      import Index from './src/Index.svelte'
 
-      const login = new Login({
-        target: document.getElementById('login'),
+      const index = new Index({
+        target: document.getElementById('index'),
       });
 
-      export default Login
+      export default Index
     </script>
   </body>
 </html>

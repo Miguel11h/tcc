@@ -58,26 +58,6 @@
     }
     
   };
-
-  // Função para deletar o usuário pelo ID
-  const deletarUsuario = async (id) => {
-    try {
-      let res = await axios.delete(`${api_base_url}/usuarios/${id}`, {
-        headers: {
-          Accept: "application/json",
-        },
-      });
-      resultado = res.data;
-      error = null;
-      // recarrega lista de usuários apresentada
-      carregarUsuarios();
-    } catch (err) {
-      error =
-        "Erro ao deletar usuário: " +
-        (err.response?.data?.message || err.message);
-      resultado = null;
-    }
-  };
   
 
   carregarUsuarios();
@@ -102,7 +82,7 @@
 
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
           <div class="d-flex w-50 navbar-nav ms-auto" id="search-form">
-            <input class="form-control me-2" type="search" id="search-input" placeholder="Search..." aria-label="Search">
+            <input class="form-control me-2" type="search" id="search-input" placeholder="Pesquise aqui" aria-label="Search">
             <button class="btn-primary sidebar" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
       <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
     </svg></button>
@@ -209,36 +189,13 @@
           {#if resultado && resultado.message}
             <p style="color: green;">{resultado.message}</p>
           {/if}
-          <a type="button" class="btn" href='login.html'>login</a>
+          <p id="message" class="mt-3 text-center"></p>
+          <p class="text-center mt-2">Já tem uma conta? <a href="login.html">Faça login aqui</a></p>
         </div>
       </form>
       </div>
       </div>
       </div>
-    {#if usuarios}
-      <table>
-        <thead>
-          <tr>
-            {#each colunas_usuarios as nome_coluna}
-              <th>{nome_coluna}</th>
-            {/each}
-            <th></th>
-          </tr><tr/>
-        </thead>
-        <tbody>
-          {#each Object.values(usuarios) as linha_usuario}
-            <tr>
-              {#each colunas_usuarios as atributo}
-                <td>{linha_usuario[atributo]}</td>
-              {/each}
-              <td>
-                <button on:click={() => deletarUsuario(linha_usuario.id_usuario)}>Remover</button>
-              </td>
-            </tr>
-          {/each}
-        </tbody>
-      </table>
-    {/if}
     <footer class="footer mt-auto py-3">
       <div class="container text-center">
           <span class="text-muted">DISCONOW &copy; 2024</span>

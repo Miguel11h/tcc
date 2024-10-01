@@ -12,7 +12,7 @@
   let colunas_usuarios = null;
   const api_base_url = "http://localhost:3000";
 
-  const carregarUsuarios = async () => {
+const carregarUsuarios = async () => {
     try {
       let res = await axios.get(api_base_url + "/usuarios", {
         responseType: "json",
@@ -29,7 +29,7 @@
     }
   };
 
-  const logarUsuario = async () => {
+const logarUsuario = async () => {
     try {
       let res = await axios.post(
         api_base_url + "/usuarios/login",
@@ -65,7 +65,7 @@
             </a>
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
               <div class="d-flex w-50 navbar-nav ms-auto" id="search-form">
-                <input class="form-control me-2" type="search" id="search-input" placeholder="Pesquise aqui" aria-label="Search">
+                <input class="form-control me-2" type="search" id="search-input" placeholder="Search..." aria-label="Search">
                 <button class="btn-primary sidebar" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
           <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
         </svg></button>
@@ -105,7 +105,7 @@
             <li class="list-group-item"><a href="">SUPORTE</a></li>
             <br>
             <div class="d-flex w-50" id="search-form">
-              <input class="form-control me-2" type="search" id="search-input" placeholder="Pesquise aqui" aria-label="Search">
+              <input class="form-control me-2" type="search" id="search-input" placeholder="Search..." aria-label="Search">
               <button class="btn-primary sidebar rounded-5" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
       </svg></button>
@@ -113,32 +113,6 @@
           </ul>
         </div>
       </div>
-    </div>
-
-    <div class="d-flex justify-content-center align-items-center min-vh-100">
-        <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%;">
-            <h2 class="text-center mb-4"><b>Login</b></h2>
-            <form on:submit|preventDefault={logarUsuario} class="form_exemplo">
-                <div class="mb-3">
-                    <label for="email" class="form-label">E-mail</label>
-                    <input type="email" id="email" name="email" bind:value={email} class="form-control" placeholder="Digite seu e-mail">
-                </div>
-                <div class="mb-3">
-                    <label for="senha" class="form-label">Senha</label>
-                    <input type="password" id="senha" name="senha" bind:value={senha} class="form-control" placeholder="Digite sua senha">
-                </div>
-                <div>
-                  <button type="submit" class="btn-primary w-100 rounded">Entrar</button>
-                  {#if error}
-                    <p style="color: red;">{error}</p>
-                  {/if}
-                  {#if resultado && resultado.message}
-                    <p style="color: green;">{resultado.message}</p>
-                  {/if} 
-            </form>
-            <p id="message" class="mt-3 text-center"></p>
-            <p class="text-center mt-2">Não tem uma conta? <a href="usuarios.html">Registre-se aqui</a></p>
-        </div>
     </div>
     <footer class="footer mt-auto py-3">
       <div class="container text-center">
