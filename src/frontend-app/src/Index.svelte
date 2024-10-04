@@ -4,12 +4,6 @@
   import './style.css';
   import './assets/logo.png'
   import './assets/ouvindo.png'
-  let email = "";
-  let senha = "";
-  let resultado = null;
-  let error = null;
-  let usuarios = null;
-  let colunas_usuarios = null;
   const api_base_url = "http://localhost:3000";
 </script>
 
@@ -30,7 +24,7 @@
             </a>
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
               <div class="d-flex w-50 navbar-nav ms-auto" id="search-form">
-                <input class="form-control me-2" type="search" id="search-input" placeholder="Search..." aria-label="Search">
+                <input class="form-control me-2" type="search" id="search-input" placeholder="Pesquise aqui" aria-label="Search">
                 <button class="btn-primary sidebar" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
           <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
         </svg></button>
@@ -54,33 +48,6 @@
             </div>
         </div>
     </nav>
-
-    <div id="carouselExampleIndicators" class="carousel slide">
-        <div class="carousel-indicators">
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        </div>
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img src="/src/assets/slide1.png" class="d-block w-100" alt="Imagem de boas vindas">
-          </div>
-          <div class="carousel-item">
-            <img src="/src/assets/slide2.png" class="d-block w-100" alt="Imagem de divulgação">
-          </div>
-          <div class="carousel-item">
-            <img src="..." class="d-block w-100" alt="...">
-          </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
       <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasExampleLabel">DISCONOW</h5>
@@ -104,6 +71,27 @@
           </ul>
         </div>
       </div>
+    </div>
+<div class="container cardcarousel">
+      <div id="carouselExampleIndicators" class="carousel slide">
+        <div class="carousel-indicators btn-carousel h-50">
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active bg-dark" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" class="bg-dark" aria-label="Slide 2"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="/src/assets/slide1.png" class="d-block w-100" alt="Imagem de boas-vindas">
+          </div>
+          <div class="carousel-item">
+            <img src="/src/assets/slide2.png" class="d-block w-100" alt="Imagem de oferta">
+          </div>
+        </div>
+      </div>
+      <hr>
+      <h1 class="subtitulo">DISCOS</h1>
+      <div> <img src="https://s2-g1.glbimg.com/QKdegG-dgI-Hb_0C1Y3btDYBkbI=/0x0:589x796/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2020/p/U/WQcM7XQBGi6HwPbNwcNg/tim1970.jpg" alt=""> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTj5lkHVBXbZf7DLtIEXNlim3KqhCEJoUE2FA&s" alt=""> <img src="https://cloudfront-us-east-1.images.arcpublishing.com/estadao/4U366DGD3VNPPE3EMVW6SCXB5Y.jpg" alt=""> </div>
+      <hr>
+      <h1 class="subtitulo">CDs</h1>
     </div>
     <footer class="footer mt-auto py-3">
       <div class="container text-center">

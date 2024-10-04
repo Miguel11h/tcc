@@ -1,3 +1,9 @@
+@font-face {
+    font-family: 'bright';
+    src: url('assets/Bright.otf');
+}
+
+
 .custom-navbar {
     background-color: #7d4a2c;
 }
@@ -155,3 +161,28 @@ h2 {
     }
 }
 
+.cardcarousel {
+    position: relative;
+    margin-bottom: 0;
+}
+.btn-carousel{
+    padding-top: 100px;
+}
+
+.carousel-control-prev {
+    left: 10px;
+}
+
+.carousel-control-next {
+    right: 10px; 
+}
+
+hr{
+    height: 10px; 
+    background-color: #7d4a2c;
+}
+
+
+.subtitulo{
+    font-family: 'bright';
+}

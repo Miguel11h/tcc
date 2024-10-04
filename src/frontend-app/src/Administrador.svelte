@@ -196,7 +196,6 @@ const editarSenha = async (id_usuario, novaSenha) => {
                       <label for="edit_senha">Editar Senha:</label>
                       <input type="text" bind:value ={novaSenha} id="edit_senha" class="form-control">
                       <button on:click={() => editarSenha(linha_usuario.id_usuario, novaSenha)} class="btn btn-primary">Salvar</button>
-                    
                     </ul>
                   </div> 
                 </td>
