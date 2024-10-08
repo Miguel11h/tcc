@@ -4,6 +4,7 @@
   import './style.css';
   import './assets/logo.png'
   import './assets/ouvindo.png'
+//import ImageGallery from './ImageGallery.svelte';
   const api_base_url = "http://localhost:3000";
 </script>
 
@@ -74,7 +75,7 @@
     </div>
 <div class="container cardcarousel">
       <div id="carouselExampleIndicators" class="carousel slide">
-        <div class="carousel-indicators btn-carousel h-50">
+        <div class="carousel-indicators btn-carousel">
           <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active bg-dark" aria-current="true" aria-label="Slide 1"></button>
           <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" class="bg-dark" aria-label="Slide 2"></button>
         </div>
@@ -89,9 +90,177 @@
       </div>
       <hr>
       <h1 class="subtitulo">DISCOS</h1>
-      <div> <img src="https://s2-g1.glbimg.com/QKdegG-dgI-Hb_0C1Y3btDYBkbI=/0x0:589x796/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2020/p/U/WQcM7XQBGi6HwPbNwcNg/tim1970.jpg" alt=""> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTj5lkHVBXbZf7DLtIEXNlim3KqhCEJoUE2FA&s" alt=""> <img src="https://cloudfront-us-east-1.images.arcpublishing.com/estadao/4U366DGD3VNPPE3EMVW6SCXB5Y.jpg" alt=""> </div>
+  
+      <!--<h1>Galeria de Imagens</h1>
+      //<ImageGallery />-->
+      
+      <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div id="carouselExampleIndicators2" class="carousel slide">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide-to="0" class="active bg-dark" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide-to="1" class="bg-dark" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide-to="2" class="bg-dark" aria-label="Slide 3"></button>
+          
+        </div>
+
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <img src="/src/assets/album1.png" class="img-fluid w-75" alt="Imagem 1">
+                        </div>
+                        <div class="col">
+                            <img src="/src/assets/album2.png" class="img-fluid w-75" alt="Imagem 2">
+                        </div>
+                        <div class="col">
+                            <img src="/src/assets/album3.png" class="img-fluid w-75" alt="Imagem 3">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <img src="/src/assets/album4.png" class="img-fluid w-75" alt="Imagem 4">
+                        </div>
+                        <div class="col">
+                            <img src="/src/assets/album5.png" class="img-fluid w-75" alt="Imagem 5">
+                        </div>
+                        <div class="col">
+                            <img src="/src/assets/album6.png" class="img-fluid w-75" alt="Imagem 6">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+              <div class="container">
+                  <div class="row">
+                      <div class="col">
+                          <img src="/src/assets/album7.png" class="img-fluid w-75" alt="Imagem 7">
+                      </div>
+                      <div class="col">
+                          <img src="/src/assets/album8.png" class="img-fluid w-75" alt="Imagem 8">
+                      </div>
+                      <div class="col">
+                          <img src="/src/assets/album9.png" class="img-fluid w-75" alt="Imagem 9">
+                      </div>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+          <div class="container">
+              <div class="row">
+                  <div class="col">
+                      <img src="/src/assets/album7.png" class="img-fluid w-75" alt="Imagem 7">
+                  </div>
+                  <div class="col">
+                      <img src="/src/assets/album8.png" class="img-fluid w-75" alt="Imagem 8">
+                  </div>
+                  <div class="col">
+                      <img src="/src/assets/album9.png" class="img-fluid w-75" alt="Imagem 9">
+                  </div>
+              </div>
+          </div>
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+      
       <hr>
       <h1 class="subtitulo">CDs</h1>
+      <div id="imageCarousel1" class="carousel slide" data-bs-ride="carousel">
+        <div id="carouselExampleIndicators3" class="carousel slide">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators3" data-bs-slide-to="0" class="active bg-dark" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators3" data-bs-slide-to="1" class="bg-dark" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators3" data-bs-slide-to="2" class="bg-dark" aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators3" data-bs-slide-to="3" class="bg-dark" aria-label="Slide 4"></button>
+      </div>
+
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <img src="/src/assets/album1.png" class="img-fluid w-75" alt="Imagem 1">
+                        </div>
+                        <div class="col">
+                            <img src="/src/assets/album2.png" class="img-fluid w-75" alt="Imagem 2">
+                        </div>
+                        <div class="col">
+                            <img src="/src/assets/album3.png" class="img-fluid w-75" alt="Imagem 3">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <img src="/src/assets/album4.png" class="img-fluid w-75" alt="Imagem 4">
+                        </div>
+                        <div class="col">
+                            <img src="/src/assets/album5.png" class="img-fluid w-75" alt="Imagem 5">
+                        </div>
+                        <div class="col">
+                            <img src="/src/assets/album6.png" class="img-fluid w-75" alt="Imagem 6">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+              <div class="container">
+                  <div class="row">
+                      <div class="col">
+                          <img src="/src/assets/album7.png" class="img-fluid w-75" alt="Imagem 7">
+                      </div>
+                      <div class="col">
+                          <img src="/src/assets/album8.png" class="img-fluid w-75" alt="Imagem 8">
+                      </div>
+                      <div class="col">
+                          <img src="/src/assets/album9.png" class="img-fluid w-75" alt="Imagem 9">
+                      </div>
+                  </div>
+              </div>
+              <div class="carousel-item">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <img src="/src/assets/album10.png" class="img-fluid w-75" alt="Imagem 10">
+                        </div>
+                        <div class="col">
+                            <img src="/src/assets/album11.png" class="img-fluid w-75" alt="Imagem 11">
+                        </div>
+                        <div class="col">
+                            <img src="/src/assets/album12.png" class="img-fluid w-75" alt="Imagem 12">
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+
+        </div>
+        <button class="carousel-control-prev bg-dark h-50" type="button" data-bs-target="#imageCarousel1" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next bg-dark h-50" type="button" data-bs-target="#imageCarousel1" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    </div>
+    </div>
     </div>
     <footer class="footer mt-auto py-3">
       <div class="container text-center">
