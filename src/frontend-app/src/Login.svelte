@@ -11,6 +11,7 @@
   let usuarios = null;
   let colunas_usuarios = null;
   const api_base_url = "http://localhost:3000";
+  const API_BASE_URL = "http://localhost:3000";
 
   const carregarUsuarios = async () => {
     try {
@@ -29,14 +30,27 @@
     }
   };
 
+  const axiosInstance = axios.create({
+        withCredentials: true,
+        baseURL: API_BASE_URL,
+        responseType: "json",
+        headers: {
+                Accept: "application/json",
+            }
+    });
+    
+
   const logarUsuario = async () => {
     try {
-      let res = await axios.post(
-        api_base_url + "/usuarios/login",
-        { email, senha },
-        { headers: { Accept: "application/json" } }
-      );
+      let res = await axiosInstance.post("/login",
+          {
+            email,
+            senha
+          });
       resultado = res.data;
+      if (resultado && resultado.status === "success") { 
+            window.location.href = "/index.html";  
+        }
       error = null; // Limpa o erro se a requisição for bem-sucedida
     } catch (err) {
       error = "Erro ao enviar dados: " + (err.response?.data?.message || err.message);
@@ -53,7 +67,7 @@
     <link rel="stylesheet" href="style.css">
     <nav class="navbar navbar-expand-sm custom-navbar">
         <div class="container">
-          <button class="btn-primary rounded-5 sidebar" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+          <button class="btn-primary rounded-5 sidebar" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" href="index.html">
             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#f3e6d8" class="bi bi-list" viewBox="0 0 16 16">
               <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
             </svg>
@@ -98,11 +112,13 @@
       <div class="offcanvas-body">
         <div>
           <ul class="list-group list-group-flush">
-            <li class="list-group-item"><a href="">USUÁRIO</a></li>
+            <li class="list-group-item"><a href="login.html">USUÁRIO</a></li>
             <li class="list-group-item"><a href="">CARRINHO</a></li>
             <li class="list-group-item"><a href="">CDs</a></li>
             <li class="list-group-item"><a href="">VINIL</a></li>
             <li class="list-group-item"><a href="">SUPORTE</a></li>
+            <li class="list-group-item"><a href="index.html">Voltar para a página principal</a></li>
+            <li class="list-group-item"><a href="administrador.html">Página de Administrador</a></li>
             <br>
             <div class="d-flex w-50" id="search-form">
               <input class="form-control me-2" type="search" id="search-input" placeholder="Pesquise aqui" aria-label="Search">
