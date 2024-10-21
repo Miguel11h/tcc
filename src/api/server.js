@@ -13,7 +13,7 @@ app.use(express.json());
 const port = 3000;
 
 app.use(cors({
-  origin: 'http://localhost:5173', // Habilita apenas URL do frontend svelte
+  origin: "http://localhost:5173", // Habilita apenas URL do frontend svelte
   credentials: true, 
 }));
 
@@ -30,8 +30,20 @@ function geraAcessoJWT(idUsuario) {
     expiresIn: '20m',
   });
 };
+
+function geraConexaoDeBancoDeDados() {
+  let db = new sqlite3.Database('./users.db', (err) => {
+    if (err) {
+      return console.error(err.message);
+    }
+    console.log('Conectou no banco de dados!');
+  });
+  return db;
+}
+
 async function verificaToken(req, res, next) {  
   // se o token (variável SessionID) não estiver presente no cookie o usuário não está logado
+
   const token = req.cookies.SessionID;
   if (!token) {
     return res.status(401).json({ 
@@ -79,10 +91,12 @@ async function verificaToken(req, res, next) {
       });
     }   
   });
+  
+  
 }
 
 
-app.get('/usuarios', (req, res) => {
+app.get('/usuarios', verificaToken, (req, res) => {
   let db = new sqlite3.Database('./users.db', (err) => {
     if (err) {
       return console.error(err.message);
@@ -116,7 +130,7 @@ app.get('/usuarios', (req, res) => {
   });
 });
 
-app.post('/usuarios/login', verificaToken, (req, res) => {
+app.post('/usuarios/login', (req, res) => {
   const { email, senha } = req.body;
   if (!email || !senha) {
     return res.status(400).json({
@@ -151,7 +165,7 @@ app.post('/usuarios/login', verificaToken, (req, res) => {
         message: 'Usuário não encontrado!',
       });
     }
-
+    let idUsuario = usuario.id_usuario;
     const senhaCorreta = await bcrypt.compare(senha, usuario.senha);
 
     if (!senhaCorreta) {
@@ -200,7 +214,7 @@ app.post('/usuarios/login', verificaToken, (req, res) => {
   });
 });
 
-app.post('/usuarios/novo', (req, res) => {
+app.post('/usuarios/novo', verificaToken, (req, res) => {
   const { nome, email, senha, conf_senha } = req.body;
   console.log(req);
   let erro = "";
@@ -265,7 +279,7 @@ app.post('/usuarios/novo', (req, res) => {
 
 
 
-app.delete('/usuarios/:id_usuario', (req, res) => {
+app.delete('/usuarios/:id_usuario', verificaToken , (req, res) => {
   const { id_usuario } = req.params;
 
   // Conectar ao banco de dados SQLite
@@ -316,7 +330,7 @@ app.post('/logout', (req, res) => {
   });
 });
 
-app.get('/usuarios/me', verificaToken, (req, res) => {
+app.get('/usuarios/me', (req, res) => {
   // recupera dados do usuário logado
   const usuarioLogado = {
     idUsuario: req.idUsuario,

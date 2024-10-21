@@ -10,12 +10,11 @@
   let error = null;
   let usuarios = null;
   let colunas_usuarios = null;
-  const api_base_url = "http://localhost:3000";
   const API_BASE_URL = "http://localhost:3000";
 
   const carregarUsuarios = async () => {
     try {
-      let res = await axios.get(api_base_url + "/usuarios", {
+      let res = await axios.get(API_BASE_URL + "/usuarios", {
         responseType: "json",
         headers: {
           Accept: "application/json",
@@ -42,7 +41,7 @@
 
   const logarUsuario = async () => {
     try {
-      let res = await axiosInstance.post("/login",
+      let res = await axiosInstance.post("/usuarios/login",
           {
             email,
             senha

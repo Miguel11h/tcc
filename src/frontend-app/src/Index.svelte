@@ -26,9 +26,10 @@
           Accept: "application/json",
       }
   });
+
   const carregarUsuarios = async () => {
     try {
-      let res = await axiosInstance.get("/usuarios");
+      let res = await axiosInstance.get(api_base_url + "/usuarios");
       usuarios = res.data.usuarios;
       colunasUsuarios = Object.keys(usuarios[0]);
       error = null; // Limpa o erro se a requisição for bem-sucedida
@@ -63,7 +64,7 @@
 
   const buscarUsuarioLogado = async () => {
       try {
-          const res = await axiosInstance.get('/usuarios/me');
+          const res = await axiosInstance.get(api_base_url + '/usuarios/me');
           console.log(res.data);
           usuarioLogado = res.data.usuario; // Armazena os dados do usuário
           error = null; // Limpa o erro se a requisição for bem-sucedida
