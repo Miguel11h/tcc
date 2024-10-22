@@ -1,5 +1,6 @@
 <script>
-  // import { onMount } from 'svelte';
+  
+  import { onMount } from 'svelte';
   import axios from "axios";
   import './style.css';
   import './assets/logo.png'
@@ -8,36 +9,17 @@
   let senha = "";
   let resultado = null;
   let error = null;
-  let usuarios = null;
-  let colunas_usuarios = null;
+  let usuarioLogado = null;
   const API_BASE_URL = "http://localhost:3000";
 
-  const carregarUsuarios = async () => {
-    try {
-      let res = await axios.get(API_BASE_URL + "/usuarios", {
-        responseType: "json",
-        headers: {
-          Accept: "application/json",
-        },
-      });
-      usuarios = res.data.usuarios;
-      colunas_usuarios = Object.keys(usuarios[0]);
-      error = null; // Limpa o erro se a requisição for bem-sucedida
-    } catch (err) {
-      console.error(err);
-      usuarios = null; // Limpa o resultado em caso de erro
-    }
-  };
-
   const axiosInstance = axios.create({
-        withCredentials: true,
-        baseURL: API_BASE_URL,
-        responseType: "json",
-        headers: {
-                Accept: "application/json",
-            }
-    });
-    
+    withCredentials: true,
+    baseURL: API_BASE_URL,
+    responseType: "json",
+    headers: {
+          Accept: "application/json",
+      }
+  });
 
   const logarUsuario = async () => {
     try {
@@ -56,8 +38,42 @@
       resultado = null; // Limpa o resultado em caso de erro
     }
   };
+  
+  const buscarUsuarioLogado = async () => {
+      try {
+          const res = await axiosInstance.get(API_BASE_URL + '/usuarios/me');
+          console.log(res.data);
+          usuarioLogado = res.data.usuario; // Armazena os dados do usuário
+          error = null; // Limpa o erro se a requisição for bem-sucedida
+      } catch (err) {
+          error = err.response?.data?.message || err.message;
+          usuarioLogado = null; // Limpa os dados em caso de erro
+      }
+  };
 
-  carregarUsuarios();
+  const logout = async () => {
+    try {
+      let res = await axiosInstance.post("/logout");
+      resultado = res.data;
+
+      // Redirecionar para página de logon após logout
+      if (resultado && resultado.status === "success") { 
+            window.location.href = "/login.html";  
+      }
+      error = null; // Limpa o erro se a requisição for bem-sucedida
+    } catch (err) {
+      error = "Erro ao buscar dados: " + err.response?.data?.message || err.message;
+      console.error(err);
+      resultado = null; // Limpa o resultado em caso de erro
+    }
+  };
+
+  
+
+  onMount(() => {
+    buscarUsuarioLogado();
+    carregarUsuarios();
+  }); 
   
 </script>
 
@@ -91,13 +107,23 @@
                         </svg>
                       </a>
                     </li>
+                    {#if usuarioLogado}
                     <li class="nav-item">
-                      <a href="">
+                      <div class="dropdown">
+                      <button class="buttonUser" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="50" fill="#f3e6d8" class="bi bi-person" viewBox="0 0 16 16">
                           <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
                         </svg>
-                    </a>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><p class="dropdown-item">{usuarioLogado.nome}</p></li>
+                        <li><button class="dropdown-item" on:click={logout}>Logout</button></li>
+                      </ul>
+                    </div>
                     </li>
+                              
+                    {/if} 
                 </ul>
             </div>
         </div>

@@ -1,11 +1,7 @@
 <script>
-  // import { onMount } from 'svelte';
+  
   import { onMount } from 'svelte';
   import axios from "axios";
-  let nome = "";
-  let email = "";
-  let senha = "";
-  let conf_senha = "";
   let error = null;
   let resultado = null;
   let usuarios = null;
@@ -14,7 +10,6 @@
   import './style.css';
   import './assets/logo.png'
   import './assets/ouvindo.png'
-//import ImageGallery from './ImageGallery.svelte';
   const API_BASE_URL = "http://localhost:3000";
 
   const axiosInstance = axios.create({
@@ -37,28 +32,6 @@
       console.error(err);
       usuarios = null; // Limpa o resultado em caso de erro
     }
-  };
-
-  const cadastrarUsuario = async () => {
-    try {
-      let res = await axiosInstance.post("/usuarios/novo",
-        {
-          nome,
-          email,
-          senha,
-          conf_senha,
-        }
-      );
-      resultado = res.data;
-      error = null; // Limpa o erro se a requisição for bem-sucedida
-      // recarrega lista de usuários apresentada
-      carregarUsuarios();
-    } catch (err) {
-      error =
-        "Erro ao enviar dados: " + err.response?.data?.message || err.message;
-      resultado = null; // Limpa o resultado em caso de erro
-    }
-    
   };
 
   const buscarUsuarioLogado = async () => {
@@ -90,27 +63,11 @@
     }
   };
 
-
-  // Função para deletar o usuário pelo ID
-  const deletarUsuario = async (id) => {
-    try {
-      let res = await axiosInstance.delete(`/usuarios/${id}`);
-      resultado = res.data;
-      error = null;
-      // recarrega lista de usuários apresentada
-      carregarUsuarios();
-    } catch (err) {
-      error =
-        "Erro ao deletar usuário: " +
-        (err.response?.data?.message || err.message);
-      resultado = null;
-    }
-  };
-
   onMount(() => {
     buscarUsuarioLogado();
     carregarUsuarios();
   }); 
+
 </script>
 
 <main>
@@ -142,35 +99,32 @@
                           <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"/>
                         </svg>
                       </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="50" fill="#f3e6d8" class="bi bi-person" viewBox="0 0 16 16">
-                          <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
-                        </svg>
-                    </a>
-                    </li>
+                    </li>      
+      {#if usuarioLogado}
+      <li class="nav-item">
+        <div class="dropdown">
+        <button class="buttonUser" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="50" fill="#f3e6d8" class="bi bi-person" viewBox="0 0 16 16">
+            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+          </svg>
+        </button>
+        <ul class="dropdown-menu">
+          <li><p class="dropdown-item">{usuarioLogado.nome}</p></li>
+          <li><button class="dropdown-item" on:click={logout}>Logout</button></li>
+        </ul>
+      </div>
+      </li>
+  
+          {:else}
+          <a class="btn" href="login.html">Login</a>
+       
+                    
+      {/if} 
                 </ul>
             </div>
         </div>
     </nav>
-
-    <div class="card">
-      {#if error}
-          <p style="color: red;">{error}</p>
-      {:else if usuarioLogado}
-          <h2>Dados do Usuário Logado</h2>
-        
-          <p><strong>ID:</strong> {usuarioLogado.idUsuario}</p>
-          <p><strong>Nome:</strong> {usuarioLogado.nome}</p>
-          <p><strong>E-mail:</strong> {usuarioLogado.email}</p>
-  
-          <button on:click={logout}>Logout</button>
-        
-      {:else}
-          <p>Carregando dados do usuário...</p>
-      {/if}
-  </div>
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
       <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasExampleLabel">DISCONOW</h5>
