@@ -13,7 +13,7 @@ app.use(express.json());
 const port = 3000;
 
 app.use(cors({
-  origin: "http://localhost:5173", // Habilita apenas URL do frontend svelte
+  origin: ["http://localhost:5173", "http://127.0.0.1:5173"], // Habilita apenas URL do frontend svelte
   credentials: true, 
 }));
 
@@ -171,22 +171,12 @@ app.post('/usuarios/login', (req, res) => {
     if (!senhaCorreta) {
       return res.status(400).json({
         status: 'failed',
-        message: 'Login e senha incorreta!',
+        message: 'Login ou senha incorretos!',
       });
     }
 
-    res.status(200).json({
-      status: 'success',
-      message: 'Login realizado com sucesso!',
-      usuario: {
-        id: usuario.id_usuario,
-        nome: usuario.nome,
-        email: usuario.email
-      }
-    });
-
     let options = {
-      maxAge: 20 * 60 * 1000, // minutos * segundos * milissegundos = total 20 minutos
+      maxAge: 1 * 60 * 1000, // minutos * segundos * milissegundos = total 20 minutos
       httpOnly: true, // restringe acesso de js ao cookie
       secure: NODE_ENV === 'production' ? true : false, // secure ativado de acordo com ambiente (desenvolvimento/produção) para uso do https
       sameSite: "Lax", // habilita compartilhamento de cookie entre páginas
@@ -203,6 +193,11 @@ app.post('/usuarios/login', (req, res) => {
       res.status(200).json({
           status: "success",
           message: "Autenticação realizada com sucesso!",
+          usuario: {
+            id: usuario.id_usuario,
+            nome: usuario.nome,
+            email: usuario.email
+          }
       });
 
     db.close((err) => {
@@ -330,7 +325,7 @@ app.post('/logout', (req, res) => {
   });
 });
 
-app.get('/usuarios/me', (req, res) => {
+app.get('/usuarios/me', verificaToken, (req, res) => {
   // recupera dados do usuário logado
   const usuarioLogado = {
     idUsuario: req.idUsuario,

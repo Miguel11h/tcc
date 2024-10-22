@@ -15,7 +15,6 @@
   import './assets/logo.png'
   import './assets/ouvindo.png'
 //import ImageGallery from './ImageGallery.svelte';
-  const api_base_url = "http://localhost:3000";
   const API_BASE_URL = "http://localhost:3000";
 
   const axiosInstance = axios.create({
@@ -29,7 +28,7 @@
 
   const carregarUsuarios = async () => {
     try {
-      let res = await axiosInstance.get(api_base_url + "/usuarios");
+      let res = await axiosInstance.get(API_BASE_URL + "/usuarios");
       usuarios = res.data.usuarios;
       colunasUsuarios = Object.keys(usuarios[0]);
       error = null; // Limpa o erro se a requisição for bem-sucedida
@@ -64,7 +63,7 @@
 
   const buscarUsuarioLogado = async () => {
       try {
-          const res = await axiosInstance.get(api_base_url + '/usuarios/me');
+          const res = await axiosInstance.get(API_BASE_URL + '/usuarios/me');
           console.log(res.data);
           usuarioLogado = res.data.usuario; // Armazena os dados do usuário
           error = null; // Limpa o erro se a requisição for bem-sucedida

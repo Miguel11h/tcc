@@ -4,3 +4,10 @@ CREATE TABLE usuario (
     email TEXT NOT NULL UNIQUE,
     senha TEXT NOT NULL
 );
+
+CREATE TABLE produto (
+    id_produto INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome_produto TEXT NOT NULL,
+    descricao_produto TEXT NOT NULL UNIQUE,
+    preco_produto TEXT NOT NULL 
+);
