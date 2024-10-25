@@ -45,6 +45,9 @@
           console.log(res.data);
           usuarioLogado = res.data.usuario; // Armazena os dados do usuário
           error = null; // Limpa o erro se a requisição for bem-sucedida
+          if (usuarioLogado){
+            window.location.href = "/index.html";
+          }
       } catch (err) {
           error = err.response?.data?.message || err.message;
           usuarioLogado = null; // Limpa os dados em caso de erro
@@ -155,32 +158,32 @@
         </div>
       </div>
     </div>
-
-    <div class="d-flex justify-content-center align-items-center min-vh-100">
-        <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%;">
-            <h2 class="text-center mb-4"><b>Login</b></h2>
-            <form on:submit|preventDefault={logarUsuario} class="form_exemplo">
-                <div class="mb-3">
-                    <label for="email" class="form-label">E-mail</label>
-                    <input type="email" id="email" name="email" bind:value={email} class="form-control" placeholder="Digite seu e-mail">
-                </div>
-                <div class="mb-3">
-                    <label for="senha" class="form-label">Senha</label>
-                    <input type="password" id="senha" name="senha" bind:value={senha} class="form-control" placeholder="Digite sua senha">
-                </div>
-                <div>
-                  <button type="submit" class="btn-primary w-100 rounded">Entrar</button>
-                  {#if error}
-                    <p style="color: red;">{error}</p>
-                  {/if}
-                  {#if resultado && resultado.message}
-                    <p style="color: green;">{resultado.message}</p>
-                  {/if} 
-            </form>
-            <p id="message" class="mt-3 text-center"></p>
-            <p class="text-center mt-2">Não tem uma conta? <a href="usuarios.html">Registre-se aqui</a></p>
-        </div>
-    </div>
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+  <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%;">
+      <h2 class="text-center mb-4"><b>Login</b></h2>
+      <form on:submit|preventDefault={logarUsuario} class="form_exemplo">
+          <div class="mb-3">
+              <label for="email" class="form-label">E-mail</label>
+              <input type="email" id="email" name="email" bind:value={email} class="form-control" placeholder="Digite seu e-mail">
+          </div>
+          <div class="mb-3">
+              <label for="senha" class="form-label">Senha</label>
+              <input type="password" id="senha" name="senha" bind:value={senha} class="form-control" placeholder="Digite sua senha">
+          </div>
+          <div>
+            <button type="submit" class="btn-primary w-100 rounded">Entrar</button>
+            {#if error}
+              <p style="color: red;">{error}</p>
+            {/if}
+            {#if resultado && resultado.message}
+              <p style="color: green;">{resultado.message}</p>
+            {/if} 
+      </form>
+      <p id="message" class="mt-3 text-center"></p>
+      <p class="text-center mt-2">Não tem uma conta? <a href="usuarios.html">Registre-se aqui</a></p>
+  </div>
+</div>
+    
     <footer class="footer mt-auto py-3">
       <div class="container text-center">
           <span class="text-muted">DISCONOW &copy; 2024</span>
