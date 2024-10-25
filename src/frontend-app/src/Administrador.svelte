@@ -1,5 +1,4 @@
 <script>
-    
   import axios from "axios";
   import './style.css';
   import './assets/logo.png'
@@ -14,6 +13,10 @@
   let usuarios = null;
   let usuarioLogado = null;
   let colunas_usuarios = null;
+  let produtos = null;
+  let colunas_produtos = null;
+  let novoProduto = { nome: "", descricao: "", preco: 0 };
+
   const API_BASE_URL= "http://localhost:3000";
 
   const axiosInstance = axios.create({
@@ -93,10 +96,16 @@ const buscarUsuarioLogado = async () => {
         const res = await axiosInstance.get(API_BASE_URL + '/usuarios/me');
         console.log(res.data);
         usuarioLogado = res.data.usuario; // Armazena os dados do usuário
+        if (!usuarioLogado){
+            window.location.href = '/index.html';
+          }
         error = null; // Limpa o erro se a requisição for bem-sucedida
     } catch (err) {
         error = err.response?.data?.message || err.message;
         usuarioLogado = null; // Limpa os dados em caso de erro
+        if (err.response && err.response.status === 401) {
+            window.location.href = '/index.html';
+        }
     }
 };
 
@@ -117,8 +126,47 @@ const logout = async () => {
   }
 };
 
+const carregarProdutos = async () => {
+    try {
+      let res = await axiosInstance.get(API_BASE_URL + "/produtos");
+      produtos = res.data.produtos;
+      colunas_produtos = Object.keys(produtos[0]);
+      error = null;
+    } catch (err) {
+      console.error(err);
+      produtos = null;
+    }
+  };
+
+  const deletarProduto = async (id) => {
+    try {
+      let res = await axios.delete(`${API_BASE_URL}/produtos/${id}`);
+      resultado = res.data;
+      carregarProdutos();
+      error = null;
+    } catch (err) {
+      error = "Erro ao deletar produto: " + (err.response?.data?.message || err.message);
+      resultado = null;
+    }
+  };
+
+  const adicionarProduto = async () => {
+    try {
+      let res = await axiosInstance.post(API_BASE_URL + "/produtos/novo", novoProduto);
+      resultado = res.data;
+      novoProduto = { nome: "", descricao: "", preco: 0 };
+      carregarProdutos();
+      error = null;
+    } catch (err) {
+      error = "Erro ao adicionar produto: " + (err.response?.data?.message || err.message);
+      resultado = null;
+    }
+  };
+
+
 onMount(() => {
   buscarUsuarioLogado();
+  carregarProdutos();
   carregarUsuarios();
 }); 
 
@@ -155,6 +203,7 @@ onMount(() => {
 
     {#if usuarios}
     <div>
+      <h2 class="mt-4">Gerenciamento de Usuários</h2>
       <table class="table table-hover table-bordered text-center rounded">
         <thead>
           <tr>
@@ -207,6 +256,32 @@ onMount(() => {
       </table>
     </div>
     {/if}
+    <h2 class="mt-4">Gerenciamento de Produtos</h2> <button class="rounded"><a href="./produtos.html">ADICIONAR PRODUTOS</a></button>
+  {#if produtos}
+    <div>
+      <table class="table table-hover table-bordered text-center rounded">
+        <thead>
+          {#each colunas_produtos as nome_coluna_produto}
+              <th>{nome_coluna_produto}</th>
+            {/each}
+            <th></th>
+        </thead>
+          <tr>
+            <tbody>
+            {#each Object.values(produtos) as linha_produto}
+            <tr>
+              {#each colunas_produtos as atributo_produto}
+                <td>{linha_produto[atributo_produto]}</td>
+              {/each}
+              <td>
+                <button on:click={() => deletarProduto(linha_produto.id_produto)} class="rounded">Remover</button>
+              </td>
+            </tr>
+          {/each}
+        </tbody>
+      </table>
+    </div>
+  {/if}
     <footer class="footer mt-auto py-3">
       <div class="container text-center">
           <span class="text-muted">DISCONOW &copy; 2024</span>

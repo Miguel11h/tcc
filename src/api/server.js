@@ -378,6 +378,67 @@ app.post('/usuarios/senha', async (req, res) => {
   db.close();
 });
 
+app.post('/produtos/novo', (req, res) => {
+  const { nome, descricao, preco} = req.body;
+
+  const db = geraConexaoDeBancoDeDados();
+  db.run(
+    'INSERT INTO produto(nome_produto, descricao_produto, preco_produto) VALUES (?, ?, ?)',
+    [nome, descricao, preco],
+    (err) => {
+      if (err) {
+        return res.status(500).json({ status: 'failed', message: 'Erro ao adicionar o produto', error: err.message });
+      }
+      res.status(200).json({ status: 'success', message: 'Produto adicionado com sucesso!' });
+    }
+  );
+  db.close();
+});
+
+// Rota para listar todos os produtos
+app.get('/produtos', (req, res) => {
+  const db = geraConexaoDeBancoDeDados();
+  db.all('SELECT * FROM produto', [], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ status: 'failed', message: 'Erro ao buscar produtos', error: err.message });
+    }
+    res.status(200).json({ status: 'success', produtos: rows });
+  });
+  db.close();
+});
+
+// Rota para atualizar um produto por ID
+app.put('/produtos/:id_produto', (req, res) => {
+  const { id_produto } = req.params;
+  const { nome_produto, descricao_produto, preco_produto } = req.body;
+
+  const db = geraConexaoDeBancoDeDados();
+  db.run(
+    'UPDATE produto SET nome_produto = ?, descricao_produto = ?, preco_produto = ? WHERE id_produto = ?',
+    [nome_produto, descricao_produto, preco_produto, id_produto],
+    function (err) {
+      if (err) {
+        return res.status(500).json({ status: 'failed', message: 'Erro ao atualizar o produto', error: err.message });
+      }
+      res.status(200).json({ status: 'success', message: 'Produto atualizado com sucesso!' });
+    }
+  );
+  db.close();
+});
+
+// Rota para excluir um produto por ID
+app.delete('/produtos/:id_produto', (req, res) => {
+  const { id_produto } = req.params;
+
+  const db = geraConexaoDeBancoDeDados();
+  db.run('DELETE FROM produto WHERE id_produto = ?', [id_produto], function (err) {
+    if (err) {
+      return res.status(500).json({ status: 'failed', message: 'Erro ao excluir o produto', error: err.message });
+    }
+    res.status(200).json({ status: 'success', message: 'Produto excluído com sucesso!' });
+  });
+  db.close();
+});
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
