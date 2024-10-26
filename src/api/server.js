@@ -175,7 +175,7 @@ app.post('/usuarios/login', (req, res) => {
     }
 
     let options = {
-      maxAge: 20 * 60 * 1000, // minutos * segundos * milissegundos = total 20 minutos
+      maxAge: 200000 * 60 * 1000, // minutos * segundos * milissegundos = total 20 minutos
       httpOnly: true, // restringe acesso de js ao cookie
       secure: NODE_ENV === 'production' ? true : false, // secure ativado de acordo com ambiente (desenvolvimento/produção) para uso do https
       sameSite: "Lax", // habilita compartilhamento de cookie entre páginas

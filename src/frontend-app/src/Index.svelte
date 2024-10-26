@@ -7,6 +7,8 @@
   let usuarios = null;
   let usuarioLogado = null;
   let colunasUsuarios = null;
+  let colunas_produtos = null;
+  let produtos = null;
   import './style.css';
   import './assets/logo.png'
   import './assets/ouvindo.png'
@@ -32,6 +34,17 @@
       error = "Erro ao buscar dados: " + err.response?.data?.message || err.message;;
       console.error(err);
       usuarios = null; // Limpa o resultado em caso de erro
+    }
+  };
+  const carregarProdutos = async () => {
+    try {
+      let res = await axiosInstance.get(API_BASE_URL + "/produtos");
+      produtos = res.data.produtos;
+      colunas_produtos = Object.keys(produtos[0]);
+      error = null;
+    } catch (err) {
+      console.error(err);
+      produtos = null;
     }
   };
 
@@ -63,9 +76,9 @@
       resultado = null; // Limpa o resultado em caso de erro
     }
   };
-
   onMount(() => {
     buscarUsuarioLogado();
+    carregarProdutos();
     carregarUsuarios();
   }); 
 
@@ -134,7 +147,7 @@
         </div>
       </div>
       <hr>
-
+{#if produtos}
       <h1 class="subtitulo">DISCOS</h1>
       <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
         <div id="carouselExampleIndicators2" class="carousel slide">
@@ -148,15 +161,14 @@
               <div class="carousel-item active">
                   <div class="container">
                       <div class="row">
-                          <div class="col">
-                              <img src="/src/assets/album1.png" class="img-fluid w-75" alt="Imagem 1">
-                          </div>
-                          <div class="col">
-                              <img src="/src/assets/album2.png" class="img-fluid w-75" alt="Imagem 2">
-                          </div>
-                          <div class="col">
-                              <img src="/src/assets/album3.png" class="img-fluid w-75" alt="Imagem 3">
-                          </div>
+                        {#each Object.values(produtos) as linha_produto}
+
+                        <div class="col">
+                          <div class="img-fluid w-75">{linha_produto.nome_produto}</div>
+                      </div>
+
+                        {/each}
+                
                       </div>
                   </div>
               </div>
@@ -217,7 +229,7 @@
           </button>
         </div>
       </div>
-      
+      {/if}
       <hr>
       
       <h1 class="subtitulo">CDs</h1>

@@ -77,10 +77,16 @@
             const res = await axiosInstance.get(API_BASE_URL + '/usuarios/me');
             console.log(res.data);
             usuarioLogado = res.data.usuario; // Armazena os dados do usuário
+            if (!usuarioLogado){
+              window.location.href = '/index.html';
+            }
             error = null; // Limpa o erro se a requisição for bem-sucedida
         } catch (err) {
             error = err.response?.data?.message || err.message;
             usuarioLogado = null; // Limpa os dados em caso de erro
+            if (err.response && err.response.status === 401) {
+            window.location.href = '/index.html';
+        }
         }
     };
   
