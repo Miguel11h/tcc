@@ -175,7 +175,7 @@ app.post('/usuarios/login', (req, res) => {
     }
 
     let options = {
-      maxAge: 200000 * 60 * 1000, // minutos * segundos * milissegundos = total 20 minutos
+      maxAge: 20 * 60 * 1000, // minutos * segundos * milissegundos = total 20 minutos
       httpOnly: true, // restringe acesso de js ao cookie
       secure: NODE_ENV === 'production' ? true : false, // secure ativado de acordo com ambiente (desenvolvimento/produção) para uso do https
       sameSite: "Lax", // habilita compartilhamento de cookie entre páginas
@@ -404,6 +404,82 @@ app.get('/produtos', (req, res) => {
     }
     res.status(200).json({ status: 'success', produtos: rows });
   });
+  db.close();
+});
+
+app.post('/produtos/nome', (req, res) => {
+  const { id_produto, nome } = req.body;
+  let db = new sqlite3.Database('./users.db', (err) => {
+    if (err) {
+      return res.status(500).json({ status: 'failed', message: 'Erro ao conectar ao banco de dados!', error: err.message });
+    }
+  });
+
+  db.run('UPDATE produto SET nome_produto = ? WHERE id_produto = ?', [nome, id_produto], function (err) {
+    if (err) {
+      return res.status(500).json({ status: 'failed', message: 'Erro ao atualizar o nome!', error: err.message });
+    }
+
+    res.status(200).json({ status: 'success', message: 'Nome atualizado com sucesso!' });
+  });
+
+  db.close();
+});
+
+app.post('/produtos/descricao', (req, res) => {
+  const { id_produto, descricao } = req.body;
+  let db = new sqlite3.Database('./users.db', (err) => {
+    if (err) {
+      return res.status(500).json({ status: 'failed', message: 'Erro ao conectar ao banco de dados!', error: err.message });
+    }
+  });
+
+  db.run('UPDATE produto SET descricao_produto = ? WHERE id_produto = ?', [descricao, id_produto], function (err) {
+    if (err) {
+      return res.status(500).json({ status: 'failed', message: 'Erro ao atualizar a descrição!', error: err.message });
+    }
+
+    res.status(200).json({ status: 'success', message: 'Descrição atualizada com sucesso!' });
+  });
+
+  db.close();
+});
+
+app.post('/produtos/preco', (req, res) => {
+  const { id_produto, preco } = req.body;
+  let db = new sqlite3.Database('./users.db', (err) => {
+    if (err) {
+      return res.status(500).json({ status: 'failed', message: 'Erro ao conectar ao banco de dados!', error: err.message });
+    }
+  });
+
+  db.run('UPDATE produto SET preco_produto = ? WHERE id_produto = ?', [preco, id_produto], function (err) {
+    if (err) {
+      return res.status(500).json({ status: 'failed', message: 'Erro ao atualizar o preço!', error: err.message });
+    }
+
+    res.status(200).json({ status: 'success', message: 'Preço atualizado com sucesso!' });
+  });
+
+  db.close();
+});
+
+app.post('/produtos/imagem', (req, res) => {
+  const { id_produto, imagem } = req.body;
+  let db = new sqlite3.Database('./users.db', (err) => {
+    if (err) {
+      return res.status(500).json({ status: 'failed', message: 'Erro ao conectar ao banco de dados!', error: err.message });
+    }
+  });
+
+  db.run('UPDATE produto SET imagem_produto = ? WHERE id_produto = ?', [imagem, id_produto], function (err) {
+    if (err) {
+      return res.status(500).json({ status: 'failed', message: 'Erro ao atualizar a imagem!', error: err.message });
+    }
+
+    res.status(200).json({ status: 'success', message: 'Imagem atualizada com sucesso!' });
+  });
+
   db.close();
 });
 

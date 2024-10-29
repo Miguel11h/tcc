@@ -8,6 +8,10 @@
   let novoNome = "";
   let novoEmail = "";
   let novaSenha = ""; 
+  let novoNomeProduto = "";
+  let novaDescricao = "";
+  let novoPreco = "";
+  let novaImagem = null;
   let error = null;
   let resultado = null;
   let usuarios = null;
@@ -15,7 +19,7 @@
   let colunas_usuarios = null;
   let produtos = null;
   let colunas_produtos = null;
-  let novoProduto = { nome: "", descricao: "", preco: 0 };
+  let novoProduto = { nome: "", descricao: "", preco: 0, imagem: null};
 
   const API_BASE_URL= "http://localhost:3000";
 
@@ -82,7 +86,7 @@ carregarUsuarios();
 };
 
 const editarEmail = async (id_usuario, novoEmail) => {
-await editarUsuario("/usuarios/email", { id_usuario, senha: novoEmail });
+await editarUsuario("/usuarios/email", { id_usuario, email: novoEmail });
 carregarUsuarios();
 };
 
@@ -138,31 +142,50 @@ const carregarProdutos = async () => {
     }
   };
 
-  const deletarProduto = async (id) => {
-    try {
-      let res = await axios.delete(`${API_BASE_URL}/produtos/${id}`);
-      resultado = res.data;
-      carregarProdutos();
-      error = null;
-    } catch (err) {
-      error = "Erro ao deletar produto: " + (err.response?.data?.message || err.message);
-      resultado = null;
-    }
-  };
+const deletarProduto = async (id) => {
+  try {
+    let res = await axios.delete(`${API_BASE_URL}/produtos/${id}`);
+    resultado = res.data;
+    carregarProdutos();
+    error = null;
+  } catch (err) {
+    error = "Erro ao deletar produto: " + (err.response?.data?.message || err.message);
+    resultado = null;
+  }
+};
 
-  const adicionarProduto = async () => {
-    try {
-      let res = await axiosInstance.post(API_BASE_URL + "/produtos/novo", novoProduto);
-      resultado = res.data;
-      novoProduto = { nome: "", descricao: "", preco: 0 };
-      carregarProdutos();
-      error = null;
-    } catch (err) {
-      error = "Erro ao adicionar produto: " + (err.response?.data?.message || err.message);
-      resultado = null;
-    }
-  };
+const editarProduto = async (endpoint, data) => {
+try {
+  let res = await axios.post(API_BASE_URL + endpoint, data, {
+    headers: { Accept: "application/json" },
+  });
+  resultado = res.data;
+  error = null; // Limpa o erro se a requisição for bem-sucedida
+} catch (err) {
+  error = "Erro ao enviar dados: " + (err.response?.data?.message || err.message);
+  resultado = null; // Limpa o resultado em caso de erro
+}
+};
 
+const editarNomeProduto = async (id_produto, novoNomeProduto) => {
+await editarProduto("/produtos/nome", { id_produto, nome: novoNomeProduto });
+carregarProdutos();
+};
+
+const editarDescricao = async (id_produto, novaDescricao) => {
+await editarProduto("/produtos/descricao", { id_produto, descricao: novaDescricao });
+carregarProdutos();
+};
+
+const editarPreco = async (id_produto, novoPreco) => {
+await editarProduto("/produtos/preco", { id_produto, preco: novoPreco });
+carregarProdutos();
+};
+
+const editarImagem = async (id_produto, novaImagem) => {
+await editarProduto("/produtos/imagem", { id_produto, imagem: novaImagem });
+carregarProdutos();
+};
 
 onMount(() => {
   buscarUsuarioLogado();
@@ -231,7 +254,7 @@ onMount(() => {
                 <button on:click={() => deletarUsuario(linha_usuario.id_usuario)} class="rounded">Remover</button>
               </td>
               <td>
-                <div class="dropdown  dropend">
+                <div class="dropdown dropend">
                   <button type="button" class="dropdown-toggle rounded" data-bs-toggle="dropdown">
                     Editar
                   </button>
@@ -275,6 +298,30 @@ onMount(() => {
               {/each}
               <td>
                 <button on:click={() => deletarProduto(linha_produto.id_produto)} class="rounded">Remover</button>
+              </td>
+              <td>
+                <div class="dropdown  dropend">
+                  <button type="button" class="dropdown-toggle rounded" data-bs-toggle="dropdown">
+                    Editar
+                  </button>
+                  <ul class="dropdown-menu">
+                    <label for="edit_nome_produto">Editar Nome:</label>
+                    <input type="text" bind:value ={novoNomeProduto} id="edit_nome" class="form-control">
+                    <button on:click={() => editarNomeProduto(linha_produto.id_produto, novoNomeProduto)} class="btn btn-primary">Salvar</button>
+
+                    <label for="edit_descricao">Editar Descrição:</label>
+                    <input type="text" bind:value ={novaDescricao} id="edit_descricao" class="form-control">
+                    <button on:click={() => editarDescricao(linha_produto.id_produto, novaDescricao)} class="btn btn-primary">Salvar</button>
+      
+                    <label for="edit_precao">Editar Preço:</label>
+                    <input type="text" bind:value ={novoPreco} id="edit_preco" class="form-control">
+                    <button on:click={() => editarPreco(linha_produto.id_produto, novoPreco)} class="btn btn-primary">Salvar</button>
+
+                    <label for="edit_precao">Editar Imagem:</label>
+                    <input type="text" bind:value ={novaImagem} id="edit_imagem" class="form-control">
+                    <button on:click={() => editarImagem(linha_produto.id_produto, novaImagem)} class="btn btn-primary">Salvar</button>
+                  </ul>
+                </div> 
               </td>
             </tr>
           {/each}

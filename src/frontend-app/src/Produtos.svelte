@@ -226,11 +226,11 @@ onMount(() => {
           <div class="mb-3">
             <label for="imagem" class="form-label">Imagem do Produto:</label>
             <input
-              type="file"
+              type="text"
               class="form-control"
               id="imagem"
-              accept="image/*"
-              on:change={event => handleImageUpload(event)}
+              bind:value={novoProduto.imagem}
+              placeholder="Insira a imagem do produto"
             />
           </div>
           <div>

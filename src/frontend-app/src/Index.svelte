@@ -159,7 +159,7 @@
                     <div class="col">
                       <div class="dropdown  dropend">
                         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                     {linha_produto.nome_produto}
+                     {linha_produto.imagem_produtoproduto}
                     </button>
                     <ul class="dropdown-menu">
                       <li><a class="dropdown-item" href="#">{linha_produto.descricao_produto}</a></li>
@@ -186,7 +186,7 @@
     {/if}
       <hr>
       {#if produtos}
-      <h1 class="subtitulo">DISCOS</h1>
+      <h1 class="subtitulo">CDs</h1>
       <div id="imageCarousel2" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
           {#each Object.values(produtos).slice(0, Math.ceil(Object.values(produtos).length / 3)) as _, index}
@@ -197,7 +197,7 @@
                   <div class="col">
                     <div class="dropdown  dropend">
                       <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                   {linha_produto.imagem_produto}
+                  <img src = "/src/assets/album10.png" alt = {linha_produto.descricao_produto} >
                   </button>
                   <ul class="dropdown-menu">
                     <li><img src={linha_produto.descricao_produto} alt={linha_produto.nome_produto}></li>
