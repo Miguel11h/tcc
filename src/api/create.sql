@@ -11,3 +11,5 @@ CREATE TABLE IF NOT EXISTS produto (
     descricao_produto TEXT NOT NULL UNIQUE,
     preco_produto TEXT NOT NULL 
 );
+
+ALTER TABLE produto ADD COLUMN imagem_produto TEXT;

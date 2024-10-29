@@ -26,18 +26,6 @@
       }
   });
 
-  const carregarUsuarios = async () => {
-    try {
-      let res = await axiosInstance.get(API_BASE_URL + "/usuarios");
-      usuarios = res.data.usuarios;
-      colunasUsuarios = Object.keys(usuarios[0]);
-      error = null; // Limpa o erro se a requisição for bem-sucedida
-    } catch (err) {
-      error = "Erro ao buscar dados: " + err.response?.data?.message || err.message;;
-      console.error(err);
-      usuarios = null; // Limpa o resultado em caso de erro
-    }
-  };
 
   const cadastrarUsuario = async () => {
     try {

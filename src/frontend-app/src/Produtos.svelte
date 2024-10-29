@@ -15,7 +15,7 @@
     let usuarios = null;
     let usuarioLogado = null;
     let produtos = null;
-    let novoProduto = { nome: "", descricao: "", preco: 0 };
+    let novoProduto = { nome: "", descricao: "", preco: 0,  imagem: null };
     
     const API_BASE_URL = "http://localhost:3000";
   
@@ -27,6 +27,12 @@
             Accept: "application/json",
         }
     });
+    const handleImageUpload = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    novoProduto.imagem = file;
+  }
+};
   
     const carregarUsuarios = async () => {
       try {
@@ -134,7 +140,7 @@
     try {
       let res = await axiosInstance.post(API_BASE_URL + "/produtos/novo", novoProduto);
       resultado = res.data;
-      novoProduto = { nome: "", descricao: "", preco: 0 };
+      novoProduto = { nome: "", descricao: "", preco: 0, imagem: null };
       carregarProdutos();
       error = null;
     } catch (err) {
@@ -215,6 +221,16 @@ onMount(() => {
               bind:value={novoProduto.preco}
               placeholder="Insira o preço do produto"
               required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="imagem" class="form-label">Imagem do Produto:</label>
+            <input
+              type="file"
+              class="form-control"
+              id="imagem"
+              accept="image/*"
+              on:change={event => handleImageUpload(event)}
             />
           </div>
           <div>

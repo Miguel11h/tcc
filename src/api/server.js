@@ -379,12 +379,12 @@ app.post('/usuarios/senha', async (req, res) => {
 });
 
 app.post('/produtos/novo', (req, res) => {
-  const { nome, descricao, preco} = req.body;
+  const { nome, descricao, preco, imagem} = req.body;
 
   const db = geraConexaoDeBancoDeDados();
   db.run(
-    'INSERT INTO produto(nome_produto, descricao_produto, preco_produto) VALUES (?, ?, ?)',
-    [nome, descricao, preco],
+    'INSERT INTO produto(nome_produto, descricao_produto, preco_produto, imagem_produto) VALUES (?, ?, ?, ?)',
+    [nome, descricao, preco, imagem],
     (err) => {
       if (err) {
         return res.status(500).json({ status: 'failed', message: 'Erro ao adicionar o produto', error: err.message });
