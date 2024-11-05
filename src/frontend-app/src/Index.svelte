@@ -157,20 +157,32 @@
                 <div class="row">
                   {#each Object.values(produtos).slice(index * 3, index * 3 + 3) as linha_produto}
                     <div class="col">
-                      <div class="dropdown  dropend">
-                        <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                     <img src="{linha_produto.imagem_produto}" alt="" class="d-block w-100">
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li><p><b>{linha_produto.nome_produto}</b></p></li>
-                      <li><p><b>R${linha_produto.preco_produto}</b></p></li>
-                      <li><button type="button" class="btn btn-success">COMPRAR</button>
-                      <button type="button" class="btn btn-warning"><svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="#f3e6d8" class="bi bi-cart4" viewBox="0 0 16 16">
-                        <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"/>
-                      </svg>
-                      </button></li>
-                    </ul>
-                    </div>
+                      <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{linha_produto.id_produto}">
+                        <img src="{linha_produto.imagem_produto}" alt="" class="d-block w-100">
+                      </button>
+    
+                      <!-- Modal -->
+                      <div class="modal fade" id="exampleModalCenter{linha_produto.id_produto}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle{linha_produto.id_produto}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <img src="{linha_produto.imagem_produto}" alt="" class="d-block w-100">
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <p><b>{linha_produto.nome_produto}</b></p>
+                              <p><i>{linha_produto.descricao_produto}</i></p>
+                              <p>R${linha_produto.preco_produto}</p>
+
+
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">COMPRAR</button>
+                              <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>  
                     </div>
                   {/each}
                 </div>
@@ -178,6 +190,8 @@
             </div>
           {/each}
         </div>
+      </div>
+    
         
         <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -187,8 +201,7 @@
         <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Próxima</span>
-        </button>
-      </div>
+        </button> 
     {/if}
       <hr>
       {#if produtos}
@@ -201,14 +214,32 @@
                 <div class="row">
                   {#each Object.values(produtos).slice(index * 3, index * 3 + 3) as linha_produto}
                   <div class="col">
-                    <div class="dropdown  dropend">
-                      <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="{linha_produto.imagem_produto}" alt="" class="d-block w-100">
-                  </button>
-                  <ul class="dropdown-menu">
-                    {linha_produto.nome_produto}
-                  </ul>
-                  </div>
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{linha_produto.id_produto}">
+                      <img src="{linha_produto.imagem_produto}" alt="" class="d-block w-100">
+                    </button>
+  
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalCenter{linha_produto.id_produto}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle{linha_produto.id_produto}" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <img src="{linha_produto.imagem_produto}" alt="" class="d-block w-100">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <p><b>{linha_produto.nome_produto}</b></p>
+                            <p><i>{linha_produto.descricao_produto}</i></p>
+                            <p>R${linha_produto.preco_produto}</p>
+
+
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">COMPRAR</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>  
                   </div>
                   {/each}
                 </div>
@@ -237,6 +268,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </main>
