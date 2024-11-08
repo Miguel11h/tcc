@@ -516,6 +516,146 @@ app.delete('/produtos/:id_produto', (req, res) => {
   db.close();
 });
 
+app.post('/produtos_cd/novo', (req, res) => {
+  const { nome_cd, descricao_cd, preco_cd, imagem_cd} = req.body;
+
+  const db = geraConexaoDeBancoDeDados();
+  db.run(
+    'INSERT INTO produto_cd(nome_produto_cd, descricao_produto_cd, preco_produto_cd, imagem_produto_cd) VALUES (?, ?, ?, ?)',
+    [nome_cd, descricao_cd, preco_cd, imagem_cd],
+    (err) => {
+      if (err) {
+        return res.status(500).json({ status: 'failed', message: 'Erro ao adicionar o produto', error: err.message });
+      }
+      res.status(200).json({ status: 'success', message: 'Produto adicionado com sucesso!' });
+    }
+  );
+  db.close();
+});
+
+// Rota para listar todos os produtos
+app.get('/produtos_cd', (req, res) => {
+  const db = geraConexaoDeBancoDeDados();
+  db.all('SELECT * FROM produto_cd', [], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ status: 'failed', message: 'Erro ao buscar produtos', error: err.message });
+    }
+    res.status(200).json({ status: 'success', produtos: rows });
+  });
+  db.close();
+});
+
+app.post('/produtos_cd/nome', (req, res) => {
+  const { id_produto_cd, nome_cd } = req.body;
+  let db = new sqlite3.Database('./users.db', (err) => {
+    if (err) {
+      return res.status(500).json({ status: 'failed', message: 'Erro ao conectar ao banco de dados!', error: err.message });
+    }
+  });
+
+  db.run('UPDATE produto_cd SET nome_produto_cd = ? WHERE id_produto_cd = ?', [nome_cd, id_produto_cd], function (err) {
+    if (err) {
+      return res.status(500).json({ status: 'failed', message: 'Erro ao atualizar o nome!', error: err.message });
+    }
+
+    res.status(200).json({ status: 'success', message: 'Nome atualizado com sucesso!' });
+  });
+
+  db.close();
+});
+
+app.post('/produtos_cd/descricao', (req, res) => {
+  const { id_produto_cd, descricao_cd } = req.body;
+  let db = new sqlite3.Database('./users.db', (err) => {
+    if (err) {
+      return res.status(500).json({ status: 'failed', message: 'Erro ao conectar ao banco de dados!', error: err.message });
+    }
+  });
+
+  db.run('UPDATE produto_cd SET descricao_produto_cd = ? WHERE id_produto_cd = ?', [descricao_cd, id_produto_cd], function (err) {
+    if (err) {
+      return res.status(500).json({ status: 'failed', message: 'Erro ao atualizar a descrição!', error: err.message });
+    }
+
+    res.status(200).json({ status: 'success', message: 'Descrição atualizada com sucesso!' });
+  });
+
+  db.close();
+});
+
+app.post('/produtos_cd/preco', (req, res) => {
+  const { id_produto_cd, preco_cd } = req.body;
+  let db = new sqlite3.Database('./users.db', (err) => {
+    if (err) {
+      return res.status(500).json({ status: 'failed', message: 'Erro ao conectar ao banco de dados!', error: err.message });
+    }
+  });
+
+  db.run('UPDATE produto_cd SET preco_produto_cd = ? WHERE id_produto_cd = ?', [preco_cd, id_produto_cd], function (err) {
+    if (err) {
+      return res.status(500).json({ status: 'failed', message: 'Erro ao atualizar o preço!', error: err.message });
+    }
+
+    res.status(200).json({ status: 'success', message: 'Preço atualizado com sucesso!' });
+  });
+
+  db.close();
+});
+
+app.post('/produtos_cd/imagem', (req, res) => {
+  const { id_produto_cd, imagem_cd } = req.body;
+  let db = new sqlite3.Database('./users.db', (err) => {
+    if (err) {
+      return res.status(500).json({ status: 'failed', message: 'Erro ao conectar ao banco de dados!', error: err.message });
+    }
+  });
+
+  db.run('UPDATE produto_cd SET imagem_produto_cd = ? WHERE id_produto_cd = ?', [imagem_cd, id_produto_cd], function (err) {
+    if (err) {
+      return res.status(500).json({ status: 'failed', message: 'Erro ao atualizar a imagem!', error: err.message });
+    }
+
+    res.status(200).json({ status: 'success', message: 'Imagem atualizada com sucesso!' });
+  });
+
+  db.close();
+});
+
+// Rota para atualizar um produto por ID
+app.put('/produtos_cd/:id_produto', (req, res) => {
+  const { id_produto_cd } = req.params;
+  const { nome_cd, descricao_cd, preco_cd } = req.body;
+
+  const db = geraConexaoDeBancoDeDados();
+  db.run(
+    'UPDATE produto_cd SET nome_produto_cd = ?, descricao_produto_cd = ?, preco_produto_cd = ? WHERE id_produto_cd = ?',
+    [nome_cd, descricao_cd, preco_cd, id_produto_cd],
+    function (err) {
+      if (err) {
+        return res.status(500).json({ status: 'failed', message: 'Erro ao atualizar o produto', error: err.message });
+      }
+      res.status(200).json({ status: 'success', message: 'Produto atualizado com sucesso!' });
+    }
+  );
+  db.close();
+});
+
+// Rota para excluir um produto por ID
+app.delete('/produtos_cd/:id_produto', (req, res) => {
+  const { id_produto_cd } = req.params;
+
+  const db = geraConexaoDeBancoDeDados();
+  db.run('DELETE FROM produto_cd WHERE id_produto_cd = ?', [id_produto_cd], function (err) {
+    if (err) {
+      return res.status(500).json({ status: 'failed', message: 'Erro ao excluir o produto', error: err.message });
+    }
+    res.status(200).json({ status: 'success', message: 'Produto excluído com sucesso!' });
+  });
+  db.close();
+});
+
+
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });

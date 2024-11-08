@@ -12,4 +12,11 @@ CREATE TABLE IF NOT EXISTS produto (
     preco_produto TEXT NOT NULL 
 );
 
-ALTER TABLE produto ADD COLUMN imagem_produto TEXT;
+
+CREATE TABLE IF NOT EXISTS produto_cd (
+    id_produto_cd INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome_produto_cd TEXT NOT NULL,
+    descricao_produto_cd TEXT NOT NULL UNIQUE,
+    preco_produto_cd TEXT NOT NULL,
+    imagem_produto_cd TEXT NOT NULL
+);

@@ -12,6 +12,10 @@
   let novaDescricao = "";
   let novoPreco = "";
   let novaImagem = null;
+  let novoNomeProduto_cd = "";
+  let novaDescricao_cd = "";
+  let novoPreco_cd = "";
+  let novaImagem_cd = null;
   let error = null;
   let resultado = null;
   let usuarios = null;
@@ -19,7 +23,8 @@
   let colunas_usuarios = null;
   let produtos = null;
   let colunas_produtos = null;
-  let novoProduto = { nome: "", descricao: "", preco: 0, imagem: null};
+  let produtos_cd = null;
+  let colunas_produtos_cd = null;
 
   const API_BASE_URL= "http://localhost:3000";
 
@@ -113,23 +118,6 @@ const buscarUsuarioLogado = async () => {
     }
 };
 
-const logout = async () => {
-  try {
-    let res = await axiosInstance.post("/logout");
-    resultado = res.data;
-
-    // Redirecionar para página de logon após logout
-    if (resultado && resultado.status === "success") { 
-          window.location.href = "/login.html";  
-    }
-    error = null; // Limpa o erro se a requisição for bem-sucedida
-  } catch (err) {
-    error = "Erro ao buscar dados: " + err.response?.data?.message || err.message;
-    console.error(err);
-    resultado = null; // Limpa o resultado em caso de erro
-  }
-};
-
 const carregarProdutos = async () => {
     try {
       let res = await axiosInstance.get(API_BASE_URL + "/produtos");
@@ -187,9 +175,68 @@ await editarProduto("/produtos/imagem", { id_produto, imagem: novaImagem });
 carregarProdutos();
 };
 
+const carregarProdutosCd = async () => {
+  try {
+    let res = await axiosInstance.get(API_BASE_URL + "/produtos_cd");
+    produtos_cd = res.data.produtos;
+    colunas_produtos_cd = Object.keys(produtos_cd[0]);
+    error = null;
+  } catch (err) {
+    console.error(err);
+    produtos_cd = null;
+  }
+};
+
+const deletarProdutoCd = async (id) => {
+  try {
+    let res = await axios.delete(`${API_BASE_URL}/produtos_cd/${id}`);
+    resultado = res.data;
+    carregarProdutosCd();
+    error = null;
+  } catch (err) {
+    error = "Erro ao deletar produto: " + (err.response?.data?.message || err.message);
+    resultado = null;
+  }
+};
+
+const editarProdutoCd = async (endpoint, data) => {
+  try {
+    let res = await axios.post(API_BASE_URL + endpoint, data, {
+      headers: { Accept: "application/json" },
+    });
+    resultado = res.data;
+    error = null; // Limpa o erro se a requisição for bem-sucedida
+  } catch (err) {
+    error = "Erro ao enviar dados: " + (err.response?.data?.message || err.message);
+    resultado = null; // Limpa o resultado em caso de erro
+  }
+};
+
+const editarNomeProdutoCd = async (id_produto_cd, novoNomeProduto_cd) => {
+  await editarProdutoCd("/produtos_cd/nome", { id_produto_cd, nome_cd: novoNomeProduto_cd });
+  carregarProdutosCd();
+};
+
+const editarDescricaoCd = async (id_produto_cd, novaDescricao_cd) => {
+  await editarProdutoCd("/produtos_cd/descricao", { id_produto_cd, descricao_cd: novaDescricao_cd });
+  carregarProdutosCd();
+};
+
+const editarPrecoCd = async (id_produto_cd, novoPreco_cd) => {
+  await editarProdutoCd("/produtos_cd/preco", { id_produto_cd, preco_cd: novoPreco_cd });
+  carregarProdutosCd();
+};
+
+const editarImagemCd = async (id_produto_cd, novaImagem_cd) => {
+  await editarProdutoCd("/produtos_cd/imagem", { id_produto_cd, imagem_cd: novaImagem_cd });
+  carregarProdutosCd();
+};
+
+
 onMount(() => {
   buscarUsuarioLogado();
   carregarProdutos();
+  carregarProdutosCd();
   carregarUsuarios();
 }); 
 
@@ -313,13 +360,63 @@ onMount(() => {
                     <input type="text" bind:value ={novaDescricao} id="edit_descricao" class="form-control">
                     <button on:click={() => editarDescricao(linha_produto.id_produto, novaDescricao)} class="btn btn-primary">Salvar</button>
       
-                    <label for="edit_precao">Editar Preço:</label>
+                    <label for="edit_preco">Editar Preço:</label>
                     <input type="text" bind:value ={novoPreco} id="edit_preco" class="form-control">
                     <button on:click={() => editarPreco(linha_produto.id_produto, novoPreco)} class="btn btn-primary">Salvar</button>
 
-                    <label for="edit_precao">Editar Imagem:</label>
+                    <label for="edit_imagem">Editar Imagem:</label>
                     <input type="text" bind:value ={novaImagem} id="edit_imagem" class="form-control">
                     <button on:click={() => editarImagem(linha_produto.id_produto, novaImagem)} class="btn btn-primary">Salvar</button>
+                  </ul>
+                </div> 
+              </td>
+            </tr>
+          {/each}
+        </tbody>
+      </table>
+    </div>
+  {/if}
+
+  {#if produtos_cd}
+    <div>
+      <table class="table table-hover table-bordered text-center rounded">
+        <thead>
+          {#each colunas_produtos_cd as nome_coluna_produto_cd}
+              <th>{nome_coluna_produto_cd}</th>
+            {/each}
+            <th></th>
+        </thead>
+          <tr>
+            <tbody>
+            {#each Object.values(produtos_cd) as linha_produto_cd}
+            <tr>
+              {#each colunas_produtos_cd as atributo_produto_cd}
+                <td>{linha_produto_cd[atributo_produto_cd]}</td>
+              {/each}
+              <td>
+                <button on:click={() => deletarProdutoCd(linha_produto_cd.id_produto_cd)} class="rounded">Remover</button>
+              </td>
+              <td>
+                <div class="dropdown  dropend">
+                  <button type="button" class="dropdown-toggle rounded" data-bs-toggle="dropdown">
+                    Editar
+                  </button>
+                  <ul class="dropdown-menu">
+                    <label for="edit_nome_produto">Editar Nome:</label>
+                    <input type="text" bind:value={novoNomeProduto_cd} id="edit_nome" class="form-control">
+                    <button on:click={() => editarNomeProdutoCd(linha_produto_cd.id_produto_cd, novoNomeProduto_cd)} class="btn btn-primary">Salvar</button>
+
+                    <label for="edit_descricao">Editar Descrição:</label>
+                    <input type="text" bind:value={novaDescricao_cd} id="edit_descricao" class="form-control">
+                    <button on:click={() => editarDescricaoCd(linha_produto_cd.id_produto_cd, novaDescricao_cd)} class="btn btn-primary">Salvar</button>
+      
+                    <label for="edit_preco">Editar Preço:</label>
+                    <input type="text" bind:value={novoPreco_cd} id="edit_preco" class="form-control">
+                    <button on:click={() => editarPrecoCd(linha_produto_cd.id_produto_cd, novoPreco_cd)} class="btn btn-primary">Salvar</button>
+
+                    <label for="edit_imagem">Editar Imagem:</label>
+                    <input type="text" bind:value={novaImagem_cd} id="edit_imagem" class="form-control">
+                    <button on:click={() => editarImagemCd(linha_produto_cd.id_produto_cd, novaImagem_cd)} class="btn btn-primary">Salvar</button>
                   </ul>
                 </div> 
               </td>

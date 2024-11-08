@@ -9,6 +9,8 @@
   let colunasUsuarios = null;
   let colunas_produtos = null;
   let produtos = null;
+  let colunas_produtos_cd = null;
+  let produtos_cd = null;
   import './style.css';
   import './assets/logo.png'
   import './assets/ouvindo.png'
@@ -48,6 +50,18 @@
     }
   };
 
+  const carregarProdutosCd = async () => {
+    try {
+      let res = await axiosInstance.get(API_BASE_URL + "/produtos_cd");
+      produtos_cd = res.data.produtos;
+      colunas_produtos_cd = Object.keys(produtos_cd[0]);
+      error = null;
+    } catch (err) {
+      console.error(err);
+      produtos_cd = null;
+    }
+  };
+
   const buscarUsuarioLogado = async () => {
       try {
           const res = await axiosInstance.get(API_BASE_URL + '/usuarios/me');
@@ -80,6 +94,7 @@
     buscarUsuarioLogado();
     carregarProdutos();
     carregarUsuarios();
+    carregarProdutosCd();
   }); 
 
 </script>
@@ -204,32 +219,32 @@
         </button> 
     {/if}
       <hr>
-      {#if produtos}
+      {#if produtos_cd}
       <h1 class="subtitulo">CDs</h1>
       <div id="imageCarousel2" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
-          {#each Object.values(produtos).slice(0, Math.ceil(Object.values(produtos).length / 3)) as _, index}
+          {#each Object.values(produtos_cd).slice(0, Math.ceil(Object.values(produtos_cd).length / 3)) as _, index}
             <div class="carousel-item {index === 0 ? 'active' : ''}">
               <div class="container">
                 <div class="row">
-                  {#each Object.values(produtos).slice(index * 3, index * 3 + 3) as linha_produto}
+                  {#each Object.values(produtos_cd).slice(index * 3, index * 3 + 3) as linha_produto_cd}
                   <div class="col">
-                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{linha_produto.id_produto}">
-                      <img src="{linha_produto.imagem_produto}" alt="" class="d-block w-100">
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{linha_produto_cd.id_produto_cd}">
+                      <img src="{linha_produto_cd.imagem_produto_cd}" alt="{linha_produto_cd.imagem_produto_cd}" class="d-block w-100">
                     </button>
   
                     <!-- Modal -->
-                    <div class="modal fade" id="exampleModalCenter{linha_produto.id_produto}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle{linha_produto.id_produto}" aria-hidden="true">
+                    <div class="modal fade" id="exampleModalCenter{linha_produto_cd.id_produto_cd}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle{linha_produto_cd.id_produto_cd}" aria-hidden="true">
                       <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <img src="{linha_produto.imagem_produto}" alt="" class="d-block w-100">
+                            <img src="{linha_produto_cd.imagem_produto_cd}" alt="" class="d-block w-100">
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                           </div>
                           <div class="modal-body">
-                            <p><b>{linha_produto.nome_produto}</b></p>
-                            <p><i>{linha_produto.descricao_produto}</i></p>
-                            <p>R${linha_produto.preco_produto}</p>
+                            <p><b>{linha_produto_cd.nome_produto_cd}</b></p>
+                            <p><i>{linha_produto_cd.descricao_produto_cd}</i></p>
+                            <p>R${linha_produto_cd.preco_produto_cd}</p>
 
 
                           </div>

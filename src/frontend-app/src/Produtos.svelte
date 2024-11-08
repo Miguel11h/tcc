@@ -16,6 +16,8 @@
     let usuarioLogado = null;
     let produtos = null;
     let novoProduto = { nome: "", descricao: "", preco: 0,  imagem: null };
+    let produtos_cd = null;
+    let novoProduto_cd = { nome_cd: "", descricao_cd: "", preco_cd: 0,  imagem_cd: null };
     
     const API_BASE_URL = "http://localhost:3000";
   
@@ -27,12 +29,6 @@
             Accept: "application/json",
         }
     });
-    const handleImageUpload = (event) => {
-  const file = event.target.files[0];
-  if (file) {
-    novoProduto.imagem = file;
-  }
-};
   
     const carregarUsuarios = async () => {
       try {
@@ -124,18 +120,6 @@
     }
   };
 
-  const deletarProduto = async (id) => {
-    try {
-      let res = await axios.delete(`${API_BASE_URL}/produtos/${id}`);
-      resultado = res.data;
-      carregarProdutos();
-      error = null;
-    } catch (err) {
-      error = "Erro ao deletar produto: " + (err.response?.data?.message || err.message);
-      resultado = null;
-    }
-  };
-
   const adicionarProduto = async () => {
     try {
       let res = await axiosInstance.post(API_BASE_URL + "/produtos/novo", novoProduto);
@@ -149,11 +133,34 @@
     }
   };
 
+  const carregarProdutosCd = async () => {
+    try {
+      let res = await axiosInstance.get(API_BASE_URL + "/produtos_cd");
+      produtos_cd = res.data.produtos_cd;
+      error = null;
+    } catch (err) {
+      console.error(err);
+      produtos_cd = null;
+    }
+  };
+  const adicionarProdutoCd = async () => {
+    try {
+      let res = await axiosInstance.post(API_BASE_URL + "/produtos_cd/novo", novoProduto_cd);
+      resultado = res.data;
+      novoProduto_cd = { nome_cd: "", descricao_cd: "", preco_cd: 0, imagem_cd: null };
+      carregarProdutosCd();
+      error = null;
+    } catch (err) {
+      error = "Erro ao adicionar produto: " + (err.response?.data?.message || err.message);
+      resultado = null;
+    }
+  };
 
 onMount(() => {
   buscarUsuarioLogado();
   carregarProdutos();
   carregarUsuarios();
+  carregarProdutosCd();
 }); 
     
   </script>
@@ -186,7 +193,7 @@ onMount(() => {
       </div>
     </div>
   </div>
-    <div class="container-fluid d-flex align-items-center justify-content-between min-vh-100">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
     
       <div class="register-container animated">
           <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%;">
@@ -247,6 +254,67 @@ onMount(() => {
         </div>
         </div>
         </div>
+        <div class="">
+    
+          <div class="register-container animated">
+              <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%;">
+                  <h2 class="text-center mb-4"><b>Cadastro de CDs</b></h2>
+            <form on:submit|preventDefault={adicionarProdutoCd} class="form_exemplo">
+              <div class="mb-3">
+                <label for="nome" class="form-label">Nome do Produto:</label>
+                <input 
+                type="text"
+                class="form-control"
+                id="nome" 
+                bind:value={novoProduto_cd.nome_cd} 
+                placeholder="Digite o nome do produto">
+              </div>
+              <div class="mb-3">
+                <label for="descricao" class="form-label">Descrição do Produto:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="descricao"
+                  bind:value={novoProduto_cd.descricao_cd}
+                  placeholder="Digite a descrição do produto"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="preco" class="form-label">Preço do Produto:</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="preco"
+                  bind:value={novoProduto_cd.preco_cd}
+                  placeholder="Insira o preço do produto"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="imagem" class="form-label">Imagem do Produto:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="imagem"
+                  bind:value={novoProduto_cd.imagem_cd}
+                  placeholder="Insira a imagem do produto"
+                />
+              </div>
+              <div>
+                <button type="submit" class="btn-primary w-100 rounded">Registrar Produto</button>
+                {#if error}
+                  <p style="color: red;">{error}</p>
+                {/if}
+                {#if resultado && resultado.message}
+                  <p style="color: green;">{resultado.message}</p>
+                {/if}
+                <p id="message" class="mt-3 text-center"></p>
+              </div>
+            </form>
+            </div>
+            </div>
+            </div>
       <footer class="footer mt-auto py-3">
         <div class="container text-center">
             <span class="text-muted">DISCONOW &copy; 2024</span>
