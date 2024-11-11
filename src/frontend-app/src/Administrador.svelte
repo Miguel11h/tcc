@@ -25,6 +25,8 @@
   let colunas_produtos = null;
   let produtos_cd = null;
   let colunas_produtos_cd = null;
+  let novoProduto = { nome: "", descricao: "", preco: 0,  imagem: null };
+  let novoProduto_cd = { nome_cd: "", descricao_cd: "", preco_cd: 0,  imagem_cd: null };
 
   const API_BASE_URL= "http://localhost:3000";
 
@@ -154,6 +156,18 @@ try {
   resultado = null; // Limpa o resultado em caso de erro
 }
 };
+const adicionarProduto = async () => {
+    try {
+      let res = await axiosInstance.post(API_BASE_URL + "/produtos/novo", novoProduto);
+      resultado = res.data;
+      novoProduto = { nome: "", descricao: "", preco: 0, imagem: null };
+      carregarProdutos();
+      error = null;
+    } catch (err) {
+      error = "Erro ao adicionar produto: " + (err.response?.data?.message || err.message);
+      resultado = null;
+    }
+  };
 
 const editarNomeProduto = async (id_produto, novoNomeProduto) => {
 await editarProduto("/produtos/nome", { id_produto, nome: novoNomeProduto });
@@ -211,6 +225,19 @@ const editarProdutoCd = async (endpoint, data) => {
     resultado = null; // Limpa o resultado em caso de erro
   }
 };
+
+const adicionarProdutoCd = async () => {
+    try {
+      let res = await axiosInstance.post(API_BASE_URL + "/produtos_cd/novo", novoProduto_cd);
+      resultado = res.data;
+      novoProduto_cd = { nome_cd: "", descricao_cd: "", preco_cd: 0, imagem_cd: null };
+      carregarProdutosCd();
+      error = null;
+    } catch (err) {
+      error = "Erro ao adicionar produto: " + (err.response?.data?.message || err.message);
+      resultado = null;
+    }
+  };
 
 const editarNomeProdutoCd = async (id_produto_cd, novoNomeProduto_cd) => {
   await editarProdutoCd("/produtos_cd/nome", { id_produto_cd, nome_cd: novoNomeProduto_cd });
@@ -298,11 +325,11 @@ onMount(() => {
                 <td>{linha_usuario[atributo]}</td>
               {/each}
               <td>
-                <button on:click={() => deletarUsuario(linha_usuario.id_usuario)} class="rounded">Remover</button>
+                <button on:click={() => deletarUsuario(linha_usuario.id_usuario)} class="rounded black">Remover</button>
               </td>
               <td>
                 <div class="dropdown dropend">
-                  <button type="button" class="dropdown-toggle rounded" data-bs-toggle="dropdown">
+                  <button type="button" class="dropdown-toggle rounded black" data-bs-toggle="dropdown">
                     Editar
                   </button>
                   <ul class="dropdown-menu">
@@ -326,7 +353,149 @@ onMount(() => {
       </table>
     </div>
     {/if}
-    <h2 class="mt-4">Gerenciamento de Produtos</h2> <button class="rounded"><a href="./produtos.html">ADICIONAR PRODUTOS</a></button>
+    <h2 class="mt-4">Gerenciamento de Produtos</h2>
+                      <button type="button" class="rounded black" data-bs-toggle="modal" data-bs-target="#exampleModalCenter1">
+                        Adicionar Discos
+                      </button>
+    
+                      <!-- Modal -->
+                      <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-body">
+                              <div class="register-container animated">
+                                <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%;">
+                                  <h2 class="text-center mb-4"><b>Cadastro de Discos</b></h2>
+                                  <form on:submit|preventDefault={adicionarProduto} class="form_exemplo">
+                                    <div class="mb-3">
+                                      <label for="nome" class="form-label">Nome do Produto:</label>
+                                      <input 
+                                        type="text"
+                                        class="form-control"
+                                        id="nome" 
+                                        bind:value={novoProduto.nome} 
+                                        placeholder="Digite o nome do produto">
+                                    </div>
+                                    <div class="mb-3">
+                                      <label for="descricao" class="form-label">Descrição do Produto:</label>
+                                      <input
+                                        type="text"
+                                        class="form-control"
+                                        id="descricao"
+                                        bind:value={novoProduto.descricao}
+                                        placeholder="Digite a descrição do produto"
+                                        required
+                                      />
+                                    </div>
+                                    <div class="mb-3">
+                                      <label for="preco" class="form-label">Preço do Produto:</label>
+                                      <input
+                                        type="number"
+                                        class="form-control"
+                                        id="preco"
+                                        bind:value={novoProduto.preco}
+                                        placeholder="Insira o preço do produto"
+                                        required
+                                      />
+                                    </div>
+                                    <div class="mb-3">
+                                      <label for="imagem" class="form-label">Imagem do Produto:</label>
+                                      <input
+                                        type="text"
+                                        class="form-control"
+                                        id="imagem"
+                                        bind:value={novoProduto.imagem}
+                                        placeholder="Insira a imagem do produto"
+                                      />
+                                    </div>
+                                    <div>
+                                      <button type="submit" class="btn-primary w-100 rounded">Registrar Produto</button>
+                                      {#if error}
+                                        <p style="color: red;">{error}</p>
+                                      {/if}
+                                      {#if resultado && resultado.message}
+                                        <p style="color: green;">{resultado.message}</p>
+                                      {/if}
+                                      <p id="message" class="mt-3 text-center"></p>
+                                    </div>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>  
+                      <button type="button" class="rounded black" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+                        Adicionar CDs
+                      </button>
+    
+                      <!-- Modal -->
+                      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-body">
+                              <div class="register-container animated">
+                                <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%;">
+                                  <h2 class="text-center mb-4"><b>Cadastro de CDs</b></h2>
+                                  <form on:submit|preventDefault={adicionarProdutoCd} class="form_exemplo">
+                                    <div class="mb-3">
+                                      <label for="nome" class="form-label">Nome do Produto:</label>
+                                      <input 
+                                        type="text"
+                                        class="form-control"
+                                        id="nome" 
+                                        bind:value={novoProduto_cd.nome_cd} 
+                                        placeholder="Digite o nome do produto">
+                                    </div>
+                                    <div class="mb-3">
+                                      <label for="descricao" class="form-label">Descrição do Produto:</label>
+                                      <input
+                                        type="text"
+                                        class="form-control"
+                                        id="descricao"
+                                        bind:value={novoProduto_cd.descricao_cd}
+                                        placeholder="Digite a descrição do produto"
+                                        required
+                                      />
+                                    </div>
+                                    <div class="mb-3">
+                                      <label for="preco" class="form-label">Preço do Produto:</label>
+                                      <input
+                                        type="number"
+                                        class="form-control"
+                                        id="preco"
+                                        bind:value={novoProduto_cd.preco_cd}
+                                        placeholder="Insira o preço do produto"
+                                        required
+                                      />
+                                    </div>
+                                    <div class="mb-3">
+                                      <label for="imagem" class="form-label">Imagem do Produto:</label>
+                                      <input
+                                        type="text"
+                                        class="form-control"
+                                        id="imagem"
+                                        bind:value={novoProduto_cd.imagem_cd}
+                                        placeholder="Insira a imagem do produto"
+                                      />
+                                    </div>
+                                    <div>
+                                      <button type="submit" class="btn-primary w-100 rounded">Registrar Produto</button>
+                                      {#if error}
+                                        <p style="color: red;">{error}</p>
+                                      {/if}
+                                      {#if resultado && resultado.message}
+                                        <p style="color: green;">{resultado.message}</p>
+                                      {/if}
+                                      <p id="message" class="mt-3 text-center"></p>
+                                    </div>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
   {#if produtos}
     <div>
       <table class="table table-hover table-bordered text-center rounded">
@@ -344,11 +513,11 @@ onMount(() => {
                 <td>{linha_produto[atributo_produto]}</td>
               {/each}
               <td>
-                <button on:click={() => deletarProduto(linha_produto.id_produto)} class="rounded">Remover</button>
+                <button on:click={() => deletarProduto(linha_produto.id_produto)} class="rounded black">Remover</button>
               </td>
               <td>
                 <div class="dropdown  dropend">
-                  <button type="button" class="dropdown-toggle rounded" data-bs-toggle="dropdown">
+                  <button type="button" class="dropdown-toggle rounded black" data-bs-toggle="dropdown">
                     Editar
                   </button>
                   <ul class="dropdown-menu">
@@ -394,11 +563,11 @@ onMount(() => {
                 <td>{linha_produto_cd[atributo_produto_cd]}</td>
               {/each}
               <td>
-                <button on:click={() => deletarProdutoCd(linha_produto_cd.id_produto_cd)} class="rounded">Remover</button>
+                <button on:click={() => deletarProdutoCd(linha_produto_cd.id_produto_cd)} class="rounded black">Remover</button>
               </td>
               <td>
                 <div class="dropdown  dropend">
-                  <button type="button" class="dropdown-toggle rounded" data-bs-toggle="dropdown">
+                  <button type="button" class="dropdown-toggle rounded black" data-bs-toggle="dropdown">
                     Editar
                   </button>
                   <ul class="dropdown-menu">
