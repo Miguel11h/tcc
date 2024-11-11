@@ -124,7 +124,7 @@
                   <li><button class="dropdown-item" on:click={logout}>Logout</button></li>
                 </ul>
               </div></li>
-              <li class="list-group-item"><a href="">CARRINHO</a></li>
+              <li class="list-group-item"><a href="carrinho.html">CARRINHO</a></li>
               {:else}
               <li class="list-group-item"><a href="login.html">USUÁRIO</a></li>
               {/if}
@@ -144,90 +144,69 @@
           </div>
         </div>
       </div>
-  
-  
-  <div class="container cardcarousel">
-        <div id="carouselExampleIndicators" class="carousel slide">
-          <div class="carousel-indicators btn-carousel">
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active bg-dark" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" class="bg-dark" aria-label="Slide 2"></button>
+    
+      <!-- Formulário -->
+      <div class="container">
+        <form novalidate>
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <label for="validationServer01">Produto</label>
+              <input type="text" class="form-control is-valid" id="validationServer01" placeholder="Nome" value="Mark" required>
+              <div class="valid-feedback">
+                Tudo certo!
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="validationServer02">Produto teste</label>
+              <input type="text" class="form-control is-valid" id="validationServer02" placeholder="Sobrenome" value="Otto" required>
+              <div class="valid-feedback">
+                Tudo certo!
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="validationServerUsername">produto tambem teste</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroupPrepend3">@</span>
+                </div>
+                <input type="text" class="form-control is-invalid" id="validationServerUsername" placeholder="Usuário" aria-describedby="inputGroupPrepend3" required>
+                <div class="invalid-feedback">
+                  Por favor, escolha um produto tambem teste válido.
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img src="/src/assets/slide1.png" class="d-block w-100" alt="Imagem de boas-vindas">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="validationServer03">prod test</label>
+              <input type="text" class="form-control is-invalid" id="validationServer03" placeholder="Cidade" required>
+              <div class="invalid-feedback">
+                Por favor, informe um prod test válido.
+              </div>
             </div>
-            <div class="carousel-item">
-              <img src="/src/assets/slide2.png" class="d-block w-100" alt="Imagem de oferta">
+            <div class="col-md-3 mb-3">
+              <label for="validationServer04">p t</label>
+              <input type="text" class="form-control is-invalid" id="validationServer04" placeholder="Estado" required>
+              <div class="invalid-feedback">
+                Por favor, informe um p t  válido.
+              </div>
             </div>
           </div>
-        </div>
-        <hr>
-        <form>
-            <div class="form-row">
-              <div class="col-md-4 mb-3">
-                <label for="validationServer01">Primeiro nome</label>
-                <input type="text" class="form-control is-valid" id="validationServer01" placeholder="Nome" value="Mark" required>
-                <div class="valid-feedback">
-                  Tudo certo!
-                </div>
-              </div>
-              <div class="col-md-4 mb-3">
-                <label for="validationServer02">Sobrenome</label>
-                <input type="text" class="form-control is-valid" id="validationServer02" placeholder="Sobrenome" value="Otto" required>
-                <div class="valid-feedback">
-                  Tudo certo!
-                </div>
-              </div>
-              <div class="col-md-4 mb-3">
-                <label for="validationServerUsername">Usuário</label>
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroupPrepend3">@</span>
-                  </div>
-                  <input type="text" class="form-control is-invalid" id="validationServerUsername" placeholder="Usuário" aria-describedby="inputGroupPrepend3" required>
-                  <div class="invalid-feedback">
-                    Por favor, escolha um nome de usuário.
-                  </div>
-                </div>
+          <div class="form-group">
+            <div class="form-check">
+              <input class="form-check-input is-invalid" type="checkbox" value="" id="invalidCheck3" required>
+              <label class="form-check-label" for="invalidCheck3">
+                Concordo com os termos e condições
+              </label>
+              <div class="invalid-feedback">
+                Você deve concordar, antes de continuar.
               </div>
             </div>
-            <div class="form-row">
-              <div class="col-md-6 mb-3">
-                <label for="validationServer03">Cidade</label>
-                <input type="text" class="form-control is-invalid" id="validationServer03" placeholder="Cidade" required>
-                <div class="invalid-feedback">
-                  Por favor, informe uma cidade válida.
-                </div>
-              </div>
-              <div class="col-md-3 mb-3">
-                <label for="validationServer04">Estado</label>
-                <input type="text" class="form-control is-invalid" id="validationServer04" placeholder="Estado" required>
-                <div class="invalid-feedback">
-                  Por favor, informe um estado válido.
-                </div>
-              </div>
-              <div class="col-md-3 mb-3">
-                <label for="validationServer05">CEP</label>
-                <input type="text" class="form-control is-invalid" id="validationServer05" placeholder="CEP" required>
-                <div class="invalid-feedback">
-                  Por favor, informe um CEP válido.
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="form-check">
-                <input class="form-check-input is-invalid" type="checkbox" value="" id="invalidCheck3" required>
-                <label class="form-check-label" for="invalidCheck3">
-                  Concordo com os termos e condições
-                </label>
-                <div class="invalid-feedback">
-                  Você deve concordar, antes de continuar.
-                </div>
-              </div>
-            </div>
-            <button class="btn btn-primary" type="submit">Enviar</button>
-          </form>
-  </div>
+          </div>
+          <button class="btn btn-primary" type="submit">Enviar</button>
+        </form>
+      </div>
+
       <footer class="footer mt-auto py-3">
         <div class="container text-center">
             <span class="text-muted">DISCONOW &copy; 2024</span>
