@@ -16,6 +16,8 @@
   import './assets/ouvindo.png'
   import Navbar from './Navbar.svelte';
   const API_BASE_URL = "http://localhost:3000";
+  let searchQuery = ''; // Variável para armazenar o valor da pesquisa
+  let filteredProdutos = []; // Armazena os produtos filtrados
 
   const axiosInstance = axios.create({
     withCredentials: true,
@@ -26,6 +28,16 @@
       }
   });
 
+  const searchProdutos = () => {
+    if (searchQuery.trim() === '') {
+      filteredProdutos = produtos; // Se não houver pesquisa, mostra todos os produtos
+    } else {
+      filteredProdutos = produtos.filter(produto => 
+        produto.nome_produto.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        produto.descricao_produto.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+  };
   const carregarUsuarios = async () => {
     try {
       let res = await axiosInstance.get(API_BASE_URL + "/usuarios");
@@ -99,13 +111,21 @@
 
 </script>
 
+<style>
+  .maximo {
+    max-width: 400px;
+  }
+</style>
+
 <main>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <Navbar></Navbar>
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
       <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasExampleLabel">DISCONOW</h5>
+        <a class="navbar-brand" href="index.html">
+          <img src="/src/assets/logo2.png" alt="Avatar Logo" style="width:100px;">
+      </a>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
@@ -144,9 +164,24 @@
         </div>
       </div>
     </div>
+ <div class="d-flex w-50" id="search-form">
+      <input 
+        class="form-control me-2" 
+        type="search" 
+        id="search-input" 
+        placeholder="Search..." 
+        aria-label="Search" 
+        bind:value={searchQuery}/> <!-- Captura a entrada do usuário -->
+      <button class="btn-primary sidebar rounded-5" type="submit" on:click={searchProdutos}>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+        </svg>
+      </button>
+    </div>
 
 
-<div class="container cardcarousel">
+
+    <div class="container cardcarousel">
       <div id="carouselExampleIndicators" class="carousel slide">
         <div class="carousel-indicators btn-carousel">
           <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active bg-dark" aria-current="true" aria-label="Slide 1"></button>
@@ -161,120 +196,151 @@
           </div>
         </div>
       </div>
-      <hr>
-      {#if produtos}
-      <h1 class="subtitulo">DISCOS</h1>
-      <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          {#each Object.values(produtos).slice(0, Math.ceil(Object.values(produtos).length / 3)) as _, index}
-            <div class="carousel-item {index === 0 ? 'active' : ''}">
-              <div class="container">
-                <div class="row">
-                  {#each Object.values(produtos).slice(index * 3, index * 3 + 3) as linha_produto}
-                    <div class="col">
-                      <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{linha_produto.id_produto}">
-                        <img src="{linha_produto.imagem_produto}" alt="" class="d-block w-100">
-                      </button>
-    
-                      <!-- Modal -->
-                      <div class="modal fade" id="exampleModalCenter{linha_produto.id_produto}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle{linha_produto.id_produto}" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <img src="{linha_produto.imagem_produto}" alt="" class="d-block w-100">
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                              <p><b>{linha_produto.nome_produto}</b></p>
-                              <p><i>{linha_produto.descricao_produto}</i></p>
-                              <p>R${linha_produto.preco_produto}</p>
+<div class="container cardcarousel">
 
-
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">COMPRAR</button>
-                              <button type="button" class="btn btn-primary">Save changes</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>  
-                    </div>
-                  {/each}
+  {#if searchQuery}
+  <h1 class="subtitulo">DISCOS</h1>
+  <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      {#each filteredProdutos.slice(0, Math.ceil(filteredProdutos.length / 3)) as _, index}
+        <div class="carousel-item {index === 0 ? 'active' : ''}">
+          <div class="container">
+            <div class="row">
+              {#each filteredProdutos.slice(index * 3, index * 3 + 3) as linha_produto}
+                <div class="col">
+                  <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{linha_produto.id_produto}">
+                    <img src="{linha_produto.imagem_produto}" alt="" class="d-block w-100">
+                  </button>
                 </div>
-              </div>
+              {/each}
             </div>
-          {/each}
+          </div>
         </div>
-      </div>
-    
-        
-        <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Anterior</span>
-        </button>
-        
-        <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Próxima</span>
-        </button> 
-    {/if}
-      <hr>
-      {#if produtos_cd}
-      <h1 class="subtitulo">CDs</h1>
-      <div id="imageCarousel2" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          {#each Object.values(produtos_cd).slice(0, Math.ceil(Object.values(produtos_cd).length / 3)) as _, index}
-            <div class="carousel-item {index === 0 ? 'active' : ''}">
-              <div class="container">
-                <div class="row">
-                  {#each Object.values(produtos_cd).slice(index * 3, index * 3 + 3) as linha_produto_cd}
+      {/each}
+    </div>
+  </div>
+
+  {:else}
+  
+    <hr>
+    {#if produtos}
+    <h1 class="subtitulo">DISCOS</h1>
+    <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        {#each Object.values(produtos).slice(0, Math.ceil(Object.values(produtos).length / 3)) as _, index}
+          <div class="carousel-item {index === 0 ? 'active' : ''}">
+            <div class="container">
+              <div class="row">
+                {#each Object.values(produtos).slice(index * 3, index * 3 + 3) as linha_produto}
                   <div class="col">
-                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{linha_produto_cd.id_produto_cd}">
-                      <img src="{linha_produto_cd.imagem_produto_cd}" alt="{linha_produto_cd.imagem_produto_cd}" class="d-block w-100">
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{linha_produto.id_produto}">
+                      <img src="{linha_produto.imagem_produto}" alt="" class="maximo d-block w-100">
                     </button>
   
                     <!-- Modal -->
-                    <div class="modal fade" id="exampleModalCenter{linha_produto_cd.id_produto_cd}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle{linha_produto_cd.id_produto_cd}" aria-hidden="true">
+                    <div class="modal fade" id="exampleModalCenter{linha_produto.id_produto}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle{linha_produto.id_produto}" aria-hidden="true">
                       <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <img src="{linha_produto_cd.imagem_produto_cd}" alt="" class="d-block w-100">
+                            <img src="{linha_produto.imagem_produto}" alt="" class="d-block w-100">
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                           </div>
                           <div class="modal-body">
-                            <p><b>{linha_produto_cd.nome_produto_cd}</b></p>
-                            <p><i>{linha_produto_cd.descricao_produto_cd}</i></p>
-                            <p>R${linha_produto_cd.preco_produto_cd}</p>
+                            <p><b>{linha_produto.nome_produto}</b></p>
+                            <p><i>{linha_produto.descricao_produto}</i></p>
+                            <p>R${linha_produto.preco_produto}</p>
 
 
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">COMPRAR</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#f3e6d8" class="bi bi-cart4" viewBox="0 0 16 16">
+                              <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"/>
+                            </svg></button>
                           </div>
                         </div>
                       </div>
                     </div>  
                   </div>
-                  {/each}
-                </div>
+                {/each}
               </div>
             </div>
-          {/each}
-        </div>
-        
-        <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel2" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Anterior</span>
-        </button>
-        
-        <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel2" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Próxima</span>
-        </button>
+          </div>
+        {/each}
       </div>
-    {/if}
-</div>
+    </div>
+  
+      
+      <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+      </button>
+      
+      <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Próxima</span>
+      </button> 
+  {/if}
+    <hr>
+    {#if produtos_cd}
+    <h1 class="subtitulo">CDs</h1>
+    <div id="imageCarousel2" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        {#each Object.values(produtos_cd).slice(0, Math.ceil(Object.values(produtos_cd).length / 3)) as _, index}
+          <div class="carousel-item {index === 0 ? 'active' : ''}">
+            <div class="container">
+              <div class="row">
+                {#each Object.values(produtos_cd).slice(index * 3, index * 3 + 3) as linha_produto_cd}
+                <div class="col">
+                  <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{linha_produto_cd.id_produto_cd}">
+                    <img src="{linha_produto_cd.imagem_produto_cd}" alt="{linha_produto_cd.imagem_produto_cd}" class="maximo d-block w-100">
+                  </button>
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="exampleModalCenter{linha_produto_cd.id_produto_cd}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle{linha_produto_cd.id_produto_cd}" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <img src="{linha_produto_cd.imagem_produto_cd}" alt="" class="d-block w-100">
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <p><b>{linha_produto_cd.nome_produto_cd}</b></p>
+                          <p><i>{linha_produto_cd.descricao_produto_cd}</i></p>
+                          <p>R${linha_produto_cd.preco_produto_cd}</p>
+
+
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">COMPRAR</button>
+                          <button type="button" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#f3e6d8" class="bi bi-cart4" viewBox="0 0 16 16">
+                            <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"/>
+                          </svg></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>  
+                </div>
+                {/each}
+              </div>
+            </div>
+          </div>
+        {/each}
+      </div>
+      
+      <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel2" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+      </button>
+      
+      <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel2" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Próxima</span>
+      </button>
+    </div>
+  {/if}
+  {/if}
+  </div>
     <footer class="footer mt-auto py-3">
       <div class="container text-center">
           <span class="text-muted">DISCONOW &copy; 2024</span>

@@ -275,7 +275,9 @@ onMount(() => {
 
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
   <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasExampleLabel">DISCONOW</h5>
+    <a class="navbar-brand" href="index.html">
+      <img src="/src/assets/logo2.png" alt="Avatar Logo" style="width:100px;">
+  </a>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
@@ -300,7 +302,7 @@ onMount(() => {
 
     {#if usuarios}
     <div>
-      <h2 class="mt-4">Gerenciamento de Usuários</h2>
+      <h2 class="mt-4"><b>Gerenciamento de Usuários</b></h2>
       <table class="table table-hover table-bordered text-center rounded">
         <thead>
           <tr>
@@ -325,13 +327,11 @@ onMount(() => {
                 <td>{linha_usuario[atributo]}</td>
               {/each}
               <td>
-                <button on:click={() => deletarUsuario(linha_usuario.id_usuario)} class="rounded black">Remover</button>
+                <button on:click={() => deletarUsuario(linha_usuario.id_usuario)} class="rounded btn-primary">Remover</button>
               </td>
               <td>
                 <div class="dropdown dropend">
-                  <button type="button" class="dropdown-toggle rounded black" data-bs-toggle="dropdown">
-                    Editar
-                  </button>
+                  <button type="button" class="dropdown-toggle rounded btn-primary" data-bs-toggle="dropdown">Editar</button>
                   <ul class="dropdown-menu">
                     <label for="edit_nome">Editar Nome:</label>
                     <input type="text" bind:value ={novoNome} id="edit_nome" class="form-control">
@@ -349,13 +349,13 @@ onMount(() => {
               </td>
             </tr>
           {/each}
-        </tbody>
+        </tbody>  
       </table>
     </div>
     {/if}
-    <h2 class="mt-4">Gerenciamento de Produtos</h2>
-                      <button type="button" class="rounded black" data-bs-toggle="modal" data-bs-target="#exampleModalCenter1">
-                        Adicionar Discos
+    <h2 class="mt-4"><b>Gerenciamento de Produtos</b></h2>
+                      <button type="button" class="rounded btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenter1">
+                       Adicionar Discos
                       </button>
     
                       <!-- Modal -->
@@ -425,7 +425,7 @@ onMount(() => {
                           </div>
                         </div>
                       </div>  
-                      <button type="button" class="rounded black" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+                      <button type="button" class="rounded btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
                         Adicionar CDs
                       </button>
     
@@ -513,13 +513,11 @@ onMount(() => {
                 <td>{linha_produto[atributo_produto]}</td>
               {/each}
               <td>
-                <button on:click={() => deletarProduto(linha_produto.id_produto)} class="rounded black">Remover</button>
+                <button on:click={() => deletarProduto(linha_produto.id_produto)} class="rounded btn-primary">Remover</button>
               </td>
               <td>
                 <div class="dropdown  dropend">
-                  <button type="button" class="dropdown-toggle rounded black" data-bs-toggle="dropdown">
-                    Editar
-                  </button>
+                  <button type="button" class="dropdown-toggle rounded btn-primary" data-bs-toggle="dropdown">Editar</button>
                   <ul class="dropdown-menu">
                     <label for="edit_nome_produto">Editar Nome:</label>
                     <input type="text" bind:value ={novoNomeProduto} id="edit_nome" class="form-control">
@@ -563,11 +561,11 @@ onMount(() => {
                 <td>{linha_produto_cd[atributo_produto_cd]}</td>
               {/each}
               <td>
-                <button on:click={() => deletarProdutoCd(linha_produto_cd.id_produto_cd)} class="rounded black">Remover</button>
+                <button on:click={() => deletarProdutoCd(linha_produto_cd.id_produto_cd)} class="rounded btn-primary">Remover</button>
               </td>
               <td>
                 <div class="dropdown  dropend">
-                  <button type="button" class="dropdown-toggle rounded black" data-bs-toggle="dropdown">
+                  <button type="button" class="dropdown-toggle rounded btn-primary" data-bs-toggle="dropdown">
                     Editar
                   </button>
                   <ul class="dropdown-menu">

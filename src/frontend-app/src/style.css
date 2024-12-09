@@ -49,6 +49,7 @@ h2 {
 .btn-primary {
     background-color: #7d4a2c;
     border-color: #7d4a2c;
+    color: white;
 }
 
 .btn-primary:hover {
@@ -183,6 +184,6 @@ hr{
 }
 
 
-.subtitulo{
+.subtitulo {
     font-family: 'bright';
 }

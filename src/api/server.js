@@ -663,5 +663,3 @@ app.listen(port, () => {
 });
 
 
-
-res.cookie("carrinho", carrinho, options);
