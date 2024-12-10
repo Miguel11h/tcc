@@ -7,11 +7,17 @@
   let usuarios = null;
   let usuarioLogado = null;
   let colunasUsuarios = null;
+  let colunas_produtos = null;
+  let produtos = null;
+  let colunas_produtos_cd = null;
+  let produtos_cd = null;
   import './style.css';
   import './assets/logo.png'
   import './assets/ouvindo.png'
   import Navbar from './Navbar.svelte';
   const API_BASE_URL = "http://localhost:3000";
+  let searchQuery = ''; // Variável para armazenar o valor da pesquisa
+  let filteredProdutos = []; // Armazena os produtos filtrados
 
   const axiosInstance = axios.create({
     withCredentials: true,
@@ -21,6 +27,16 @@
           Accept: "application/json",
       }
   });
+  const searchProdutos = () => {
+    if (searchQuery.trim() === '') {
+      filteredProdutos = produtos; // Se não houver pesquisa, mostra todos os produtos
+    } else {
+      filteredProdutos = produtos.filter(produto => 
+        produto.nome_produto.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        produto.descricao_produto.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+  };
 
   const carregarUsuarios = async () => {
     try {
@@ -83,8 +99,9 @@
         </a>
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
           <div class="d-flex w-50 navbar-nav ms-auto" id="search-form">
-            <input class="form-control me-2" type="search" id="search-input" placeholder="Pesquise aqui" aria-label="Search">
-            <button class="btn-primary sidebar" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+            <input class="form-control me-2" type="search" id="search-input" placeholder="Pesquise aqui" aria-label="Search" bind:value={searchQuery}>
+            <button class="btn-primary sidebar" type="submit" on:click={searchProdutos}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" >
       <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
     </svg></button>
   </div>

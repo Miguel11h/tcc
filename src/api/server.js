@@ -52,8 +52,6 @@ async function verificaToken(req, res, next) {
     });
   }
 
-  const carrinho = req.cookies.Carrinho;
-
   console.log(`token: ${token}`);
   console.log(`SECRET_ACCESS_TOKEN: ${SECRET_ACCESS_TOKEN}`);
   jwt.verify(token, SECRET_ACCESS_TOKEN, (err, decoded) => {
@@ -661,5 +659,3 @@ app.delete('/produtos_cd/:id_produto', (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
-
-

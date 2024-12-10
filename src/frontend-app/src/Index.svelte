@@ -120,7 +120,59 @@
 <main>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <Navbar></Navbar>
+    <nav class="navbar navbar-expand-sm custom-navbar">
+      <div class="container">
+        <button class="btn-primary rounded-5 sidebar" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#f3e6d8" class="bi bi-list" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+          </svg>
+        </button>
+        
+        
+          <a class="navbar-brand" href="index.html">
+              <img src="/src/assets/logo.png" alt="Avatar Logo" style="width:100px;">
+          </a>
+          <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <div class="d-flex w-50 navbar-nav ms-auto" id="search-form">
+              <input class="form-control me-2" type="search" id="search-input" placeholder="Pesquise aqui" aria-label="Search" bind:value={searchQuery} on:input={searchProdutos}>
+              <button class="btn-primary sidebar" type="submit" on:click={searchProdutos}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" >
+        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+      </svg></button>
+    </div>
+              <ul class="navbar-nav ms-auto">
+                  <li class="nav-item">
+                    <a href="">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#f3e6d8" class="bi bi-cart4" viewBox="0 0 16 16">
+                        <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"/>
+                      </svg>
+                    </a>
+                  </li>      
+    {#if usuarioLogado}
+    <li class="nav-item">
+      <div class="dropdown">
+      <button class="buttonUser" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="50" fill="#f3e6d8" class="bi bi-person" viewBox="0 0 16 16">
+          <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+        </svg>
+      </button>
+      <ul class="dropdown-menu">
+        <li><p class="dropdown-item">{usuarioLogado.nome}</p></li>
+        <li><button class="dropdown-item" on:click={logout}>Logout</button></li>
+      </ul>
+    </div>
+    </li>
+  
+        {:else}
+        <a class="btn" href="login.html">Login</a>
+     
+                  
+    {/if} 
+              </ul>
+          </div>
+      </div>
+  </nav>
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
       <div class="offcanvas-header">
         <a class="navbar-brand" href="index.html">
@@ -164,21 +216,6 @@
         </div>
       </div>
     </div>
- <div class="d-flex w-50" id="search-form">
-      <input 
-        class="form-control me-2" 
-        type="search" 
-        id="search-input" 
-        placeholder="Search..." 
-        aria-label="Search" 
-        bind:value={searchQuery}/> <!-- Captura a entrada do usuário -->
-      <button class="btn-primary sidebar rounded-5" type="submit" on:click={searchProdutos}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-        </svg>
-      </button>
-    </div>
-
 
 
     <div class="container cardcarousel">
@@ -209,8 +246,31 @@
               {#each filteredProdutos.slice(index * 3, index * 3 + 3) as linha_produto}
                 <div class="col">
                   <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{linha_produto.id_produto}">
-                    <img src="{linha_produto.imagem_produto}" alt="" class="d-block w-100">
+                    <img src="{linha_produto.imagem_produto}" alt="" class="maximo d-block w-100">
                   </button>
+                  <div class="modal fade" id="exampleModalCenter{linha_produto.id_produto}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle{linha_produto.id_produto}" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <img src="{linha_produto.imagem_produto}" alt="" class="d-block w-100">
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <p><b>{linha_produto.nome_produto}</b></p>
+                          <p><i>{linha_produto.descricao_produto}</i></p>
+                          <p>R${linha_produto.preco_produto}</p>
+
+
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">COMPRAR</button>
+                          <button type="button" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#f3e6d8" class="bi bi-cart4" viewBox="0 0 16 16">
+                            <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"/>
+                          </svg></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>  
                 </div>
               {/each}
             </div>
