@@ -16,6 +16,21 @@
     import './assets/ouvindo.png'
     import Navbar from './Navbar.svelte';
     const API_BASE_URL = "http://localhost:3000";
+
+    const carrinho = {};
+
+    function adicionarDoCarrinho(idProduto) {
+      // verificar se existe o produto dentro da variavel carrinho
+      // se não, adiciona o produto com quantidade = 1 no carrinho
+      // se não, soma 1 na quantidade do produto existe no carrinho
+      console.log(carrinho);
+    }
+
+    function removerDoCarrinho(idProduto) {
+      // procura o produto
+      // retira do dicionario
+      console.log(carrinho);
+    }
   
     const axiosInstance = axios.create({
       withCredentials: true,

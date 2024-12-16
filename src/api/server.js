@@ -273,7 +273,7 @@ app.post('/usuarios/novo', (req, res) => {
 
 
 
-app.delete('/usuarios/:id_usuario', verificaToken , (req, res) => {
+app.delete('/usuarios/:id_usuario' , (req, res) => {
   const { id_usuario } = req.params;
 
   // Conectar ao banco de dados SQLite
@@ -641,7 +641,7 @@ app.put('/produtos_cd/:id_produto', (req, res) => {
 });
 
 // Rota para excluir um produto por ID
-app.delete('/produtos_cd/:id_produto', (req, res) => {
+app.delete('/produtos_cd/:id_produto_cd', (req, res) => {
   const { id_produto_cd } = req.params;
 
   const db = geraConexaoDeBancoDeDados();

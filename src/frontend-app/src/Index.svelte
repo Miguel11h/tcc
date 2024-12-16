@@ -19,6 +19,38 @@
   let searchQuery = ''; // Variável para armazenar o valor da pesquisa
   let filteredProdutos = []; // Armazena os produtos filtrados
 
+  const carrinho = {};
+
+  function adicionarCarrinho(idProduto) {
+    // verificar se existe o produto dentro da variavel carrinho
+    // se não, adiciona o produto com quantidade = 1 no carrinho
+    // se sim, soma 1 a quantidade do produto existe no carrinho
+    if (idProduto == carrinho.id_produto) {
+      carrinho.set('produto', 'id_produto');
+    console.log('Produto adicionado.');
+    }
+    
+    console.log(carrinho);
+  }
+
+// Adiciona a chave e o valor no mapa
+
+
+// Com item inserido
+console.log('has', dict.has('chave'));
+console.log('get',dict.get('chave'));
+
+console.log('Chave inexistente');
+// Com um item não inserido
+console.log('has', dict.has('chave inexistente'));
+console.log('get', dict.get('chave inexistente'));
+
+  function removerCarrinho(idProduto) {
+    // procura o produto
+    // retira do dicionario
+    console.log(carrinho);
+  }
+
   const axiosInstance = axios.create({
     withCredentials: true,
     baseURL: API_BASE_URL,
