@@ -1,5 +1,6 @@
 <script>
-  
+  import { carrinho } from './store.js'
+  import { get } from 'svelte/store';
   import { onMount } from 'svelte';
   import axios from "axios";
   let error = null;
@@ -11,6 +12,7 @@
   let produtos = null;
   let colunas_produtos_cd = null;
   let produtos_cd = null;
+  let rtrn = null;
   import './style.css';
   import './assets/logo.png'
   import './assets/ouvindo.png'
@@ -18,38 +20,50 @@
   const API_BASE_URL = "http://localhost:3000";
   let searchQuery = ''; // Variável para armazenar o valor da pesquisa
   let filteredProdutos = []; // Armazena os produtos filtrados
+  let filteredProdutos_cd = [];
+  console.log(get(carrinho))
+  function adicionarCarrinho(idProduto, nome, imagem, preco) {
+  // Usando `get(carrinho)` para acessar o carrinho
+  const currentCarrinho = get(carrinho);
+  let item = currentCarrinho.find(p => p.id_produto === idProduto);
 
-  const carrinho = {};
+  if (item) {
+    // Produto encontrado, aumentar a quantidade
+    item.quantidade += 1;
+    carrinho.set([...currentCarrinho]); // Atualiza o carrinho com a nova quantidade
+    let rtrn = ("Produto já no carrinho, quantidade atualizada:", item)
+    console.log("Produto já no carrinho, quantidade atualizada:", item);
+  } else {
+    // Produto não encontrado, adicionar ao carrinho
+    carrinho.update(c => [...c, { id_produto: idProduto, nome, imagem, preco, quantidade: 1 }]);
+    let rtrn = "Produto adicionado ao carrinho."
+    console.log("Produto adicionado ao carrinho.");
+  }
 
-  function adicionarCarrinho(idProduto) {
-    // verificar se existe o produto dentro da variavel carrinho
-    // se não, adiciona o produto com quantidade = 1 no carrinho
-    // se sim, soma 1 a quantidade do produto existe no carrinho
-    if (idProduto == carrinho.id_produto) {
-      carrinho.set('produto', 'id_produto');
-    console.log('Produto adicionado.');
+  console.log("Carrinho Atual:", get(carrinho));
+}
+function removerCarrinho(idProduto) {
+  // Usando `get(carrinho)` para acessar o carrinho
+  const currentCarrinho = get(carrinho);
+  let item = currentCarrinho.find(p => p.id_produto === idProduto);
+
+  if (item) {
+    if (item.quantidade > 1) {
+      // Reduz a quantidade se for maior que 1
+      item.quantidade -= 1;
+      carrinho.set([...currentCarrinho]); // Atualiza o carrinho com a nova quantidade
+      console.log("Quantidade reduzida:", item);
+    } else {
+      // Remove o produto se a quantidade for 1
+      carrinho.set(currentCarrinho.filter(p => p.id_produto !== idProduto));
+      console.log("Produto removido do carrinho.");
     }
-    
-    console.log(carrinho);
+  } else {
+    console.log("Produto não encontrado no carrinho.");
   }
 
-// Adiciona a chave e o valor no mapa
-
-
-// Com item inserido
-console.log('has', dict.has('chave'));
-console.log('get',dict.get('chave'));
-
-console.log('Chave inexistente');
-// Com um item não inserido
-console.log('has', dict.has('chave inexistente'));
-console.log('get', dict.get('chave inexistente'));
-
-  function removerCarrinho(idProduto) {
-    // procura o produto
-    // retira do dicionario
-    console.log(carrinho);
-  }
+  console.log("Carrinho Atual:", get(carrinho));
+}
 
   const axiosInstance = axios.create({
     withCredentials: true,
@@ -63,10 +77,15 @@ console.log('get', dict.get('chave inexistente'));
   const searchProdutos = () => {
     if (searchQuery.trim() === '') {
       filteredProdutos = produtos; // Se não houver pesquisa, mostra todos os produtos
+      filteredProdutos_cd = produtos_cd;
     } else {
       filteredProdutos = produtos.filter(produto => 
         produto.nome_produto.toLowerCase().includes(searchQuery.toLowerCase()) || 
         produto.descricao_produto.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      filteredProdutos_cd = produtos_cd.filter(produto_cd => 
+        produto_cd.nome_produto_cd.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        produto_cd.descricao_produto_cd.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
   };
@@ -147,6 +166,9 @@ console.log('get', dict.get('chave inexistente'));
   .maximo {
     max-width: 400px;
   }
+  .maximoPesquisa {
+    max-width: 250px;
+  }
 </style>
 
 <main>
@@ -174,7 +196,7 @@ console.log('get', dict.get('chave inexistente'));
     </div>
               <ul class="navbar-nav ms-auto">
                   <li class="nav-item">
-                    <a href="">
+                    <a href="carrinho.html">
                       <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#f3e6d8" class="bi bi-cart4" viewBox="0 0 16 16">
                         <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"/>
                       </svg>
@@ -269,48 +291,70 @@ console.log('get', dict.get('chave inexistente'));
 
   {#if searchQuery}
   <h1 class="subtitulo">DISCOS</h1>
-  <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      {#each filteredProdutos.slice(0, Math.ceil(filteredProdutos.length / 3)) as _, index}
-        <div class="carousel-item {index === 0 ? 'active' : ''}">
-          <div class="container">
-            <div class="row">
-              {#each filteredProdutos.slice(index * 3, index * 3 + 3) as linha_produto}
-                <div class="col">
-                  <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{linha_produto.id_produto}">
-                    <img src="{linha_produto.imagem_produto}" alt="" class="maximo d-block w-100">
-                  </button>
-                  <div class="modal fade" id="exampleModalCenter{linha_produto.id_produto}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle{linha_produto.id_produto}" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <img src="{linha_produto.imagem_produto}" alt="" class="d-block w-100">
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                          <p><b>{linha_produto.nome_produto}</b></p>
-                          <p><i>{linha_produto.descricao_produto}</i></p>
-                          <p>R${linha_produto.preco_produto}</p>
-
-
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">COMPRAR</button>
-                          <button type="button" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#f3e6d8" class="bi bi-cart4" viewBox="0 0 16 16">
-                            <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"/>
-                          </svg></button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>  
+      {#each filteredProdutos as linha_produto}
+          <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{linha_produto.id_produto}">
+            <img src="{linha_produto.imagem_produto}" alt="" class="maximoPesquisa d-block w-100">
+          </button>
+          <div class="modal fade" id="exampleModalCenter{linha_produto.id_produto}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle{linha_produto.id_produto}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <img src="{linha_produto.imagem_produto}" alt="" class="d-block w-100">
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              {/each}
+                <div class="modal-body">
+                  <p><b>{linha_produto.nome_produto}</b></p>
+                  <p><i>{linha_produto.descricao_produto}</i></p>
+                  <p>R${linha_produto.preco_produto}</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">COMPRAR</button>
+                  <button type="button" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#f3e6d8" class="bi bi-cart4" viewBox="0 0 16 16">
+                      <path d="..."></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+      {/each}
+  
+
+  <h1 class="subtitulo">CDs</h1>
+<div class="container">
+
+    {#each filteredProdutos_cd as linha_produto_cd}
+
+        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{linha_produto_cd.id_produto_cd}">
+          <img src="{linha_produto_cd.imagem_produto_cd}" alt="" class="maximoPesquisa d-block w-100">
+        </button>
+        <div class="modal fade" id="exampleModalCenter{linha_produto_cd.id_produto_cd}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle{linha_produto_cd.id_produto_cd}" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <img src="{linha_produto_cd.imagem_produto_cd}" alt="" class="d-block w-100">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p><b>{linha_produto_cd.nome_produto_cd}</b></p>
+                <p><i>{linha_produto_cd.descricao_produto_cd}</i></p>
+                <p>R${linha_produto_cd.preco_produto_cd}</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">COMPRAR</button>
+                <button type="button" class="btn btn-primary">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#f3e6d8" class="bi bi-cart4" viewBox="0 0 16 16">
+                    <path d="..."></path>
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      {/each}
-    </div>
-  </div>
+    {/each}
+</div>
+
 
   {:else}
   
@@ -346,9 +390,10 @@ console.log('get', dict.get('chave inexistente'));
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">COMPRAR</button>
-                            <button type="button" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#f3e6d8" class="bi bi-cart4" viewBox="0 0 16 16">
+                            <button on:click={() => adicionarCarrinho(linha_produto.id_produto, linha_produto.nome_produto, linha_produto.imagem_produto, linha_produto.preco_produto)} type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#f3e6d8" class="bi bi-cart4" viewBox="0 0 16 16">
                               <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"/>
                             </svg></button>
+                            
                           </div>
                         </div>
                       </div>

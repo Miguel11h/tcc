@@ -1,120 +1,170 @@
 <script>
+  import { carrinho } from './store.js';
+  import { get } from 'svelte/store';
+  import { onMount } from 'svelte';
+  import axios from "axios";
+  import './style.css';
+  import './assets/logo.png';
+  import './assets/ouvindo.png';
+  import Navbar from './Navbar.svelte';
   
-    import { onMount } from 'svelte';
-    import axios from "axios";
-    let error = null;
-    let resultado = null;
-    let usuarios = null;
-    let usuarioLogado = null;
-    let colunasUsuarios = null;
-    let colunas_produtos = null;
-    let produtos = null;
-    let colunas_produtos_cd = null;
-    let produtos_cd = null;
-    import './style.css';
-    import './assets/logo.png'
-    import './assets/ouvindo.png'
-    import Navbar from './Navbar.svelte';
-    const API_BASE_URL = "http://localhost:3000";
+  const API_BASE_URL = "http://localhost:3000";
+  let searchQuery = ''; // Variável para armazenar o valor da pesquisa
+  let filteredProdutos = []; // Armazena os produtos filtrados
+  let filteredProdutos_cd = [];
+  let produtos = null;
+  let produtos_cd = null;
+  let usuarios = null;
+  let colunasUsuarios = null;
+  let colunas_produtos = null;
+  let colunas_produtos_cd = null;
+  let usuarioLogado = null;
+  let produtosCarrinho = get(carrinho); // Obtendo os produtos do carrinho
+  let totalCarrinho = 0; // Variável para armazenar o total do carrinho
+  let error = null;
 
-    const carrinho = {};
+  function calcularTotal() {
+    totalCarrinho = get(carrinho).reduce((acc, item) => {
+      const preco = parseFloat(item.preco); // Garantir que preço seja um número
+      const quantidade = parseInt(item.quantidade, 10); // Garantir que quantidade seja um número
+      if (!isNaN(preco) && !isNaN(quantidade)) {
+        return acc + (preco * quantidade);
+      }
+      return acc; // Caso contrário, não faz o cálculo para aquele item
+    }, 0);
+  }
 
-    function adicionarDoCarrinho(idProduto) {
-      // verificar se existe o produto dentro da variavel carrinho
-      // se não, adiciona o produto com quantidade = 1 no carrinho
-      // se não, soma 1 na quantidade do produto existe no carrinho
-      console.log(carrinho);
+  // Função para carregar o carrinho
+  function carregarCarrinho() {
+  produtosCarrinho = get(carrinho); // Obtém os produtos mais recentes do carrinho
+  calcularTotal(); // Recalcula o total após qualquer alteração no carrinho
+}
+
+  // Função para adicionar produto ao carrinho
+  function adicionarCarrinho(idProduto) {
+    axios.post(`${API_BASE_URL}/carrinho/adicionar`, { idProduto })
+      .then(response => {
+        carrinho.set(response.data.carrinho); // Atualiza o carrinho no frontend
+        calcularTotal(response.data.carrinho); // Recalcula o total
+      })
+      .catch(error => {
+        console.error('Erro ao adicionar produto ao carrinho:', error);
+      });
+  }
+
+  // Função para remover produto do carrinho
+  function removerCarrinho(idProduto) {
+  // Usando `get(carrinho)` para acessar o carrinho
+  const currentCarrinho = get(carrinho);
+  let item = currentCarrinho.find(p => p.id_produto === idProduto);
+
+  if (item) {
+    if (item.quantidade > 1) {
+      // Reduz a quantidade se for maior que 1
+      item.quantidade -= 1;
+      carrinho.set([...currentCarrinho]); // Atualiza o carrinho com a nova quantidade
+      console.log("Quantidade reduzida:", item);
+    } else {
+      // Remove o produto se a quantidade for 1
+      carrinho.set(currentCarrinho.filter(p => p.id_produto !== idProduto));
+      console.log("Produto removido do carrinho.");
     }
+  } else {
+    console.log("Produto não encontrado no carrinho.");
+  }
+  carregarCarrinho();
+  console.log("Carrinho Atual:", get(carrinho));
 
-    function removerDoCarrinho(idProduto) {
-      // procura o produto
-      // retira do dicionario
-      console.log(carrinho);
+}
+
+  // Função para carregar os produtos
+  const carregarProdutos = async () => {
+    try {
+      const res = await axios.get(API_BASE_URL + "/produtos");
+      produtos = res.data.produtos;
+      colunas_produtos = Object.keys(produtos[0]);
+    } catch (err) {
+      console.error(err);
+      produtos = null;
     }
-  
-    const axiosInstance = axios.create({
-      withCredentials: true,
-      baseURL: API_BASE_URL,
-      responseType: "json",
-      headers: {
-            Accept: "application/json",
-        }
-    });
-  
-    const carregarUsuarios = async () => {
-      try {
-        let res = await axiosInstance.get(API_BASE_URL + "/usuarios");
-        usuarios = res.data.usuarios;
-        colunasUsuarios = Object.keys(usuarios[0]);
-        error = null; // Limpa o erro se a requisição for bem-sucedida
-      } catch (err) {
-        error = "Erro ao buscar dados: " + err.response?.data?.message || err.message;;
-        console.error(err);
-        usuarios = null; // Limpa o resultado em caso de erro
+  };
+
+  // Função para carregar produtos do catálogo
+  const carregarProdutosCd = async () => {
+    try {
+      const res = await axios.get(API_BASE_URL + "/produtos_cd");
+      produtos_cd = res.data.produtos;
+      colunas_produtos_cd = Object.keys(produtos_cd[0]);
+    } catch (err) {
+      console.error(err);
+      produtos_cd = null;
+    }
+  };
+
+  // Função para carregar os usuários
+  const carregarUsuarios = async () => {
+    try {
+      const res = await axios.get(API_BASE_URL + "/usuarios");
+      usuarios = res.data.usuarios;
+      colunasUsuarios = Object.keys(usuarios[0]);
+    } catch (err) {
+      console.error(err);
+      usuarios = null;
+    }
+  };
+
+  // Função para buscar usuário logado
+  const buscarUsuarioLogado = async () => {
+    try {
+      const res = await axios.get(API_BASE_URL + '/usuarios/me');
+      usuarioLogado = res.data.usuario; // Armazena os dados do usuário
+    } catch (err) {
+      console.error(err);
+      usuarioLogado = null;
+    }
+  };
+
+  // Função para fazer logout
+  const logout = async () => {
+    try {
+      const res = await axios.post("/logout");
+      if (res.data.status === "success") {
+        window.location.href = "/login.html";
       }
-    };
-    const carregarProdutos = async () => {
-      try {
-        let res = await axiosInstance.get(API_BASE_URL + "/produtos");
-        produtos = res.data.produtos;
-        colunas_produtos = Object.keys(produtos[0]);
-        error = null;
-      } catch (err) {
-        console.error(err);
-        produtos = null;
-      }
-    };
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // Função para pesquisar produtos
+  const searchProdutos = () => {
+    if (searchQuery.trim() === '') {
+      filteredProdutos = produtos;
+      filteredProdutos_cd = produtos_cd;
+    } else {
+      filteredProdutos = produtos.filter(produto =>
+        produto.nome_produto.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        produto.descricao_produto.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      filteredProdutos_cd = produtos_cd.filter(produto_cd =>
+        produto_cd.nome_produto_cd.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        produto_cd.descricao_produto_cd.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+  };
+
+  // Função para carregar todos os dados
+  onMount(() => {
+    calcularTotal();
+    buscarUsuarioLogado();
+    carregarProdutos();
+    carregarUsuarios();
+    carregarProdutosCd();
+    carregarCarrinho(); // Carrega o carrinho
+  });
+</script>
+
   
-    const carregarProdutosCd = async () => {
-      try {
-        let res = await axiosInstance.get(API_BASE_URL + "/produtos_cd");
-        produtos_cd = res.data.produtos;
-        colunas_produtos_cd = Object.keys(produtos_cd[0]);
-        error = null;
-      } catch (err) {
-        console.error(err);
-        produtos_cd = null;
-      }
-    };
-  
-    const buscarUsuarioLogado = async () => {
-        try {
-            const res = await axiosInstance.get(API_BASE_URL + '/usuarios/me');
-            console.log(res.data);
-            usuarioLogado = res.data.usuario; // Armazena os dados do usuário
-            error = null; // Limpa o erro se a requisição for bem-sucedida
-        } catch (err) {
-            error = err.response?.data?.message || err.message;
-            usuarioLogado = null; // Limpa os dados em caso de erro
-        }
-    };
-  
-    const logout = async () => {
-      try {
-        let res = await axiosInstance.post("/logout");
-        resultado = res.data;
-  
-        // Redirecionar para página de logon após logout
-        if (resultado && resultado.status === "success") { 
-              window.location.href = "/login.html";  
-        }
-        error = null; // Limpa o erro se a requisição for bem-sucedida
-      } catch (err) {
-        error = "Erro ao buscar dados: " + err.response?.data?.message || err.message;
-        console.error(err);
-        resultado = null; // Limpa o resultado em caso de erro
-      }
-    };
-    onMount(() => {
-      buscarUsuarioLogado();
-      carregarProdutos();
-      carregarUsuarios();
-      carregarProdutosCd();
-    }); 
-  
-  </script>
-  
-  <main>
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
       <link rel="stylesheet" href="style.css">
       <Navbar></Navbar>
@@ -159,69 +209,38 @@
           </div>
         </div>
       </div>
-    
-      <!-- Formulário -->
-      <div class="container">
-        <form novalidate>
-          <div class="row">
-            <div class="col-md-4 mb-3">
-              <label for="validationServer01">Produto</label>
-              <input type="text" class="form-control is-valid" id="validationServer01" placeholder="Nome" value="Mark" required>
-              <div class="valid-feedback">
-                Tudo certo!
-              </div>
-            </div>
-            <div class="col-md-4 mb-3">
-              <label for="validationServer02">Produto teste</label>
-              <input type="text" class="form-control is-valid" id="validationServer02" placeholder="Sobrenome" value="Otto" required>
-              <div class="valid-feedback">
-                Tudo certo!
-              </div>
-            </div>
-            <div class="col-md-4 mb-3">
-              <label for="validationServerUsername">produto tambem teste</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroupPrepend3">@</span>
-                </div>
-                <input type="text" class="form-control is-invalid" id="validationServerUsername" placeholder="Usuário" aria-describedby="inputGroupPrepend3" required>
-                <div class="invalid-feedback">
-                  Por favor, escolha um produto tambem teste válido.
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label for="validationServer03">prod test</label>
-              <input type="text" class="form-control is-invalid" id="validationServer03" placeholder="Cidade" required>
-              <div class="invalid-feedback">
-                Por favor, informe um prod test válido.
-              </div>
-            </div>
-            <div class="col-md-3 mb-3">
-              <label for="validationServer04">p t</label>
-              <input type="text" class="form-control is-invalid" id="validationServer04" placeholder="Estado" required>
-              <div class="invalid-feedback">
-                Por favor, informe um p t  válido.
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="form-check">
-              <input class="form-check-input is-invalid" type="checkbox" value="" id="invalidCheck3" required>
-              <label class="form-check-label" for="invalidCheck3">
-                Concordo com os termos e condições
-              </label>
-              <div class="invalid-feedback">
-                Você deve concordar, antes de continuar.
-              </div>
-            </div>
-          </div>
-          <button class="btn btn-primary" type="submit">Enviar</button>
-        </form>
-      </div>
+      <style>
+  .maximo {
+    max-width: 400px;
+  }
+  .maximoPesquisa {
+    max-width: 250px;
+  }
+      </style>
+      
+      <main>
+        <div>
+  <h2>Carrinho de Compras</h2>
+  {#if produtosCarrinho && produtosCarrinho.length > 0}
+  <ul>
+    {#each produtosCarrinho as produto}
+      <li>
+        <img src="{produto.imagem}" alt="" class="maximoPesquisa">
+        {produto.nome} - 
+        {produto.quantidade} x R${parseFloat(produto.preco).toFixed(2)} = R${(parseInt(produto.quantidade) * parseFloat(produto.preco)).toFixed(2)}
+        <button on:click={() => removerCarrinho(produto.id_produto)} class="btn-primary rounded">Remover</button>
+      </li>
+    {/each}
+  </ul>
+  <p>Total: R${totalCarrinho.toFixed(2)}</p>
+{:else}
+  <p>Seu carrinho está vazio.</p>
+{/if}
 
+</div>
+    
+
+    
       <footer class="footer mt-auto py-3">
         <div class="container text-center">
             <span class="text-muted">DISCONOW &copy; 2024</span>
