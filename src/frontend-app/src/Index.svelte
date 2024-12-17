@@ -219,7 +219,7 @@ function removerCarrinho(idProduto) {
     </li>
   
         {:else}
-        <a class="btn" href="login.html">Login</a>
+        <a class="loginBtn btn" style="color: #f3e6d8;" href="login.html">Login</a>
      
                   
     {/if} 

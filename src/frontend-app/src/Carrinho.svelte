@@ -219,26 +219,40 @@
       </style>
       
       <main>
-        <div>
-  <h2>Carrinho de Compras</h2>
-  {#if produtosCarrinho && produtosCarrinho.length > 0}
-  <ul>
-    {#each produtosCarrinho as produto}
-      <li>
-        <img src="{produto.imagem}" alt="" class="maximoPesquisa">
-        {produto.nome} - 
-        {produto.quantidade} x R${parseFloat(produto.preco).toFixed(2)} = R${(parseInt(produto.quantidade) * parseFloat(produto.preco)).toFixed(2)}
-        <button on:click={() => removerCarrinho(produto.id_produto)} class="btn-primary rounded">Remover</button>
-      </li>
-    {/each}
-  </ul>
-  <p>Total: R${totalCarrinho.toFixed(2)}</p>
-{:else}
-  <p>Seu carrinho está vazio.</p>
-{/if}
-
-</div>
     
+<div class="container-fluid d-flex align-items-center justify-content-between min-vh-100">
+  
+  <div class="register-container animated">
+      <div class="card p-4 shadow-lg" style="max-width: 800px; width: 100%; padding-top: 80px; ">
+          <h2 class="text-center mb-4"><b>Carrinho de Compras</b></h2>
+          {#if produtosCarrinho && produtosCarrinho.length > 0}
+          <ul>
+            {#each produtosCarrinho as produto}
+              <li class="d-flex justify-content-between align-items-center">
+                <div>
+                  <img src="{produto.imagem}" alt="" class="maximoPesquisa">
+                  {produto.nome} - 
+                  {produto.quantidade} x R${parseFloat(produto.preco).toFixed(2)} = R${(parseInt(produto.quantidade) * parseFloat(produto.preco)).toFixed(2)}
+                </div>
+                <button on:click={() => removerCarrinho(produto.id_produto)} class="btn-primary rounded removerBtn">
+                  Remover
+                </button>
+              </li>
+            {/each}
+          </ul>
+          <b><p>Total: R${totalCarrinho.toFixed(2)}</p></b>
+          
+        {:else}
+          <p>Seu carrinho está vazio.</p>
+        {/if}
+    </div>
+    </div>
+    <div class="image-container animated">
+      <img src="src/assets/gatodisco.png" alt="Imagem de destaque" class="img-fluid">
+  </div>
+    </div>
+
+
 
     
       <footer class="footer mt-auto py-3">

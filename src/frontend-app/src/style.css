@@ -187,3 +187,7 @@ hr{
 .subtitulo {
     font-family: 'bright';
 }
+
+.removerBtn {
+    margin-left: 40px;    
+}
