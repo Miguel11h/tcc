@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Discos</title>
+  </head>
+  <body>
+    <div id="cd"></div>
+    <script type="module">
+      import './src/app.css'
+      import Cd from './src/Cd.svelte'
+
+      const cd = new Cd({
+        target: document.getElementById('cd'),
+      });
+
+      export default Cd
+    </script>
+  </body>
+</html>

@@ -170,7 +170,9 @@
       <Navbar></Navbar>
       <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasExampleLabel">DISCONOW</h5>
+          <a class="navbar-brand" href="index.html">
+            <img src="/src/assets/logo2.png" alt="Avatar Logo" style="width:100px;">
+        </a>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">

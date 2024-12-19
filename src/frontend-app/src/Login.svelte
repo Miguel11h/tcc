@@ -87,7 +87,9 @@
 <Navbar> </Navbar>
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
       <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasExampleLabel">DISCONOW</h5>
+        <a class="navbar-brand" href="index.html">
+          <img src="/src/assets/logo2.png" alt="Avatar Logo" style="width:100px;">
+      </a>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
@@ -101,12 +103,6 @@
             <li class="list-group-item"><a href="index.html">Voltar para a página principal</a></li>
             <li class="list-group-item"><a href="administrador.html">Página de Administrador</a></li>
             <br>
-            <div class="d-flex w-50" id="search-form">
-              <input class="form-control me-2" type="search" id="search-input" placeholder="Pesquise aqui" aria-label="Search">
-              <button class="btn-primary sidebar rounded-5" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-      </svg></button>
-    </div>
           </ul>
         </div>
       </div>
