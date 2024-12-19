@@ -41,19 +41,26 @@
   };
   
   const buscarUsuarioLogado = async () => {
-      try {
-          const res = await axiosInstance.get(API_BASE_URL + '/usuarios/me');
-          console.log(res.data);
-          usuarioLogado = res.data.usuario; // Armazena os dados do usuário
-          error = null; // Limpa o erro se a requisição for bem-sucedida
-          if (usuarioLogado){
+    try {
+        const res = await axiosInstance.get(API_BASE_URL + '/usuarios/me');
+        console.log(res.data);
+        usuarioLogado = res.data.usuario; // Armazena os dados do usuário
+        error = null; // Limpa o erro se a requisição for bem-sucedida
+        if (usuarioLogado) {
             window.location.href = "/index.html";
-          }
-      } catch (err) {
-          error = err.response?.data?.message || err.message;
-          usuarioLogado = null; // Limpa os dados em caso de erro
-      }
-  };
+        }
+    } catch (err) {
+        const message = err.response?.data?.message || err.message;
+        // Filtra explicitamente a mensagem "Você não está logado!"
+        if (message !== "Você não está logado!") {
+            error = message;
+        } else {
+            error = null;
+        }
+        usuarioLogado = null; // Limpa os dados em caso de erro
+    }
+};
+
 
   const logout = async () => {
     try {
@@ -95,13 +102,18 @@
       <div class="offcanvas-body">
         <div>
           <ul class="list-group list-group-flush">
+            {#if usuarioLogado}
+            <li class="list-group-item"><a href="./carrinho.html">CARRINHO</a></li>
+            {:else}
             <li class="list-group-item"><a href="login.html">USUÁRIO</a></li>
-            <li class="list-group-item"><a href="">CARRINHO</a></li>
-            <li class="list-group-item"><a href="">CDs</a></li>
-            <li class="list-group-item"><a href="">VINIL</a></li>
-            <li class="list-group-item"><a href="">SUPORTE</a></li>
-            <li class="list-group-item"><a href="index.html">Voltar para a página principal</a></li>
-            <li class="list-group-item"><a href="administrador.html">Página de Administrador</a></li>
+            {/if}
+            <li class="list-group-item"><a href="./cd.html">CDs</a></li>
+            <li class="list-group-item"><a href="./disco.html">VINIL</a></li>
+            {#if usuarioLogado}
+            <li class="list-group-item"><a href="./suporte.html">SUPORTE</a></li>
+            {/if}
+            <li class="list-group-item"><a href="administrador.html">Página de administrador</a></li>
+
             <br>
           </ul>
         </div>

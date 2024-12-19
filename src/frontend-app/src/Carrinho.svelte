@@ -9,19 +9,20 @@
   import Navbar from './Navbar.svelte';
   
   const API_BASE_URL = "http://localhost:3000";
-  let searchQuery = ''; // Variável para armazenar o valor da pesquisa
-  let filteredProdutos = []; // Armazena os produtos filtrados
-  let filteredProdutos_cd = [];
-  let produtos = null;
-  let produtos_cd = null;
   let usuarios = null;
   let colunasUsuarios = null;
-  let colunas_produtos = null;
-  let colunas_produtos_cd = null;
   let usuarioLogado = null;
   let produtosCarrinho = get(carrinho); // Obtendo os produtos do carrinho
   let totalCarrinho = 0; // Variável para armazenar o total do carrinho
   let error = null;
+  const axiosInstance = axios.create({
+    withCredentials: true,
+    baseURL: API_BASE_URL,
+    responseType: "json",
+    headers: {
+          Accept: "application/json",
+      }
+  });
 
   function calcularTotal() {
     totalCarrinho = get(carrinho).reduce((acc, item) => {
@@ -78,29 +79,8 @@
 }
 
   // Função para carregar os produtos
-  const carregarProdutos = async () => {
-    try {
-      const res = await axios.get(API_BASE_URL + "/produtos");
-      produtos = res.data.produtos;
-      colunas_produtos = Object.keys(produtos[0]);
-    } catch (err) {
-      console.error(err);
-      produtos = null;
-    }
-  };
 
   // Função para carregar produtos do catálogo
-  const carregarProdutosCd = async () => {
-    try {
-      const res = await axios.get(API_BASE_URL + "/produtos_cd");
-      produtos_cd = res.data.produtos;
-      colunas_produtos_cd = Object.keys(produtos_cd[0]);
-    } catch (err) {
-      console.error(err);
-      produtos_cd = null;
-    }
-  };
-
   // Função para carregar os usuários
   const carregarUsuarios = async () => {
     try {
@@ -112,17 +92,26 @@
       usuarios = null;
     }
   };
+  
 
   // Função para buscar usuário logado
   const buscarUsuarioLogado = async () => {
-    try {
-      const res = await axios.get(API_BASE_URL + '/usuarios/me');
-      usuarioLogado = res.data.usuario; // Armazena os dados do usuário
-    } catch (err) {
-      console.error(err);
-      usuarioLogado = null;
-    }
-  };
+        try {
+            const res = await axiosInstance.get(API_BASE_URL + '/usuarios/me');
+            console.log(res.data);
+            usuarioLogado = res.data.usuario; // Armazena os dados do usuário
+            if (!usuarioLogado){
+              window.location.href = '/index.html';
+            }
+            error = null; // Limpa o erro se a requisição for bem-sucedida
+        } catch (err) {
+            error = err.response?.data?.message || err.message;
+            usuarioLogado = null; // Limpa os dados em caso de erro
+            if (err.response && err.response.status === 401) {
+            window.location.href = '/index.html';
+        }
+        }
+    };
 
   // Função para fazer logout
   const logout = async () => {
@@ -136,31 +125,13 @@
     }
   };
 
-  // Função para pesquisar produtos
-  const searchProdutos = () => {
-    if (searchQuery.trim() === '') {
-      filteredProdutos = produtos;
-      filteredProdutos_cd = produtos_cd;
-    } else {
-      filteredProdutos = produtos.filter(produto =>
-        produto.nome_produto.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        produto.descricao_produto.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-      filteredProdutos_cd = produtos_cd.filter(produto_cd =>
-        produto_cd.nome_produto_cd.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        produto_cd.descricao_produto_cd.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
-  };
 
   // Função para carregar todos os dados
   onMount(() => {
     calcularTotal();
     buscarUsuarioLogado();
-    carregarProdutos();
     carregarUsuarios();
-    carregarProdutosCd();
-    carregarCarrinho(); // Carrega o carrinho
+
   });
 </script>
 
@@ -180,7 +151,7 @@
             <ul class="list-group list-group-flush">
               {#if usuarioLogado}
               <li class="list-group-item"><div class="dropdown">
-                <button class="buttonUser" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <button style="background-color: #7d4a2c;" class="rounded" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                   
                   <svg xmlns="http://www.w3.org/2000/svg" width="40" height="50" fill="#f3e6d8" class="bi bi-person" viewBox="0 0 16 16">
                     <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
@@ -191,22 +162,19 @@
                   <li><button class="dropdown-item" on:click={logout}>Logout</button></li>
                 </ul>
               </div></li>
-              <li class="list-group-item"><a href="carrinho.html">CARRINHO</a></li>
+              <li class="list-group-item"><a href="./carrinho.html">CARRINHO</a></li>
               {:else}
               <li class="list-group-item"><a href="login.html">USUÁRIO</a></li>
               {/if}
-              <li class="list-group-item"><a href="">CDs</a></li>
-              <li class="list-group-item"><a href="">VINIL</a></li>
-              <li class="list-group-item"><a href="">SUPORTE</a></li>
+              <li class="list-group-item"><a href="./cd.html">CDs</a></li>
+              <li class="list-group-item"><a href="./disco.html">VINIL</a></li>
+              {#if usuarioLogado}
+              <li class="list-group-item"><a href="./suporte.html">SUPORTE</a></li>
+              {/if}
               <li class="list-group-item"><a href="administrador.html">Página de administrador</a></li>
   
+  
               <br>
-              <div class="d-flex w-50" id="search-form">
-                <input class="form-control me-2" type="search" id="search-input" placeholder="Search..." aria-label="Search">
-                <button class="btn-primary sidebar rounded-5" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-        </svg></button>
-      </div>
             </ul>
           </div>
         </div>
@@ -243,6 +211,9 @@
             {/each}
           </ul>
           <b><p>Total: R${totalCarrinho.toFixed(2)}</p></b>
+          <a href="compra.html">
+            <button type="button" class="btn-primary rounded" data-bs-dismiss="modal">Finalizar Compra</button>
+          </a>
           
         {:else}
           <p>Seu carrinho está vazio.</p>

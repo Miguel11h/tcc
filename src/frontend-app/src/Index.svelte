@@ -22,26 +22,33 @@
   let filteredProdutos = []; // Armazena os produtos filtrados
   let filteredProdutos_cd = [];
   console.log(get(carrinho))
+
+
   function adicionarCarrinho(idProduto, nome, imagem, preco) {
-  // Usando `get(carrinho)` para acessar o carrinho
-  const currentCarrinho = get(carrinho);
-  let item = currentCarrinho.find(p => p.id_produto === idProduto);
-
-  if (item) {
-    // Produto encontrado, aumentar a quantidade
-    item.quantidade += 1;
-    carrinho.set([...currentCarrinho]); // Atualiza o carrinho com a nova quantidade
-    let rtrn = ("Produto já no carrinho, quantidade atualizada:", item)
-    console.log("Produto já no carrinho, quantidade atualizada:", item);
-  } else {
-    // Produto não encontrado, adicionar ao carrinho
-    carrinho.update(c => [...c, { id_produto: idProduto, nome, imagem, preco, quantidade: 1 }]);
-    let rtrn = "Produto adicionado ao carrinho."
-    console.log("Produto adicionado ao carrinho.");
+    // Usando `get(carrinho)` para acessar o carrinho
+    const currentCarrinho = get(carrinho);
+    if (usuarioLogado) {
+    let item = currentCarrinho.find(p => p.id_produto === idProduto);
+  
+    if (item) {
+      // Produto encontrado, aumentar a quantidade
+      item.quantidade += 1;
+      carrinho.set([...currentCarrinho]); // Atualiza o carrinho com a nova quantidade
+      let rtrn = ("Produto já no carrinho, quantidade atualizada:", item)
+      console.log("Produto já no carrinho, quantidade atualizada:", item);
+    } else {
+      // Produto não encontrado, adicionar ao carrinho
+      carrinho.update(c => [...c, { id_produto: idProduto, nome, imagem, preco, quantidade: 1 }]);
+      let rtrn = "Produto adicionado ao carrinho."
+      console.log("Produto adicionado ao carrinho.");
+    }
+  
+    console.log("Carrinho Atual:", get(carrinho));
   }
-
-  console.log("Carrinho Atual:", get(carrinho));
-}
+  else {
+    window.location.href = '/login.html'
+  }
+  }
 function removerCarrinho(idProduto) {
   // Usando `get(carrinho)` para acessar o carrinho
   const currentCarrinho = get(carrinho);
@@ -195,14 +202,15 @@ function removerCarrinho(idProduto) {
       </svg></button>
     </div>
               <ul class="navbar-nav ms-auto">
-                  <li class="nav-item">
-                    <a href="carrinho.html">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#f3e6d8" class="bi bi-cart4" viewBox="0 0 16 16">
-                        <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"/>
-                      </svg>
-                    </a>
-                  </li>      
+                    
     {#if usuarioLogado}
+    <li class="nav-item">
+      <a href="carrinho.html">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#f3e6d8" class="bi bi-cart4" viewBox="0 0 16 16">
+          <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"/>
+        </svg>
+      </a>
+    </li>    
     <li class="nav-item">
       <div class="dropdown">
       <button class="buttonUser" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -239,7 +247,7 @@ function removerCarrinho(idProduto) {
           <ul class="list-group list-group-flush">
             {#if usuarioLogado}
             <li class="list-group-item"><div class="dropdown">
-              <button class="buttonUser" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <button style="background-color: #7d4a2c;" class="rounded" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 
                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="50" fill="#f3e6d8" class="bi bi-person" viewBox="0 0 16 16">
                   <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
@@ -250,19 +258,21 @@ function removerCarrinho(idProduto) {
                 <li><button class="dropdown-item" on:click={logout}>Logout</button></li>
               </ul>
             </div></li>
-            <li class="list-group-item"><a href="">CARRINHO</a></li>
+            <li class="list-group-item"><a href="./carrinho.html">CARRINHO</a></li>
             {:else}
             <li class="list-group-item"><a href="login.html">USUÁRIO</a></li>
             {/if}
-            <li class="list-group-item"><a href="">CDs</a></li>
-            <li class="list-group-item"><a href="">VINIL</a></li>
-            <li class="list-group-item"><a href="">SUPORTE</a></li>
+            <li class="list-group-item"><a href="./cd.html">CDs</a></li>
+            <li class="list-group-item"><a href="./disco.html">VINIL</a></li>
+            {#if usuarioLogado}
+            <li class="list-group-item"><a href="./suporte.html">SUPORTE</a></li>
+            {/if}
             <li class="list-group-item"><a href="administrador.html">Página de administrador</a></li>
 
             <br>
             <div class="d-flex w-50" id="search-form">
-              <input class="form-control me-2" type="search" id="search-input" placeholder="Search..." aria-label="Search">
-              <button class="btn-primary sidebar rounded-5" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+              <input class="form-control me-2" type="search" id="search-input" placeholder="Search..." aria-label="Search" bind:value={searchQuery} on:input={searchProdutos}>
+              <button class="btn-primary sidebar rounded-5" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16"  on:click={searchProdutos}>
         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
       </svg></button>
     </div>
@@ -308,12 +318,12 @@ function removerCarrinho(idProduto) {
                   <p>R${linha_produto.preco_produto}</p>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">COMPRAR</button>
-                  <button type="button" class="btn btn-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#f3e6d8" class="bi bi-cart4" viewBox="0 0 16 16">
-                      <path d="..."></path>
-                    </svg>
-                  </button>
+                  <a href="compra.html">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" on:click={() => adicionarCarrinho(linha_produto.id_produto, linha_produto.nome_produto, linha_produto.imagem_produto, linha_produto.preco_produto)}>COMPRAR</button>
+                </a>
+                  <button on:click={() => adicionarCarrinho(linha_produto.id_produto, linha_produto.nome_produto, linha_produto.imagem_produto, linha_produto.preco_produto)} type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#f3e6d8" class="bi bi-cart4" viewBox="0 0 16 16">
+                    <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"/>
+                  </svg></button>
                 </div>
               </div>
             </div>
@@ -342,12 +352,13 @@ function removerCarrinho(idProduto) {
                 <p>R${linha_produto_cd.preco_produto_cd}</p>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">COMPRAR</button>
+                <a href="compra.html">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" on:click={() => adicionarCarrinho(linha_produto_cd.id_produto_cd, linha_produto_cd.nome_produto_cd, linha_produto_cd.imagem_produto_cd, linha_produto_cd.preco_produto_cd)} >COMPRAR</button>
+                </a>
                 <button type="button" class="btn btn-primary">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#f3e6d8" class="bi bi-cart4" viewBox="0 0 16 16">
-                    <path d="..."></path>
-                  </svg>
-                </button>
+                  <button on:click={() => adicionarCarrinho(linha_produto_cd.id_produto_cd, linha_produto_cd.nome_produto_cd, linha_produto_cd.imagem_produto_cd, linha_produto_cd.preco_produto_cd)} type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#f3e6d8" class="bi bi-cart4" viewBox="0 0 16 16">
+                    <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"/>
+                  </svg></button>
               </div>
             </div>
           </div>
@@ -389,7 +400,9 @@ function removerCarrinho(idProduto) {
 
                           </div>
                           <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">COMPRAR</button>
+                            <a href="compra.html">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" on:click={() => adicionarCarrinho(linha_produto.id_produto, linha_produto.nome_produto, linha_produto.imagem_produto, linha_produto.preco_produto)}>COMPRAR</button>
+                            </a>
                             <button on:click={() => adicionarCarrinho(linha_produto.id_produto, linha_produto.nome_produto, linha_produto.imagem_produto, linha_produto.preco_produto)} type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#f3e6d8" class="bi bi-cart4" viewBox="0 0 16 16">
                               <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"/>
                             </svg></button>
@@ -449,7 +462,9 @@ function removerCarrinho(idProduto) {
 
                         </div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">COMPRAR</button>
+                          <a href="compra.html">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" on:click={() => adicionarCarrinho(linha_produto_cd.id_produto_cd, linha_produto_cd.nome_produto_cd, linha_produto_cd.imagem_produto_cd, linha_produto_cd.preco_produto_cd)}>COMPRAR</button>
+                          </a>
                           <button on:click={() => adicionarCarrinho(linha_produto_cd.id_produto_cd, linha_produto_cd.nome_produto_cd, linha_produto_cd.imagem_produto_cd, linha_produto_cd.preco_produto_cd)} type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#f3e6d8" class="bi bi-cart4" viewBox="0 0 16 16">
                             <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"/>
                           </svg></button>

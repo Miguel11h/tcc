@@ -44,34 +44,49 @@
         },
       );
       resultado = res.data;
-      if (resultado && resultado.status === "success") { 
-            window.location.href = "/index.html";  
+   if (resultado && resultado.status === "success") { 
+            window.location.href = "/login.html";  
         }
       error = null; // Limpa o erro se a requisição for bem-sucedida
       // recarrega lista de usuários apresentada
-      carregarUsuarios();
+      buscarUsuarioLogado();
     } catch (err) {
-      error =
-        "Erro ao enviar dados: " + err.response?.data?.message || err.message;
-      resultado = null; // Limpa o resultado em caso de erro
-    }
+  if (err.response) {
+    // Se a resposta foi retornada, mostra a mensagem do servidor
+    error = "Erro ao enviar dados: " + err.response.data.message || "Erro desconhecido";
+  } else if (err.request) {
+    // Se não houver resposta (ex: problema de rede)
+    error = "Erro ao enviar dados: Problema de rede";
+  } else {
+    // Se o erro foi gerado durante a configuração da requisição
+    error = "Erro ao enviar dados: " + err.message || "Erro desconhecido";
+  }
+  resultado = null; // Limpa o resultado em caso de erro
+}
+
     
   };
 
   const buscarUsuarioLogado = async () => {
-      try {
-          const res = await axiosInstance.get(API_BASE_URL + '/usuarios/me');
-          console.log(res.data);
-          usuarioLogado = res.data.usuario; // Armazena os dados do usuário
-          error = null; // Limpa o erro se a requisição for bem-sucedida
-          if (usuarioLogado){
-            window.location.href = '/index.html';
-          }
-      } catch (err) {
-          error = err.response?.data?.message || err.message;
-          usuarioLogado = null; // Limpa os dados em caso de erro
-      }
-  };
+    try {
+        const res = await axiosInstance.get(API_BASE_URL + '/usuarios/me');
+        console.log(res.data);
+        usuarioLogado = res.data.usuario; // Armazena os dados do usuário
+        error = null; // Limpa o erro se a requisição for bem-sucedida
+        if (usuarioLogado) {
+            window.location.href = "/index.html";
+        }
+    } catch (err) {
+        const message = err.response?.data?.message || err.message;
+        // Filtra explicitamente a mensagem "Você não está logado!"
+        if (message !== "Você não está logado!") {
+            error = message;
+        } else {
+            error = null;
+        }
+        usuarioLogado = null; // Limpa os dados em caso de erro
+    }
+};
 
   const logout = async () => {
     try {
@@ -104,24 +119,38 @@
   <Navbar></Navbar>
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
   <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasExampleLabel">DISCONOW</h5>
+    <a href="index.html">
+    <img src="/src/assets/logo2.png" alt="Avatar Logo" style="width:100px;">
+  </a>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
     <div>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item"><a href="">USUÁRIO</a></li>
-        <li class="list-group-item"><a href="">CARRINHO</a></li>
-        <li class="list-group-item"><a href="">CDs</a></li>
-        <li class="list-group-item"><a href="">VINIL</a></li>
-        <li class="list-group-item"><a href="">SUPORTE</a></li>
+        {#if usuarioLogado}
+        <li class="list-group-item"><div class="dropdown">
+          <button style="background-color: #7d4a2c;" class="rounded" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="50" fill="#f3e6d8" class="bi bi-person" viewBox="0 0 16 16">
+              <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+            </svg>
+          </button>
+          <ul class="dropdown-menu">
+            <li><p class="dropdown-item">{usuarioLogado.nome}</p></li>
+            <li><button class="dropdown-item" on:click={logout}>Logout</button></li>
+          </ul>
+        </div></li>
+        <li class="list-group-item"><a href="./carrinho.html">CARRINHO</a></li>
+        {:else}
+        <li class="list-group-item"><a href="login.html">USUÁRIO</a></li>
+        {/if}
+        <li class="list-group-item"><a href="./cd.html">CDs</a></li>
+        <li class="list-group-item"><a href="./disco.html">VINIL</a></li>
+        {#if usuarioLogado}
+        <li class="list-group-item"><a href="./suporte.html">SUPORTE</a></li>
+        {/if}
+        <li class="list-group-item"><a href="administrador.html">Página de administrador</a></li>
         <br>
-        <div class="d-flex w-50" id="search-form">
-          <input class="form-control me-2" type="search" id="search-input" placeholder="Search..." aria-label="Search">
-          <button class="btn-primary sidebar rounded-5" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-  </svg></button>
-</div>
       </ul>
     </div>
   </div>
